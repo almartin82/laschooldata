@@ -1,0 +1,35 @@
+Package: laschooldata
+Title: Fetch and Process Louisiana School Data
+Version: 0.1.0
+Authors@R:
+    person("Al", "Martin", , "almartin@example.com", role = c("aut", "cre"))
+Description: Downloads and processes school data from the Louisiana Department
+    of Education (LDOE). Provides functions for fetching enrollment data from
+    the Multi Stats reports and transforming it into tidy format for analysis.
+    Covers October 1 enrollment counts from 2006 to present.
+License: MIT + file LICENSE
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.3.3
+Depends:
+    R (>= 4.0)
+Imports:
+    dplyr,
+    readxl,
+    readr,
+    purrr,
+    stringr,
+    tidyr,
+    rlang,
+    httr,
+    rappdirs
+Suggests:
+    testthat (>= 3.0.0),
+    knitr,
+    rmarkdown,
+    ggplot2,
+    scales
+VignetteBuilder: knitr
+Config/testthat/edition: 3
+URL: https://almartin82.github.io/laschooldata/, https://github.com/almartin82/laschooldata
+BugReports: https://github.com/almartin82/laschooldata/issues
