@@ -2,12 +2,13 @@
 
 <!-- badges: start -->
 [![R-CMD-check](https://github.com/almartin82/laschooldata/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/almartin82/laschooldata/actions/workflows/R-CMD-check.yaml)
+[![Python Tests](https://github.com/almartin82/laschooldata/actions/workflows/python-test.yaml/badge.svg)](https://github.com/almartin82/laschooldata/actions/workflows/python-test.yaml)
 [![pkgdown](https://github.com/almartin82/laschooldata/actions/workflows/pkgdown.yaml/badge.svg)](https://github.com/almartin82/laschooldata/actions/workflows/pkgdown.yaml)
 <!-- badges: end -->
 
 **[Documentation](https://almartin82.github.io/laschooldata/)** | **[Getting Started](https://almartin82.github.io/laschooldata/articles/quickstart.html)**
 
-Fetch and analyze Louisiana public school enrollment data from the Louisiana Department of Education (LDOE).
+Fetch and analyze Louisiana school enrollment data from the Louisiana Department of Education (LDOE) in R or Python.
 
 ## What can you find with laschooldata?
 
@@ -202,7 +203,9 @@ enr %>%
 remotes::install_github("almartin82/laschooldata")
 ```
 
-## Quick start
+## Quick Start
+
+### R
 
 ```r
 library(laschooldata)
@@ -228,6 +231,29 @@ enr_2025 %>%
   filter(is_state, grade_level == "TOTAL",
          subgroup %in% c("white", "black", "hispanic", "asian")) %>%
   select(subgroup, n_students, pct)
+```
+
+### Python
+
+```python
+import pylaschooldata as la
+
+# Fetch 2025 data (2024-25 school year)
+enr = la.fetch_enr(2025)
+
+# Statewide total
+total = enr[(enr['is_state']) & (enr['grade_level'] == 'TOTAL') &
+            (enr['subgroup'] == 'total_enrollment')]['n_students'].sum()
+print(f"{total:,} students")
+#> ~680,000 students
+
+# Get multiple years
+enr_multi = la.fetch_enr_multi([2020, 2021, 2022, 2023, 2024, 2025])
+
+# Check available years
+years = la.get_available_years()
+print(f"Data available: {years['min_year']}-{years['max_year']}")
+#> Data available: 2007-2025
 ```
 
 ## Data availability
