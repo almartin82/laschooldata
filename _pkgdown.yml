@@ -13,4 +13,3 @@ reference:
   contents:
   - fetch_enr
   - fetch_enr_multi
-  - get_available_years
