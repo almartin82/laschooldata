@@ -2,20 +2,35 @@
 # Utility Functions
 # ==============================================================================
 
-#' Pipe operator
-#'
-#' See \code{dplyr::\link[dplyr:reexports]{\%>\%}} for details.
-#'
-#' @name %>%
-#' @rdname pipe
-#' @keywords internal
-#' @export
-#' @importFrom dplyr %>%
-#' @usage lhs \%>\% rhs
-#' @param lhs A value or the magrittr placeholder.
-#' @param rhs A function call using the magrittr semantics.
-#' @return The result of calling `rhs(lhs)`.
+#' @importFrom rlang .data
 NULL
+
+
+#' Get available years for Louisiana enrollment data
+#'
+#' Returns the range of years for which enrollment data is available
+#' from the Louisiana Department of Education (LDOE).
+#'
+#' @return A list with:
+#'   \item{min_year}{First available year (2007)}
+#'   \item{max_year}{Last available year (2025)}
+#'   \item{description}{Description of data availability}
+#' @export
+#' @examples
+#' years <- get_available_years()
+#' print(years$min_year)
+#' print(years$max_year)
+get_available_years <- function() {
+  list(
+    min_year = 2007,
+    max_year = 2025,
+    description = paste(
+      "Louisiana enrollment data from LDOE Multi Stats files.",
+      "Available years: 2007-2025.",
+      "Data for 2006 and earlier uses a different format and is not supported."
+    )
+  )
+}
 
 
 #' Louisiana Parish Codes

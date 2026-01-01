@@ -3,4 +3,5 @@
 export("%>%")
 export(fetch_enr)
 export(fetch_enr_multi)
+export(get_available_years)
 importFrom(dplyr,"%>%")
