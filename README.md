@@ -33,6 +33,8 @@ enr %>%
   select(end_year, n_students)
 ```
 
+![Orleans Parish recovery](man/figures/orleans-recovery.png)
+
 ---
 
 ### 2. Louisiana's charter school revolution
@@ -50,6 +52,8 @@ enr_2025 %>%
   select(district_name, n_students)
 ```
 
+![Charter growth](man/figures/charter-growth.png)
+
 ---
 
 ### 3. The Baton Rouge boom
@@ -64,6 +68,8 @@ enr %>%
          district_name %in% c("East Baton Rouge Parish", "Orleans Parish")) %>%
   select(end_year, district_name, n_students)
 ```
+
+![Baton Rouge vs Orleans](man/figures/br-vs-orleans.png)
 
 ---
 
@@ -80,6 +86,8 @@ enr_2025 %>%
   arrange(desc(n_students))
 ```
 
+![Demographics](man/figures/demographics.png)
+
 ---
 
 ### 5. COVID hit kindergarten hardest
@@ -94,6 +102,8 @@ enr %>%
          grade_level %in% c("K", "01", "09", "12")) %>%
   select(end_year, grade_level, n_students)
 ```
+
+![COVID kindergarten](man/figures/covid-kindergarten.png)
 
 ---
 
@@ -119,6 +129,8 @@ d2015 %>%
   head(10)
 ```
 
+![Rural decline](man/figures/rural-decline.png)
+
 ---
 
 ### 7. Jefferson Parish: suburban stability
@@ -132,6 +144,8 @@ enr %>%
   select(end_year, n_students)
 ```
 
+![Jefferson stable](man/figures/jefferson-stable.png)
+
 ---
 
 ### 8. English learners on the rise
@@ -144,6 +158,8 @@ enr %>%
   mutate(pct = round(pct * 100, 1)) %>%
   select(end_year, n_students, pct)
 ```
+
+![EL growth](man/figures/el-growth.png)
 
 ---
 
@@ -160,6 +176,8 @@ enr_2025 %>%
   head(10)
 ```
 
+![Economic disadvantage](man/figures/econ-disadvantage.png)
+
 ---
 
 ### 10. The I-10/I-12 corridor drives growth
@@ -174,6 +192,8 @@ enr %>%
   mutate(index = n_students / first(n_students) * 100) %>%
   select(end_year, district_name, n_students, index)
 ```
+
+![I-10 corridor growth](man/figures/i10-growth.png)
 
 ---
 
