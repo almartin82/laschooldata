@@ -40,11 +40,9 @@
 #' }
 fetch_enr <- function(end_year, tidy = TRUE, use_cache = TRUE) {
 
-  # Validate year
-  # Multi Stats format available from 2007-2025
-  # Earlier years (2006 and before) use different formats
-  if (end_year < 2007 || end_year > 2025) {
-    stop("end_year must be between 2007 and 2025")
+  # Validate year - only 2019-2024 are confirmed working
+  if (end_year < 2019 || end_year > 2024) {
+    stop("end_year must be between 2019 and 2024 (confirmed available years)")
   }
 
   # Determine cache type based on tidy parameter
@@ -98,11 +96,11 @@ fetch_enr <- function(end_year, tidy = TRUE, use_cache = TRUE) {
 #' }
 fetch_enr_multi <- function(end_years, tidy = TRUE, use_cache = TRUE) {
 
-  # Validate years
-  invalid_years <- end_years[end_years < 2007 | end_years > 2025]
+  # Validate years - only 2019-2024 are confirmed working
+  invalid_years <- end_years[end_years < 2019 | end_years > 2024]
   if (length(invalid_years) > 0) {
     stop(paste("Invalid years:", paste(invalid_years, collapse = ", "),
-               "\nend_year must be between 2007 and 2025"))
+               "\nend_year must be between 2019 and 2024 (confirmed available years)"))
   }
 
   # Fetch each year

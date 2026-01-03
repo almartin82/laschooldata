@@ -10,9 +10,10 @@ get_raw_enr(end_year)
 \item{end_year}{School year end (2023-24 = 2024)}
 }
 \value{
-List with site and lea data frames
+List with site and lea data frames, with proper column names
 }
 \description{
 Downloads site and LEA enrollment data from LDOE's Multi Stats files.
+Properly handles the multi-row header structure.
 }
 \keyword{internal}

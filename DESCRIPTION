@@ -14,13 +14,11 @@ Depends:
 Imports:
     dplyr,
     readxl,
-    readr,
     purrr,
-    stringr,
-    tidyr,
     rlang,
     httr,
-    rappdirs
+    rappdirs,
+    janitor
 Suggests:
     testthat (>= 3.0.0),
     knitr,

@@ -1,0 +1,270 @@
+---
+title: "Getting Started with laschooldata"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Getting Started with laschooldata}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  eval = FALSE
+)
+```
+
+## Introduction
+
+The `laschooldata` package provides easy access to Louisiana K-12 public school enrollment data from the Louisiana Department of Education (LDOE). The data comes from the Multi Stats reports published each October.
+
+## Installation
+
+```{r installation}
+# Install from GitHub
+devtools::install_github("almartin82/laschooldata")
+```
+
+## Quick Start
+
+```{r setup}
+library(laschooldata)
+library(dplyr)
+
+# Check available years
+get_available_years()
+# Returns: min_year = 2019, max_year = 2024
+```
+
+## Fetching Enrollment Data
+
+### Single Year
+
+Use `fetch_enr()` to download enrollment data for a single school year:
+```{r single-year}
+# Get 2024 data (2023-24 school year)
+enr_2024 <- fetch_enr(2024)
+
+# By default, returns tidy (long) format
+head(enr_2024)
+```
+
+The tidy format includes:
+- `end_year`: School year end (e.g., 2024 = 2023-24)
+- `type`: "State", "District", or "Campus"
+- `district_id`: 3-digit parish code
+- `campus_id`: Site code (NA for state/district rows)
+- `district_name`: Parish name
+- `campus_name`: School name
+- `subgroup`: Demographic group (e.g., "total_enrollment", "white", "male")
+- `grade_level`: Grade level (e.g., "TOTAL", "K", "01")
+- `n_students`: Student count
+- `is_state`, `is_district`, `is_campus`: Aggregation level flags
+
+### Wide Format
+
+For wide format (one row per entity), use `tidy = FALSE`:
+```{r wide-format}
+enr_wide <- fetch_enr(2024, tidy = FALSE)
+
+# Wide format has columns for each subgroup
+names(enr_wide)
+# Includes: row_total, white, black, hispanic, asian, male, female, etc.
+```
+
+### Multiple Years
+
+Use `fetch_enr_multi()` for multiple years:
+```{r multi-year}
+enr_multi <- fetch_enr_multi(2022:2024)
+
+# Track state enrollment trends
+enr_multi |>
+  filter(is_state, subgroup == "total_enrollment", grade_level == "TOTAL") |>
+  select(end_year, n_students)
+```
+
+## Common Analysis Examples
+
+### State-Level Summary
+
+```{r state-summary}
+enr_2024 |>
+  filter(is_state, grade_level == "TOTAL") |>
+  select(subgroup, n_students) |>
+  arrange(desc(n_students))
+```
+
+### District Enrollment Ranking
+
+```{r district-ranking}
+enr_2024 |>
+  filter(is_district, subgroup == "total_enrollment", grade_level == "TOTAL") |>
+  arrange(desc(n_students)) |>
+  select(district_name, n_students) |>
+  head(10)
+```
+
+### Grade-Level Distribution
+
+```{r grade-distribution}
+enr_2024 |>
+  filter(is_state, subgroup == "total_enrollment", grade_level != "TOTAL") |>
+  select(grade_level, n_students) |>
+  arrange(grade_level)
+```
+
+### Racial Demographics by District
+
+```{r demographics}
+# Get racial demographics for top 5 districts
+top_districts <- enr_2024 |>
+  filter(is_district, subgroup == "total_enrollment", grade_level == "TOTAL") |>
+  arrange(desc(n_students)) |>
+  head(5) |>
+  pull(district_id)
+
+enr_2024 |>
+  filter(is_district, district_id %in% top_districts, grade_level == "TOTAL") |>
+  filter(subgroup %in% c("white", "black", "hispanic", "asian")) |>
+  tidyr::pivot_wider(
+    id_cols = district_name,
+    names_from = subgroup,
+    values_from = n_students
+  )
+```
+
+### Year-over-Year Comparison
+
+```{r yoy-comparison}
+enr_multi <- fetch_enr_multi(2019:2024)
+
+state_trends <- enr_multi |>
+  filter(is_state, subgroup == "total_enrollment", grade_level == "TOTAL") |>
+  select(end_year, n_students) |>
+  arrange(end_year) |>
+  mutate(
+    change = n_students - lag(n_students),
+    pct_change = change / lag(n_students) * 100
+  )
+
+state_trends
+```
+
+## Caching
+
+The package caches downloaded data locally to speed up repeated access:
+```{r caching}
+# View cache status
+cache_status()
+
+# Clear all cached data
+clear_cache()
+
+# Clear specific year
+clear_cache(2024)
+
+# Force fresh download (bypass cache)
+enr_fresh <- fetch_enr(2024, use_cache = FALSE)
+```
+
+## Data Structure Details
+
+### Parish Codes
+
+Louisiana uses 3-digit parish codes for district IDs:
+- 001 = Acadia Parish
+- 017 = East Baton Rouge Parish
+- 026 = Jefferson Parish
+- 000 = State total (included in LEA data)
+
+### School Types
+
+- State: Statewide totals
+- District: Parish/LEA-level data
+- Campus: Individual school data
+
+### Subgroups Available
+
+**Demographics (counts):**
+- total_enrollment, white, black, hispanic, asian
+- pacific_islander, native_american, multiracial, minority
+
+**Gender (calculated from percentages):**
+- male, female
+
+**Special Populations (calculated from percentages):**
+- lep (Limited English Proficiency)
+- fep (Fully English Proficient)
+- econ_disadv (Economically Disadvantaged)
+
+### Grade Levels
+
+- INF: Infants (Special Ed)
+- PS: Pre-School (Special Ed)
+- PK: Pre-K (Regular Ed)
+- K: Kindergarten
+- 01-12: Grades 1-12
+- T9: Transitional 9th grade
+- EXT: Extension Academy
+
+## Data Processing Notes
+
+### Gender and Percentage Data
+
+Gender, LEP, and Economic Disadvantage data are stored as percentages in the LDOE source files, not counts. The package converts these to counts using:
+
+```r
+count = round(total_enrollment * percentage / 100)
+```
+
+**Important**: The source data format varies by year:
+- **2024+**: Percentages stored as "48.8%" (with % sign)
+- **2019-2023**: Percentages stored as decimals like 0.488
+
+The package automatically detects and normalizes both formats to ensure consistent output across all years.
+
+### Validating Gender Data
+
+To verify gender data is being processed correctly:
+```{r validate-gender}
+enr <- fetch_enr(2024, tidy = FALSE)
+state <- enr[enr$type == "State", ]
+
+# These should be approximately equal
+state$row_total
+state$male + state$female
+
+# Percentages should be in 0-100 range
+state$pct_male  # ~51%
+state$pct_female  # ~49%
+```
+
+## Troubleshooting
+
+### Common Issues
+
+**"end_year must be between 2019 and 2024"**
+The package currently supports 2019-2024. Earlier years use different file formats.
+
+**Missing data for some districts**
+Some smaller districts or charter schools may have suppressed data for privacy.
+
+**Male/female values seem off**
+Gender data is stored as percentages in the source file. The package converts to counts using: `count = round(total * pct / 100)`. Ensure pct_male and pct_female are in the 40-60% range (not 0.40-0.60).
+
+### Getting Help
+
+```{r help}
+# View function documentation
+?fetch_enr
+?get_available_years
+?tidy_enr
+```
+
+## Session Info
+
+```{r session}
+sessionInfo()
+```

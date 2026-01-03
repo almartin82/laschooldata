@@ -16,6 +16,6 @@ Processed data frame with standardized columns
 }
 \description{
 Transforms raw Multi Stats data into a standardized schema combining site
-and LEA data.
+and LEA data. Converts percentage columns (gender, LEP) to counts.
 }
 \keyword{internal}

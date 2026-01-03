@@ -2,7 +2,7 @@
 % Please edit documentation in R/process_enrollment.R
 \name{safe_numeric}
 \alias{safe_numeric}
-\title{Convert to numeric, handling suppression markers}
+\title{Convert to numeric, handling suppression markers and percentages}
 \usage{
 safe_numeric(x)
 }
@@ -14,6 +14,6 @@ Numeric vector with NA for non-numeric values
 }
 \description{
 LDOE uses various markers for suppressed data (*, <5, -, etc.)
-and may use commas in large numbers.
+and may use commas in large numbers. Percentages have \% suffix.
 }
 \keyword{internal}
