@@ -80,11 +80,14 @@ ggplot(orleans, aes(x = end_year, y = n_students)) +
 
 ## 2. Louisiana's charter school revolution
 
-New Orleans became America's first all-charter city. Statewide, charter enrollment has grown dramatically.
+New Orleans became America's first all-charter city. The "Type 2 Charters" district tracks statewide charter enrollment.
 
 ```{r charter-growth}
+# Louisiana tracks charter schools under the "Type 2 Charters" LEA
 charter <- enr %>%
-  filter(is_charter, subgroup == "total_enrollment", grade_level == "TOTAL") %>%
+  filter(is_district,
+         grepl("Type 2 Charter", district_name, ignore.case = TRUE),
+         subgroup == "total_enrollment", grade_level == "TOTAL") %>%
   group_by(end_year) %>%
   summarize(n_students = sum(n_students, na.rm = TRUE), .groups = "drop")
 
@@ -92,7 +95,7 @@ ggplot(charter, aes(x = end_year, y = n_students)) +
   geom_line(linewidth = 1.5, color = colors["total"]) +
   geom_point(size = 3, color = colors["total"]) +
   scale_y_continuous(labels = comma) +
-  labs(title = "Louisiana Charter School Enrollment",
+  labs(title = "Louisiana Charter School Enrollment (Type 2)",
        subtitle = "New Orleans became America's first all-charter city",
        x = "School Year", y = "Students") +
   theme_readme()
