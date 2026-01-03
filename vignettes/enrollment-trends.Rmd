@@ -125,11 +125,18 @@ ggplot(br_orleans, aes(x = end_year, y = n_students, color = district_name)) +
 African American and Hispanic students together now comprise over 55% of enrollment.
 
 ```{r demographics}
+# Get total enrollment to calculate percentages
+state_totals <- enr %>%
+  filter(is_state, grade_level == "TOTAL", subgroup == "total_enrollment") %>%
+  select(end_year, total = n_students)
+
 demo <- enr %>%
   filter(is_state, grade_level == "TOTAL",
-         subgroup %in% c("white", "black", "hispanic", "asian"))
+         subgroup %in% c("white", "black", "hispanic", "asian")) %>%
+  left_join(state_totals, by = "end_year") %>%
+  mutate(pct = n_students / total * 100)
 
-ggplot(demo, aes(x = end_year, y = pct * 100, color = subgroup)) +
+ggplot(demo, aes(x = end_year, y = pct, color = subgroup)) +
   geom_line(linewidth = 1.2) +
   geom_point(size = 2.5) +
   scale_color_manual(values = colors,
@@ -213,9 +220,11 @@ EL students have grown from 3% to over 5% of enrollment, concentrated in certain
 
 ```{r el-growth}
 el <- enr %>%
-  filter(is_state, subgroup == "lep", grade_level == "TOTAL")
+  filter(is_state, subgroup == "lep", grade_level == "TOTAL") %>%
+  left_join(state_totals, by = "end_year") %>%
+  mutate(pct = n_students / total * 100)
 
-ggplot(el, aes(x = end_year, y = pct * 100)) +
+ggplot(el, aes(x = end_year, y = pct)) +
   geom_line(linewidth = 1.5, color = colors["total"]) +
   geom_point(size = 3, color = colors["total"]) +
   labs(title = "English Learners on the Rise",
@@ -229,13 +238,20 @@ ggplot(el, aes(x = end_year, y = pct * 100)) +
 Delta parishes like Madison, Tensas, and East Carroll have over 90% economically disadvantaged students.
 
 ```{r econ-disadvantage}
+# Get district totals for current year to calculate percentages
+district_totals <- enr_current %>%
+  filter(is_district, subgroup == "total_enrollment", grade_level == "TOTAL") %>%
+  select(district_name, total = n_students)
+
 econ <- enr_current %>%
   filter(is_district, subgroup == "econ_disadv", grade_level == "TOTAL") %>%
+  left_join(district_totals, by = "district_name") %>%
+  mutate(pct = n_students / total * 100) %>%
   arrange(desc(pct)) %>%
   head(10) %>%
   mutate(district_label = reorder(district_name, pct))
 
-ggplot(econ, aes(x = district_label, y = pct * 100)) +
+ggplot(econ, aes(x = district_label, y = pct)) +
   geom_col(fill = colors["total"]) +
   coord_flip() +
   labs(title = "Highest Poverty Parishes",
