@@ -31,6 +31,10 @@ enr %>%
   select(end_year, n_students)
 ```
 
+![Orleans Parish recovery](reference/figures/orleans-recovery.png)
+
+Orleans Parish recovery
+
 ------------------------------------------------------------------------
 
 ### 2. Louisiana’s charter school revolution
@@ -49,6 +53,10 @@ enr_2025 %>%
   select(district_name, n_students)
 ```
 
+![Charter growth](reference/figures/charter-growth.png)
+
+Charter growth
+
 ------------------------------------------------------------------------
 
 ### 3. The Baton Rouge boom
@@ -64,6 +72,10 @@ enr %>%
          district_name %in% c("East Baton Rouge Parish", "Orleans Parish")) %>%
   select(end_year, district_name, n_students)
 ```
+
+![Baton Rouge vs Orleans](reference/figures/br-vs-orleans.png)
+
+Baton Rouge vs Orleans
 
 ------------------------------------------------------------------------
 
@@ -81,6 +93,10 @@ enr_2025 %>%
   arrange(desc(n_students))
 ```
 
+![Demographics](reference/figures/demographics.png)
+
+Demographics
+
 ------------------------------------------------------------------------
 
 ### 5. COVID hit kindergarten hardest
@@ -96,6 +112,10 @@ enr %>%
          grade_level %in% c("K", "01", "09", "12")) %>%
   select(end_year, grade_level, n_students)
 ```
+
+![COVID kindergarten](reference/figures/covid-kindergarten.png)
+
+COVID kindergarten
 
 ------------------------------------------------------------------------
 
@@ -122,6 +142,10 @@ d2015 %>%
   head(10)
 ```
 
+![Rural decline](reference/figures/rural-decline.png)
+
+Rural decline
+
 ------------------------------------------------------------------------
 
 ### 7. Jefferson Parish: suburban stability
@@ -136,6 +160,10 @@ enr %>%
   select(end_year, n_students)
 ```
 
+![Jefferson stable](reference/figures/jefferson-stable.png)
+
+Jefferson stable
+
 ------------------------------------------------------------------------
 
 ### 8. English learners on the rise
@@ -149,6 +177,10 @@ enr %>%
   mutate(pct = round(pct * 100, 1)) %>%
   select(end_year, n_students, pct)
 ```
+
+![EL growth](reference/figures/el-growth.png)
+
+EL growth
 
 ------------------------------------------------------------------------
 
@@ -166,6 +198,10 @@ enr_2025 %>%
   head(10)
 ```
 
+![Economic disadvantage](reference/figures/econ-disadvantage.png)
+
+Economic disadvantage
+
 ------------------------------------------------------------------------
 
 ### 10. The I-10/I-12 corridor drives growth
@@ -181,6 +217,10 @@ enr %>%
   mutate(index = n_students / first(n_students) * 100) %>%
   select(end_year, district_name, n_students, index)
 ```
+
+![I-10 corridor growth](reference/figures/i10-growth.png)
+
+I-10 corridor growth
 
 ------------------------------------------------------------------------
 
