@@ -13,7 +13,7 @@ NULL
 #'
 #' @return A list with:
 #'   \item{min_year}{First available year (2007)}
-#'   \item{max_year}{Last available year (2025)}
+#'   \item{max_year}{Last available year (2024)}
 #'   \item{description}{Description of data availability}
 #' @export
 #' @examples
@@ -23,10 +23,10 @@ NULL
 get_available_years <- function() {
   list(
     min_year = 2007,
-    max_year = 2025,
+    max_year = 2024,
     description = paste(
       "Louisiana enrollment data from LDOE Multi Stats files.",
-      "Available years: 2007-2025.",
+      "Available years: 2007-2024.",
       "Data for 2006 and earlier uses a different format and is not supported."
     )
   )
