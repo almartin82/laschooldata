@@ -52,10 +52,9 @@ if (is.list(years)) {
   min_year <- min(years)
 }
 
-# Fetch data
-enr <- fetch_enr_multi((max_year - 9):max_year)
-key_years <- seq(max(min_year, 2007), max_year, by = 5)
-if (!max_year %in% key_years) key_years <- c(key_years, max_year)
+# Fetch data - use only available years
+enr <- fetch_enr_multi(min_year:max_year)
+key_years <- c(min_year, max_year)
 enr_long <- fetch_enr_multi(key_years)
 enr_current <- fetch_enr(max_year)
 ```
