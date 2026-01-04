@@ -1,7 +1,7 @@
 # Process raw LDOE enrollment data
 
 Transforms raw Multi Stats data into a standardized schema combining
-site and LEA data.
+site and LEA data. Converts percentage columns (gender, LEP) to counts.
 
 ## Usage
 

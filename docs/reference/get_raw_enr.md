@@ -1,6 +1,7 @@
 # Download raw enrollment data from LDOE
 
 Downloads site and LEA enrollment data from LDOE's Multi Stats files.
+Properly handles the multi-row header structure.
 
 ## Usage
 
@@ -16,4 +17,4 @@ get_raw_enr(end_year)
 
 ## Value
 
-List with site and lea data frames
+List with site and lea data frames, with proper column names

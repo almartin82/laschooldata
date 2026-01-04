@@ -48,7 +48,7 @@ enr_wide <- fetch_enr(2024, tidy = FALSE)
 enr_fresh <- fetch_enr(2024, use_cache = FALSE)
 
 # Filter to specific parish
-orleans <- enr_2024 %>%
+orleans <- enr_2024 |>
   dplyr::filter(district_id == "036")
 } # }
 ```
