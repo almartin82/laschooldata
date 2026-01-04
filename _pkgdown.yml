@@ -17,3 +17,12 @@ reference:
   contents:
   - fetch_enr
   - fetch_enr_multi
+  - get_available_years
+- title: Data Transformation
+  contents:
+  - tidy_enr
+  - id_enr_aggs
+- title: Cache Management
+  contents:
+  - cache_status
+  - clear_cache
