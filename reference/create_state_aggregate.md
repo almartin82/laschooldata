@@ -1,6 +1,7 @@
 # Create state-level aggregate from LEA data
 
-Create state-level aggregate from LEA data
+Sums all LEA rows to create a state total. EXCLUDES the state row from
+LEA data if present (district_id == "000").
 
 ## Usage
 

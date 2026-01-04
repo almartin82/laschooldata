@@ -15,7 +15,12 @@
     </button>
 
     <div id="navbar" class="collapse navbar-collapse ms-3">
-      <ul class="navbar-nav me-auto"><li class="nav-item"><a class="nav-link" href="reference/index.html">Reference</a></li>
+      <ul class="navbar-nav me-auto"><li class="nav-item"><a class="nav-link" href="articles/laschooldata.html">Get started</a></li>
+<li class="nav-item"><a class="nav-link" href="reference/index.html">Reference</a></li>
+<li class="nav-item dropdown">
+  <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
+  <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><a class="dropdown-item" href="articles/enrollment-trends.html">Louisiana Enrollment Trends</a></li>
+  </ul></li>
       </ul><ul class="navbar-nav"><li class="nav-item"><form class="form-inline" role="search">
  <input class="form-control" type="search" name="search-input" id="search-input" autocomplete="off" aria-label="Search site" placeholder="Search for" data-search-index="search.json"></form></li>
 <li class="nav-item"><a class="external-link nav-link" href="https://github.com/almartin82/laschooldata/" aria-label="GitHub"><span class="fa fab fa-github fa-lg"></span></a></li>
@@ -31,6 +36,11 @@
       <small class="dont-index">Source: <a href="https://github.com/almartin82/laschooldata/blob/main/CLAUDE.md" class="external-link"><code>CLAUDE.md</code></a></small>
     </div>
 
+
+<div class="section level2">
+<h2 id="critical-data-source-rules">CRITICAL DATA SOURCE RULES<a class="anchor" aria-label="anchor" href="#critical-data-source-rules"></a></h2>
+<p><strong>NEVER use Urban Institute API, NCES CCD, or ANY federal data source</strong> — the entire point of these packages is to provide STATE-LEVEL data directly from state DOEs. Federal sources aggregate/transform data differently and lose state-specific details. If a state DOE source is broken, FIX IT or find an alternative STATE source — do not fall back to federal data.</p>
+<hr></div>
 <div id="claude-code-instructions" class="section level1">
 
 <div class="section level2">
@@ -39,10 +49,239 @@
 <li>NEVER reference Claude, Claude Code, or AI assistance in PR descriptions</li>
 <li>NEVER add Co-Authored-By lines mentioning Claude or Anthropic</li>
 <li>Keep commit messages focused on what changed, not how it was written</li>
+</ul><hr></div>
+<div class="section level2">
+<h2 id="local-testing-before-prs-required">Local Testing Before PRs (REQUIRED)<a class="anchor" aria-label="anchor" href="#local-testing-before-prs-required"></a></h2>
+<p><strong>PRs will not be merged until CI passes.</strong> Run these checks locally BEFORE opening a PR:</p>
+<div class="section level3">
+<h3 id="ci-checks-that-must-pass">CI Checks That Must Pass<a class="anchor" aria-label="anchor" href="#ci-checks-that-must-pass"></a></h3>
+<table class="table"><colgroup><col width="18%"><col width="40%"><col width="40%"></colgroup><thead><tr class="header"><th>Check</th>
+<th>Local Command</th>
+<th>What It Tests</th>
+</tr></thead><tbody><tr class="odd"><td>R-CMD-check</td>
+<td><code>devtools::check()</code></td>
+<td>Package builds, tests pass, no errors/warnings</td>
+</tr><tr class="even"><td>Python tests</td>
+<td><code>pytest tests/test_pylaschooldata.py -v</code></td>
+<td>Python wrapper works correctly</td>
+</tr><tr class="odd"><td>pkgdown</td>
+<td><code><a href="https://pkgdown.r-lib.org/reference/build_site.html" class="external-link">pkgdown::build_site()</a></code></td>
+<td>Documentation and vignettes render</td>
+</tr></tbody></table></div>
+<div class="section level3">
+<h3 id="quick-commands">Quick Commands<a class="anchor" aria-label="anchor" href="#quick-commands"></a></h3>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># R package check (required)</span></span>
+<span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">check</span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Python tests (required)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/system.html" class="external-link">system</a></span><span class="op">(</span><span class="st">"pip install -e ./pylaschooldata &amp;&amp; pytest tests/test_pylaschooldata.py -v"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># pkgdown build (required)</span></span>
+<span><span class="fu">pkgdown</span><span class="fu">::</span><span class="fu"><a href="https://pkgdown.r-lib.org/reference/build_site.html" class="external-link">build_site</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+</div>
+<div class="section level3">
+<h3 id="pre-pr-checklist">Pre-PR Checklist<a class="anchor" aria-label="anchor" href="#pre-pr-checklist"></a></h3>
+<p>Before opening a PR, verify: - [ ] <code>devtools::check()</code> — 0 errors, 0 warnings - [ ] <code>pytest tests/test_pylaschooldata.py</code> — all tests pass - [ ] <code><a href="https://pkgdown.r-lib.org/reference/build_site.html" class="external-link">pkgdown::build_site()</a></code> — builds without errors - [ ] Vignettes render (no <code>eval=FALSE</code> hacks)</p>
+<hr></div>
+</div>
+</div>
+<div class="section level1">
+<h1 id="laschooldata-package-documentation">laschooldata Package Documentation<a class="anchor" aria-label="anchor" href="#laschooldata-package-documentation"></a></h1>
+<div class="section level2">
+<h2 id="overview">Overview<a class="anchor" aria-label="anchor" href="#overview"></a></h2>
+<p><code>laschooldata</code> is an R package for downloading and processing K-12 public school enrollment data from the Louisiana Department of Education (LDOE). The package provides clean, tidy data suitable for analysis.</p>
+</div>
+<div class="section level2">
+<h2 id="data-source">Data Source<a class="anchor" aria-label="anchor" href="#data-source"></a></h2>
+<p><strong>Primary Source</strong>: Louisiana Department of Education Multi Stats Files - URL Pattern: <code>https://www.louisianabelieves.com/docs/default-source/data-management/oct-{YEAR}-multi-stats-(total-by-site-and-school-system).xlsx</code> - Snapshot Date: October 1st of each school year - Data Center: <a href="https://doe.louisiana.gov/data-and-reports/enrollment-data" class="external-link uri">https://doe.louisiana.gov/data-and-reports/enrollment-data</a></p>
+</div>
+<div class="section level2">
+<h2 id="available-years">Available Years<a class="anchor" aria-label="anchor" href="#available-years"></a></h2>
+<p><strong>Confirmed Working</strong>: 2019-2024 (6 years) - Earlier years (2007-2018) may exist but use different URL patterns and file structures</p>
+</div>
+<div class="section level2">
+<h2 id="available-subgroups">Available Subgroups<a class="anchor" aria-label="anchor" href="#available-subgroups"></a></h2>
+<div class="section level3">
+<h3 id="demographic-groups-stored-as-counts-in-raw-data">Demographic Groups (stored as COUNTS in raw data)<a class="anchor" aria-label="anchor" href="#demographic-groups-stored-as-counts-in-raw-data"></a></h3>
+<ul><li>White</li>
+<li>Black</li>
+<li>Hispanic</li>
+<li>Asian</li>
+<li>Hawaiian/Pacific Islander</li>
+<li>American Indian/Native American</li>
+<li>Multiple Races (Non-Hispanic)</li>
+<li>Minority (aggregate)</li>
+</ul></div>
+<div class="section level3">
+<h3 id="gender-stored-as-percentages-in-raw-data---converted-to-counts">Gender (stored as PERCENTAGES in raw data - converted to counts)<a class="anchor" aria-label="anchor" href="#gender-stored-as-percentages-in-raw-data---converted-to-counts"></a></h3>
+<ul><li>Male (% Male -&gt; count via total * pct/100)</li>
+<li>Female (% Female -&gt; count via total * pct/100)</li>
+</ul></div>
+<div class="section level3">
+<h3 id="special-populations-stored-as-percentages-in-raw-data---converted-to-counts">Special Populations (stored as PERCENTAGES in raw data - converted to counts)<a class="anchor" aria-label="anchor" href="#special-populations-stored-as-percentages-in-raw-data---converted-to-counts"></a></h3>
+<ul><li>Limited English Proficiency (LEP)</li>
+<li>Fully English Proficient (FEP)</li>
+<li>Economically Disadvantaged</li>
+</ul></div>
+<div class="section level3">
+<h3 id="grade-levels">Grade Levels<a class="anchor" aria-label="anchor" href="#grade-levels"></a></h3>
+<ul><li>Infants (Sp Ed)</li>
+<li>Pre-School (Sp Ed)</li>
+<li>Pre-K (Reg Ed)</li>
+<li>Kindergarten</li>
+<li>Grades 1-12</li>
+<li>Grade T9 (transitional 9th grade)</li>
+<li>Extension Academy</li>
 </ul></div>
 </div>
+<div class="section level2">
+<h2 id="critical-data-fidelity-requirement">CRITICAL: Data Fidelity Requirement<a class="anchor" aria-label="anchor" href="#critical-data-fidelity-requirement"></a></h2>
+<p><strong>The tidy=TRUE version MUST maintain fidelity to the raw, unprocessed source file.</strong></p>
+<p>When processing data: 1. Race/ethnicity counts must exactly match the raw file 2. Gender counts are calculated from percentages: <code>count = round(total * pct / 100)</code> 3. Special population counts are calculated from percentages similarly 4. Grade-level counts must exactly match the raw file</p>
+</div>
+<div class="section level2">
+<h2 id="key-data-quirks">Key Data Quirks<a class="anchor" aria-label="anchor" href="#key-data-quirks"></a></h2>
+<div class="section level3">
+<h3 id="gender-is-stored-as-percentages-critical">Gender is Stored as Percentages (CRITICAL)<a class="anchor" aria-label="anchor" href="#gender-is-stored-as-percentages-critical"></a></h3>
+<p>The raw LDOE data stores gender as “% Male” and “% Female”, NOT as counts. The package converts these to counts using total enrollment.</p>
+<p><strong>IMPORTANT: Percentage format varies by year!</strong> - <strong>2024+</strong>: Stored as “48.8%” (with % sign, already in percentage form) - <strong>2019-2023</strong>: Stored as 0.48846847… (decimal format, needs *100)</p>
+<p>The <code><a href="reference/safe_percentage.html">safe_percentage()</a></code> function automatically detects and normalizes both formats: 1. Checks if any values have a “%” sign 2. If no % sign found and values are &lt;=1, multiplies by 100 3. Returns percentages in 0-100 range for all years</p>
+<p>This was a CRITICAL BUG that caused “0 male” values for 2019-2023 when decimals were incorrectly used as percentages.</p>
+</div>
+<div class="section level3">
+<h3 id="no-traditional-orleans-parish-district">No Traditional Orleans Parish District<a class="anchor" aria-label="anchor" href="#no-traditional-orleans-parish-district"></a></h3>
+<p>Post-Hurricane Katrina, Orleans Parish public schools were reorganized. Most are now under the Recovery School District or charter operators. District code “036” is NOT the main Orleans Parish school system.</p>
+</div>
+<div class="section level3">
+<h3 id="district-id-000-is-state-total">District ID “000” is State Total<a class="anchor" aria-label="anchor" href="#district-id-000-is-state-total"></a></h3>
+<p>The LEA sheet includes a state-wide total row with district_id = “000” and name “State of Louisiana”.</p>
+</div>
+<div class="section level3">
+<h3 id="excel-file-structure">Excel File Structure<a class="anchor" aria-label="anchor" href="#excel-file-structure"></a></h3>
+<p>The Multi Stats Excel files have a complex header structure: - Row 1: Title - Row 2: FERPA disclaimer - Row 3: Category headers (e.g., “Students by Gender”) - Row 4: Column sub-headers (e.g., “% Female”, “% Male”) - Row 5: Blank - Row 6+: Data</p>
+</div>
+</div>
+<div class="section level2">
+<h2 id="package-functions">Package Functions<a class="anchor" aria-label="anchor" href="#package-functions"></a></h2>
+<div class="section level3">
+<h3 id="primary-functions">Primary Functions<a class="anchor" aria-label="anchor" href="#primary-functions"></a></h3>
+<ul><li>
+<code>fetch_enr(end_year, tidy = TRUE, use_cache = TRUE)</code> - Fetch single year</li>
+<li>
+<code>fetch_enr_multi(end_years, tidy = TRUE, use_cache = TRUE)</code> - Fetch multiple years</li>
+<li>
+<code><a href="reference/get_available_years.html">get_available_years()</a></code> - Get available year range</li>
+</ul></div>
+<div class="section level3">
+<h3 id="data-transformation">Data Transformation<a class="anchor" aria-label="anchor" href="#data-transformation"></a></h3>
+<ul><li>
+<code>tidy_enr(df)</code> - Transform wide data to tidy/long format</li>
+<li>
+<code>id_enr_aggs(df)</code> - Add is_state, is_district, is_campus flags</li>
+<li>
+<code>enr_grade_aggs(df)</code> - Add grade band aggregations (ELEM, MIDDLE, HIGH)</li>
+</ul></div>
+<div class="section level3">
+<h3 id="cache-management">Cache Management<a class="anchor" aria-label="anchor" href="#cache-management"></a></h3>
+<ul><li>
+<code><a href="reference/cache_status.html">cache_status()</a></code> - View cached data status</li>
+<li>
+<code><a href="reference/clear_cache.html">clear_cache()</a></code> - Clear cached data</li>
+</ul></div>
+</div>
+<div class="section level2">
+<h2 id="usage-examples">Usage Examples<a class="anchor" aria-label="anchor" href="#usage-examples"></a></h2>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://almartin82.github.io/laschooldata/">laschooldata</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Get 2024 enrollment data (2023-24 school year)</span></span>
+<span><span class="va">enr_2024</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/fetch_enr.html">fetch_enr</a></span><span class="op">(</span><span class="fl">2024</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># State-level totals</span></span>
+<span><span class="va">state</span> <span class="op">&lt;-</span> <span class="va">enr_2024</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">is_state</span>, <span class="va">grade_level</span> <span class="op">==</span> <span class="st">"TOTAL"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Get multiple years</span></span>
+<span><span class="va">enr_multi</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/fetch_enr_multi.html">fetch_enr_multi</a></span><span class="op">(</span><span class="fl">2019</span><span class="op">:</span><span class="fl">2024</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Track enrollment trends</span></span>
+<span><span class="va">trends</span> <span class="op">&lt;-</span> <span class="va">enr_multi</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">is_state</span>, <span class="va">subgroup</span> <span class="op">==</span> <span class="st">"total_enrollment"</span>, <span class="va">grade_level</span> <span class="op">==</span> <span class="st">"TOTAL"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">end_year</span>, <span class="va">n_students</span><span class="op">)</span></span></code></pre></div>
+</div>
+<div class="section level2">
+<h2 id="test-coverage">Test Coverage<a class="anchor" aria-label="anchor" href="#test-coverage"></a></h2>
+<p>Tests verify: 1. All available years (2019-2024) work correctly 2. Male/female enrollment is NOT ZERO (critical bug fix) 3. Race/ethnicity counts match raw file values 4. Gender percentages and calculated counts are correct 5. Grade-level data is properly parsed 6. Aggregation flags work correctly 7. Multi-year fetching works 8. Cache functions work</p>
+</div>
+<div class="section level2">
+<h2 id="known-limitations">Known Limitations<a class="anchor" aria-label="anchor" href="#known-limitations"></a></h2>
+<ol style="list-style-type: decimal"><li>Only 2019-2024 are confirmed working (earlier years may have different formats)</li>
+<li>Gender and special population counts are derived from percentages (may have rounding differences)</li>
+<li>Orleans Parish data is fragmented across multiple entities post-Katrina</li>
+<li>Extension Academy enrollment may not be available for all years/districts</li>
+</ol><hr></div>
+<div class="section level2">
+<h2 id="live-pipeline-testing">LIVE Pipeline Testing<a class="anchor" aria-label="anchor" href="#live-pipeline-testing"></a></h2>
+<p>This package includes <code>tests/testthat/test-pipeline-live.R</code> with LIVE network tests.</p>
+<div class="section level3">
+<h3 id="test-categories">Test Categories:<a class="anchor" aria-label="anchor" href="#test-categories"></a></h3>
+<ol style="list-style-type: decimal"><li>URL Availability - HTTP 200 checks</li>
+<li>File Download - Verify actual file (not HTML error)</li>
+<li>File Parsing - readxl/readr succeeds</li>
+<li>Column Structure - Expected columns exist</li>
+<li>get_raw_enr() - Raw data function works</li>
+<li>Data Quality - No Inf/NaN, non-negative counts</li>
+<li>Aggregation - State total &gt; 0</li>
+<li>Output Fidelity - tidy=TRUE matches raw</li>
+</ol></div>
+<div class="section level3">
+<h3 id="running-tests">Running Tests:<a class="anchor" aria-label="anchor" href="#running-tests"></a></h3>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">test</span><span class="op">(</span>filter <span class="op">=</span> <span class="st">"pipeline-live"</span><span class="op">)</span></span></code></pre></div>
+<p>See <code>state-schooldata/CLAUDE.md</code> for complete testing framework documentation.</p>
+<hr></div>
+</div>
+<div class="section level2">
+<h2 id="git-workflow-required">Git Workflow (REQUIRED)<a class="anchor" aria-label="anchor" href="#git-workflow-required"></a></h2>
+<div class="section level3">
+<h3 id="feature-branch--pr--auto-merge-policy">Feature Branch + PR + Auto-Merge Policy<a class="anchor" aria-label="anchor" href="#feature-branch--pr--auto-merge-policy"></a></h3>
+<p><strong>NEVER push directly to main.</strong> All changes must go through PRs with auto-merge:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="co"># 1. Create feature branch</span></span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a><span class="fu">git</span> checkout <span class="at">-b</span> fix/description-of-change</span>
+<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a><span class="co"># 2. Make changes, commit</span></span>
+<span id="cb4-5"><a href="#cb4-5" tabindex="-1"></a><span class="fu">git</span> add <span class="at">-A</span></span>
+<span id="cb4-6"><a href="#cb4-6" tabindex="-1"></a><span class="fu">git</span> commit <span class="at">-m</span> <span class="st">"Fix: description of change"</span></span>
+<span id="cb4-7"><a href="#cb4-7" tabindex="-1"></a></span>
+<span id="cb4-8"><a href="#cb4-8" tabindex="-1"></a><span class="co"># 3. Push and create PR with auto-merge</span></span>
+<span id="cb4-9"><a href="#cb4-9" tabindex="-1"></a><span class="fu">git</span> push <span class="at">-u</span> origin fix/description-of-change</span>
+<span id="cb4-10"><a href="#cb4-10" tabindex="-1"></a><span class="ex">gh</span> pr create <span class="at">--title</span> <span class="st">"Fix: description"</span> <span class="at">--body</span> <span class="st">"Description of changes"</span></span>
+<span id="cb4-11"><a href="#cb4-11" tabindex="-1"></a><span class="ex">gh</span> pr merge <span class="at">--auto</span> <span class="at">--squash</span></span>
+<span id="cb4-12"><a href="#cb4-12" tabindex="-1"></a></span>
+<span id="cb4-13"><a href="#cb4-13" tabindex="-1"></a><span class="co"># 4. Clean up stale branches after PR merges</span></span>
+<span id="cb4-14"><a href="#cb4-14" tabindex="-1"></a><span class="fu">git</span> checkout main <span class="kw">&amp;&amp;</span> <span class="fu">git</span> pull <span class="kw">&amp;&amp;</span> <span class="fu">git</span> fetch <span class="at">--prune</span> origin</span></code></pre></div>
+</div>
+<div class="section level3">
+<h3 id="branch-cleanup-required">Branch Cleanup (REQUIRED)<a class="anchor" aria-label="anchor" href="#branch-cleanup-required"></a></h3>
+<p><strong>Clean up stale branches every time you touch this package:</strong></p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="co"># Delete local branches merged to main</span></span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a><span class="fu">git</span> branch <span class="at">--merged</span> main <span class="kw">|</span> <span class="fu">grep</span> <span class="at">-v</span> main <span class="kw">|</span> <span class="fu">xargs</span> <span class="at">-r</span> git branch <span class="at">-d</span></span>
+<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a><span class="co"># Prune remote tracking branches</span></span>
+<span id="cb5-5"><a href="#cb5-5" tabindex="-1"></a><span class="fu">git</span> fetch <span class="at">--prune</span> origin</span></code></pre></div>
+</div>
+<div class="section level3">
+<h3 id="auto-merge-requirements">Auto-Merge Requirements<a class="anchor" aria-label="anchor" href="#auto-merge-requirements"></a></h3>
+<p>PRs auto-merge when ALL CI checks pass: - R-CMD-check (0 errors, 0 warnings) - Python tests (if py{st}schooldata exists) - pkgdown build (vignettes must render)</p>
+<p>If CI fails, fix the issue and push - auto-merge triggers when checks pass.</p>
+</div>
+</div>
+</div>
 
-  </main></div>
+
+  </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
+    </nav></aside></div>
 
 
     <footer><div class="pkgdown-footer-left">

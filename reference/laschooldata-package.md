@@ -14,25 +14,25 @@ Multi Stats reports and transforming it into tidy format for analysis.
 
   Fetch enrollment data for multiple years
 
-- `tidy_enr`:
+- [`tidy_enr`](https://almartin82.github.io/laschooldata/reference/tidy_enr.md):
 
   Transform wide data to tidy (long) format
 
-- `id_enr_aggs`:
+- [`id_enr_aggs`](https://almartin82.github.io/laschooldata/reference/id_enr_aggs.md):
 
   Add aggregation level flags
 
-- `enr_grade_aggs`:
+- [`enr_grade_aggs`](https://almartin82.github.io/laschooldata/reference/enr_grade_aggs.md):
 
   Create grade-level aggregations
 
 ## Cache functions
 
-- `cache_status`:
+- [`cache_status`](https://almartin82.github.io/laschooldata/reference/cache_status.md):
 
   View cached data files
 
-- `clear_cache`:
+- [`clear_cache`](https://almartin82.github.io/laschooldata/reference/clear_cache.md):
 
   Remove cached data files
 
