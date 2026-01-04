@@ -12,3 +12,5 @@
 ^CLAUDE\.md$
 ^PRD\.md$
 ^py.*schooldata$
+^generate_readme_figs\.R$
+^vignettes/.*_cache$

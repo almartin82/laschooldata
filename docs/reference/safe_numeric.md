@@ -1,7 +1,7 @@
-# Convert to numeric, handling suppression markers
+# Convert to numeric, handling suppression markers and percentages
 
 LDOE uses various markers for suppressed data (\*, \<5, -, etc.) and may
-use commas in large numbers.
+use commas in large numbers. Percentages have % suffix.
 
 ## Usage
 
