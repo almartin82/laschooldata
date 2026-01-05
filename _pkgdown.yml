@@ -17,7 +17,9 @@ reference:
   contents:
   - fetch_enr
   - fetch_enr_multi
+  - fetch_directory
   - get_available_years
+  - get_directory_available_years
 - title: Data Transformation
   contents:
   - tidy_enr
