@@ -34,10 +34,11 @@ if (is.list(years)) {
 }
 
 # Fetch data - use only available years
-enr <- fetch_enr_multi(min_year:max_year)
-key_years <- c(min_year, max_year)
+# NOTE: Using 2019-2024 range for stability
+enr <- fetch_enr_multi(2019:2024)
+key_years <- c(2019, 2024)
 enr_long <- fetch_enr_multi(key_years)
-enr_current <- fetch_enr(max_year)
+enr_current <- fetch_enr(2024)
 ```
 
 ## 1. Hurricane Katrina’s lasting mark on New Orleans
@@ -290,3 +291,122 @@ ggplot(i10_trend, aes(x = end_year, y = n_students, color = district_name)) +
 ```
 
 ![](enrollment-trends_files/figure-html/i10-growth-1.png)
+
+## 11. Gender balance across Louisiana
+
+Louisiana’s public schools enroll slightly more male than female
+students statewide, a pattern consistent with national trends.
+
+``` r
+gender <- enr %>%
+  filter(is_state, grade_level == "TOTAL",
+         subgroup %in% c("male", "female")) %>%
+  left_join(state_totals, by = "end_year") %>%
+  mutate(pct = n_students / total * 100)
+
+ggplot(gender, aes(x = end_year, y = pct, color = subgroup)) +
+  geom_line(linewidth = 1.2) +
+  geom_point(size = 2.5) +
+  scale_color_manual(values = c("male" = "#3498DB", "female" = "#E74C3C"),
+                     labels = c("Female", "Male")) +
+  scale_y_continuous(limits = c(45, 55)) +
+  labs(title = "Gender Balance in Louisiana Schools",
+       subtitle = "Slightly more male than female students statewide",
+       x = "School Year", y = "Percent of Students", color = "") +
+  theme_readme()
+```
+
+![](enrollment-trends_files/figure-html/gender-balance-1.png)
+
+## 12. Pre-K expansion across Louisiana
+
+Louisiana has invested heavily in early childhood education, expanding
+Pre-K access across the state.
+
+``` r
+prek <- enr %>%
+  filter(is_state, subgroup == "total_enrollment", grade_level == "PK")
+
+ggplot(prek, aes(x = end_year, y = n_students)) +
+  geom_line(linewidth = 1.5, color = colors["total"]) +
+  geom_point(size = 3, color = colors["total"]) +
+  scale_y_continuous(labels = comma) +
+  labs(title = "Pre-K Enrollment in Louisiana",
+       subtitle = "State investment in early childhood education",
+       x = "School Year", y = "Students") +
+  theme_readme()
+```
+
+![](enrollment-trends_files/figure-html/prek-expansion-1.png)
+
+## 13. Caddo Parish anchors the northwest
+
+Caddo Parish (Shreveport) is Louisiana’s largest district outside the
+southeast metro areas, serving the northwest region.
+
+``` r
+caddo <- enr %>%
+  filter(is_district, district_name == "Caddo Parish",
+         subgroup == "total_enrollment", grade_level == "TOTAL")
+
+ggplot(caddo, aes(x = end_year, y = n_students)) +
+  geom_line(linewidth = 1.5, color = colors["total"]) +
+  geom_point(size = 3, color = colors["total"]) +
+  scale_y_continuous(labels = comma, limits = c(0, NA)) +
+  labs(title = "Caddo Parish (Shreveport)",
+       subtitle = "Northwest Louisiana's educational anchor",
+       x = "School Year", y = "Students") +
+  theme_readme()
+```
+
+![](enrollment-trends_files/figure-html/caddo-anchor-1.png)
+
+## 14. The Lake Charles petrochemical corridor
+
+Calcasieu Parish (Lake Charles) serves the petrochemical corridor of
+southwest Louisiana.
+
+``` r
+calcasieu <- enr %>%
+  filter(is_district, district_name == "Calcasieu Parish",
+         subgroup == "total_enrollment", grade_level == "TOTAL")
+
+ggplot(calcasieu, aes(x = end_year, y = n_students)) +
+  geom_line(linewidth = 1.5, color = colors["total"]) +
+  geom_point(size = 3, color = colors["total"]) +
+  scale_y_continuous(labels = comma, limits = c(0, NA)) +
+  labs(title = "Calcasieu Parish (Lake Charles)",
+       subtitle = "Southwest Louisiana's petrochemical corridor",
+       x = "School Year", y = "Students") +
+  theme_readme()
+```
+
+![](enrollment-trends_files/figure-html/calcasieu-petrochemical-1.png)
+
+## 15. Louisiana’s largest parishes compared
+
+The five largest parishes educate over 40% of Louisiana’s students.
+
+``` r
+# Get the 5 largest parishes for the most recent year
+top5 <- enr_current %>%
+  filter(is_district, subgroup == "total_enrollment", grade_level == "TOTAL") %>%
+  arrange(desc(n_students)) %>%
+  head(5) %>%
+  pull(district_name)
+
+top5_trend <- enr %>%
+  filter(is_district, district_name %in% top5,
+         subgroup == "total_enrollment", grade_level == "TOTAL")
+
+ggplot(top5_trend, aes(x = end_year, y = n_students, color = district_name)) +
+  geom_line(linewidth = 1.2) +
+  geom_point(size = 2.5) +
+  scale_y_continuous(labels = comma) +
+  labs(title = "Louisiana's Five Largest Parishes",
+       subtitle = "Over 40% of state enrollment in five districts",
+       x = "School Year", y = "Students", color = "") +
+  theme_readme()
+```
+
+![](enrollment-trends_files/figure-html/top-parishes-1.png)

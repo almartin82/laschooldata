@@ -14,6 +14,10 @@ Multi Stats reports and transforming it into tidy format for analysis.
 
   Fetch enrollment data for multiple years
 
+- [`fetch_directory`](https://almartin82.github.io/laschooldata/reference/fetch_directory.md):
+
+  Fetch school directory data
+
 - [`tidy_enr`](https://almartin82.github.io/laschooldata/reference/tidy_enr.md):
 
   Transform wide data to tidy (long) format
@@ -54,6 +58,9 @@ Data is sourced from the Louisiana Department of Education:
 
 - Data Center:
   <https://doe.louisiana.gov/data-and-reports/enrollment-data>
+
+- School Directory:
+  <https://doe.louisiana.gov/data-and-reports/data-management-and-downloads>
 
 ## See also
 

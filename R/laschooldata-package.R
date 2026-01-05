@@ -8,6 +8,7 @@
 #' \describe{
 #'   \item{\code{\link{fetch_enr}}}{Fetch enrollment data for a school year}
 #'   \item{\code{\link{fetch_enr_multi}}}{Fetch enrollment data for multiple years}
+#'   \item{\code{\link{fetch_directory}}}{Fetch school directory data}
 #'   \item{\code{\link{tidy_enr}}}{Transform wide data to tidy (long) format}
 #'   \item{\code{\link{id_enr_aggs}}}{Add aggregation level flags}
 #'   \item{\code{\link{enr_grade_aggs}}}{Create grade-level aggregations}
@@ -31,6 +32,7 @@
 #' \itemize{
 #'   \item Multi Stats: \url{https://www.louisianabelieves.com/resources/library/student-attributes}
 #'   \item Data Center: \url{https://doe.louisiana.gov/data-and-reports/enrollment-data}
+#'   \item School Directory: \url{https://doe.louisiana.gov/data-and-reports/data-management-and-downloads}
 #' }
 #'
 #' @docType package
