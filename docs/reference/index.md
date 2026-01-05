@@ -6,8 +6,12 @@
   : Fetch Louisiana enrollment data
 - [`fetch_enr_multi()`](https://almartin82.github.io/laschooldata/reference/fetch_enr_multi.md)
   : Fetch enrollment data for multiple years
+- [`fetch_directory()`](https://almartin82.github.io/laschooldata/reference/fetch_directory.md)
+  : Fetch Louisiana school directory data
 - [`get_available_years()`](https://almartin82.github.io/laschooldata/reference/get_available_years.md)
   : Get available years for Louisiana enrollment data
+- [`get_directory_available_years()`](https://almartin82.github.io/laschooldata/reference/get_directory_available_years.md)
+  : Get available years for school directory data
 
 ## Data Transformation
 

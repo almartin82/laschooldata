@@ -30,7 +30,7 @@ A list with:
 ``` r
 years <- get_available_years()
 print(years$min_year)
-#> [1] 2019
+#> [1] 2007
 print(years$max_year)
-#> [1] 2024
+#> [1] 2025
 ```
