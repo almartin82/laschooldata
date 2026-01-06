@@ -5,6 +5,12 @@
 #' @importFrom rlang .data
 NULL
 
+# Declare global variables for NSE (dplyr programming)
+utils::globalVariables(
+  c("end_year", "district_id", "campus_id", "type", "grade_level",
+    "n_students", "subgroup", "pct")
+)
+
 
 #' Get available years for Louisiana enrollment data
 #'
@@ -92,6 +98,7 @@ get_parish_codes <- function() {
 #'   \item{subgroup}{Subgroup name (e.g., "total_enrollment", "male", "white")}
 #'   \item{grade_level}{Grade level (e.g., "TOTAL", "K", "01", "02")}
 #'   \item{n_students}{Student count for this subgroup/grade}
+#'   \item{pct}{Proportion of total enrollment (0-1 scale)}
 #' @export
 #' @examples
 #' \dontrun{
@@ -196,6 +203,55 @@ tidy_enr <- function(df) {
 
   # Remove rows with NA n_students
   result <- result[!is.na(result$n_students), ]
+
+  # Calculate percentage of total for each subgroup (pct column)
+  # Group by entity and grade_level, then calculate pct within each group
+  # For each (entity, grade_level), pct = n_students / total_enrollment
+  result <- result |>
+    dplyr::group_by(
+      end_year, district_id, campus_id, type, grade_level,
+      .drop = FALSE
+    ) |>
+    dplyr::mutate(
+      pct = n_students / n_students[subgroup == "total_enrollment"],
+      pct = dplyr::if_else(subgroup == "total_enrollment", 1.0, pct)
+    ) |>
+    dplyr::ungroup()
+
+  # Handle any division issues (NA, Inf)
+  result <- result |>
+    dplyr::mutate(
+      pct = dplyr::if_else(!is.finite(pct) | is.na(pct), NA_real_, pct)
+    )
+
+  # Reorder columns to match PRD specification
+  # PRD columns first, then helper columns
+  prd_cols <- c(
+    "end_year", "district_id", "campus_id", "district_name", "campus_name",
+    "type", "grade_level", "subgroup", "n_students", "pct"
+  )
+
+  # Helper columns (at the end)
+  helper_cols <- c(
+    "is_state", "is_district", "is_campus"
+  )
+
+  # Build column order: PRD cols, helper cols, anything else
+  all_possible <- c(prd_cols, helper_cols)
+  col_order <- all_possible[all_possible %in% names(result)]
+  remaining <- setdiff(names(result), col_order)
+  col_order <- c(col_order, remaining)
+
+  result <- result |>
+    dplyr::select(dplyr::all_of(col_order)) |>
+    dplyr::mutate(
+      aggregation_flag = dplyr::case_when(
+        !is.na(.data$district_id) & .data$district_id != "" &
+          !is.na(.data$campus_id) & .data$campus_id != "" ~ "campus",
+        !is.na(.data$district_id) & .data$district_id != "" ~ "district",
+        TRUE ~ "state"
+      )
+    )
 
   result
 }

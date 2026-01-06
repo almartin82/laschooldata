@@ -115,22 +115,22 @@ test_that("2024 tidy format preserves race/ethnicity values", {
   state_data <- enr[enr$is_state & enr$grade_level == "TOTAL", ]
 
   # Black students
-  black <- state_data[state_data$subgroup == "black", "n_students"]
+  black <- state_data[state_data$subgroup == "black", "n_students"][[1]]
   expect_equal(black, 282521,
     label = "Tidy black count should match raw file")
 
   # White students
-  white <- state_data[state_data$subgroup == "white", "n_students"]
+  white <- state_data[state_data$subgroup == "white", "n_students"][[1]]
   expect_equal(white, 275265,
     label = "Tidy white count should match raw file")
 
   # Hispanic students
-  hispanic <- state_data[state_data$subgroup == "hispanic", "n_students"]
+  hispanic <- state_data[state_data$subgroup == "hispanic", "n_students"][[1]]
   expect_equal(hispanic, 77836,
     label = "Tidy Hispanic count should match raw file")
 
   # Asian students
-  asian <- state_data[state_data$subgroup == "asian", "n_students"]
+  asian <- state_data[state_data$subgroup == "asian", "n_students"][[1]]
   expect_equal(asian, 10745,
     label = "Tidy Asian count should match raw file")
 })
@@ -144,12 +144,12 @@ test_that("2024 tidy format preserves gender values", {
   state_data <- enr[enr$is_state & enr$grade_level == "TOTAL", ]
 
   # Male students (calculated from 51.2%)
-  male <- state_data[state_data$subgroup == "male", "n_students"]
+  male <- state_data[state_data$subgroup == "male", "n_students"][[1]]
   expect_equal(male, 346497,
     label = "Tidy male count should match calculated value")
 
   # Female students (calculated from 48.8%)
-  female <- state_data[state_data$subgroup == "female", "n_students"]
+  female <- state_data[state_data$subgroup == "female", "n_students"][[1]]
   expect_equal(female, 330254,
     label = "Tidy female count should match calculated value")
 })

@@ -12,6 +12,18 @@ October.
 ``` r
 # Install from GitHub
 devtools::install_github("almartin82/laschooldata")
+#> Using github PAT from envvar GITHUB_PAT. Use `gitcreds::gitcreds_set()` and unset GITHUB_PAT in .Renviron (or elsewhere) if you want to use the more secure git credential store instead.
+#> Downloading GitHub repo almartin82/laschooldata@HEAD
+#> 
+#> ── R CMD build ─────────────────────────────────────────────────────────────────
+#> * checking for file ‘/private/var/folders/p3/8ndxtxss5t56wgxkdyspqlwm0000gn/T/RtmpNhLfvJ/remotes138da3e5421ff/almartin82-laschooldata-36c78e6/DESCRIPTION’ ... OK
+#> * preparing ‘laschooldata’:
+#> * checking DESCRIPTION meta-information ... OK
+#> * checking for LF line-endings in source and make files and shell scripts
+#> * checking for empty or unneeded directories
+#> * building ‘laschooldata_0.1.0.tar.gz’
+#> Installing package into '/private/var/folders/p3/8ndxtxss5t56wgxkdyspqlwm0000gn/T/RtmpBom8si/temp_libpath137a744888222'
+#> (as 'lib' is unspecified)
 ```
 
 ## Quick Start
@@ -19,9 +31,25 @@ devtools::install_github("almartin82/laschooldata")
 ``` r
 library(laschooldata)
 library(dplyr)
+#> 
+#> Attaching package: 'dplyr'
+#> The following objects are masked from 'package:stats':
+#> 
+#>     filter, lag
+#> The following objects are masked from 'package:base':
+#> 
+#>     intersect, setdiff, setequal, union
 
 # Check available years
 get_available_years()
+#> $min_year
+#> [1] 2019
+#> 
+#> $max_year
+#> [1] 2024
+#> 
+#> $description
+#> [1] "Louisiana enrollment data from LDOE Multi Stats files. Available years: 2019-2024. Earlier years (2007-2018) may use different formats and URLs."
 # Returns: min_year = 2019, max_year = 2024
 ```
 
@@ -36,9 +64,21 @@ to download enrollment data for a single school year:
 ``` r
 # Get 2024 data (2023-24 school year)
 enr_2024 <- fetch_enr(2024)
+#> Using cached data for 2024
 
 # By default, returns tidy (long) format
 head(enr_2024)
+#> # A tibble: 6 × 14
+#>   end_year district_id campus_id district_name     campus_name type  grade_level
+#>      <int> <chr>       <chr>     <chr>             <chr>       <chr> <chr>      
+#> 1     2024 NA          NA        State of Louisia… NA          State TOTAL      
+#> 2     2024 000         NA        State of Louisia… NA          Dist… TOTAL      
+#> 3     2024 001         NA        Acadia Parish     NA          Dist… TOTAL      
+#> 4     2024 002         NA        Allen Parish      NA          Dist… TOTAL      
+#> 5     2024 003         NA        Ascension Parish  NA          Dist… TOTAL      
+#> 6     2024 004         NA        Assumption Parish NA          Dist… TOTAL      
+#> # ℹ 7 more variables: subgroup <chr>, n_students <dbl>, pct <dbl>,
+#> #   aggregation_flag <chr>, is_state <lgl>, is_district <lgl>, is_campus <lgl>
 ```
 
 The tidy format includes: - `end_year`: School year end (e.g., 2024 =
@@ -56,9 +96,21 @@ For wide format (one row per entity), use `tidy = FALSE`:
 
 ``` r
 enr_wide <- fetch_enr(2024, tidy = FALSE)
+#> Using cached data for 2024
 
 # Wide format has columns for each subgroup
 names(enr_wide)
+#>  [1] "end_year"         "type"             "district_id"      "campus_id"       
+#>  [5] "district_name"    "campus_name"      "row_total"        "white"           
+#>  [9] "black"            "hispanic"         "asian"            "pacific_islander"
+#> [13] "native_american"  "multiracial"      "minority"         "female"          
+#> [17] "pct_female"       "male"             "pct_male"         "lep"             
+#> [21] "pct_lep"          "fep"              "pct_fep"          "econ_disadv"     
+#> [25] "pct_econ_disadv"  "grade_infant"     "grade_preschool"  "grade_pk"        
+#> [29] "grade_k"          "grade_01"         "grade_02"         "grade_03"        
+#> [33] "grade_04"         "grade_05"         "grade_06"         "grade_07"        
+#> [37] "grade_08"         "grade_09"         "grade_t9"         "grade_10"        
+#> [41] "grade_11"         "grade_12"         "grade_extension"
 # Includes: row_total, white, black, hispanic, asian, male, female, etc.
 ```
 
@@ -70,11 +122,23 @@ for multiple years:
 
 ``` r
 enr_multi <- fetch_enr_multi(2022:2024)
+#> Fetching 2022 ...
+#> Using cached data for 2022
+#> Fetching 2023 ...
+#> Using cached data for 2023
+#> Fetching 2024 ...
+#> Using cached data for 2024
 
 # Track state enrollment trends
 enr_multi |>
   filter(is_state, subgroup == "total_enrollment", grade_level == "TOTAL") |>
   select(end_year, n_students)
+#> # A tibble: 3 × 2
+#>   end_year n_students
+#>      <int>      <dbl>
+#> 1     2022     685606
+#> 2     2023     681176
+#> 3     2024     676751
 ```
 
 ## Common Analysis Examples
@@ -86,6 +150,23 @@ enr_2024 |>
   filter(is_state, grade_level == "TOTAL") |>
   select(subgroup, n_students) |>
   arrange(desc(n_students))
+#> # A tibble: 14 × 2
+#>    subgroup         n_students
+#>    <chr>                 <dbl>
+#>  1 total_enrollment     676751
+#>  2 fep                  640883
+#>  3 econ_disadv          474402
+#>  4 minority             401486
+#>  5 male                 346497
+#>  6 female               330254
+#>  7 black                282521
+#>  8 white                275265
+#>  9 hispanic              77836
+#> 10 lep                   35868
+#> 11 multiracial           26225
+#> 12 asian                 10745
+#> 13 native_american        3666
+#> 14 pacific_islander        493
 ```
 
 ### District Enrollment Ranking
@@ -96,6 +177,19 @@ enr_2024 |>
   arrange(desc(n_students)) |>
   select(district_name, n_students) |>
   head(10)
+#> # A tibble: 10 × 2
+#>    district_name           n_students
+#>    <chr>                        <dbl>
+#>  1 State of Louisiana          676751
+#>  2 Jefferson Parish             47702
+#>  3 East Baton Rouge Parish      39932
+#>  4 St. Tammany Parish           36384
+#>  5 Caddo Parish                 32614
+#>  6 Lafayette Parish             29877
+#>  7 Calcasieu Parish             28623
+#>  8 Livingston Parish            26852
+#>  9 Ascension Parish             24076
+#> 10 Bossier Parish               22447
 ```
 
 ### Grade-Level Distribution
@@ -105,6 +199,27 @@ enr_2024 |>
   filter(is_state, subgroup == "total_enrollment", grade_level != "TOTAL") |>
   select(grade_level, n_students) |>
   arrange(grade_level)
+#> # A tibble: 18 × 2
+#>    grade_level n_students
+#>    <chr>            <dbl>
+#>  1 01               50106
+#>  2 02               50649
+#>  3 03               51503
+#>  4 04               49820
+#>  5 05               48905
+#>  6 06               48855
+#>  7 07               48717
+#>  8 08               48909
+#>  9 09               48486
+#> 10 10               50991
+#> 11 11               47493
+#> 12 12               45213
+#> 13 EXT                 78
+#> 14 INF                297
+#> 15 K                48084
+#> 16 PK               26152
+#> 17 PS                6494
+#> 18 T9                5999
 ```
 
 ### Racial Demographics by District
@@ -125,12 +240,32 @@ enr_2024 |>
     names_from = subgroup,
     values_from = n_students
   )
+#> # A tibble: 5 × 5
+#>   district_name            white  black hispanic asian
+#>   <chr>                    <dbl>  <dbl>    <dbl> <dbl>
+#> 1 State of Louisiana      275265 282521    77836 10745
+#> 2 Caddo Parish              8072  21002     1938   459
+#> 3 East Baton Rouge Parish   4376  27194     6104  1465
+#> 4 Jefferson Parish          9860  15559    18705  2240
+#> 5 St. Tammany Parish       22037   7896     4175   483
 ```
 
 ### Year-over-Year Comparison
 
 ``` r
 enr_multi <- fetch_enr_multi(2019:2024)
+#> Fetching 2019 ...
+#> Using cached data for 2019
+#> Fetching 2020 ...
+#> Using cached data for 2020
+#> Fetching 2021 ...
+#> Using cached data for 2021
+#> Fetching 2022 ...
+#> Using cached data for 2022
+#> Fetching 2023 ...
+#> Using cached data for 2023
+#> Fetching 2024 ...
+#> Using cached data for 2024
 
 state_trends <- enr_multi |>
   filter(is_state, subgroup == "total_enrollment", grade_level == "TOTAL") |>
@@ -142,6 +277,15 @@ state_trends <- enr_multi |>
   )
 
 state_trends
+#> # A tibble: 6 × 4
+#>   end_year n_students change pct_change
+#>      <int>      <dbl>  <dbl>      <dbl>
+#> 1     2019     643986     NA     NA    
+#> 2     2020     624527 -19459     -3.02 
+#> 3     2021     615839  -8688     -1.39 
+#> 4     2022     685606  69767     11.3  
+#> 5     2023     681176  -4430     -0.646
+#> 6     2024     676751  -4425     -0.650
 ```
 
 ## Caching
@@ -151,15 +295,68 @@ The package caches downloaded data locally to speed up repeated access:
 ``` r
 # View cache status
 cache_status()
+#>   end_year tidy_cached wide_cached
+#> 1     2019        TRUE       FALSE
+#> 2     2020        TRUE       FALSE
+#> 3     2021        TRUE       FALSE
+#> 4     2022        TRUE       FALSE
+#> 5     2023        TRUE       FALSE
+#> 6     2024        TRUE        TRUE
 
 # Clear all cached data
 clear_cache()
+#> Removed 7 cached file(s)
 
 # Clear specific year
 clear_cache(2024)
+#> Removed 0 cached file(s)
 
 # Force fresh download (bypass cache)
 enr_fresh <- fetch_enr(2024, use_cache = FALSE)
+#> Downloading LDOE enrollment data for 2024 ...
+#>   Downloading from: https://www.louisianabelieves.com/docs/default-source/data-management/oct-2024-multi-stats-(total-by-site-and-school-system)_web.xlsx
+#>   Trying alternate URL: https://www.louisianabelieves.com/docs/default-source/data-management/oct-2024-multi-stats-(total-by-site-and-school-system)_web.xlsx
+#>   Trying alternate URL: https://www.louisianabelieves.com/docs/default-source/data-management/oct-2024-multi-stats-(total-by-site-and-school-system).xlsx
+#>   Reading Excel file...
+#>   Reading LEA sheet: Total by School System
+#> New names:
+#> Reading site sheet: Total by Site
+#> New names:
+#> • `` -> `...1`
+#> • `` -> `...2`
+#> • `` -> `...3`
+#> • `` -> `...4`
+#> • `` -> `...5`
+#> • `` -> `...6`
+#> • `` -> `...7`
+#> • `` -> `...8`
+#> • `` -> `...9`
+#> • `` -> `...10`
+#> • `` -> `...11`
+#> • `` -> `...12`
+#> • `` -> `...13`
+#> • `` -> `...14`
+#> • `` -> `...15`
+#> • `` -> `...16`
+#> • `` -> `...17`
+#> • `` -> `...18`
+#> • `` -> `...19`
+#> • `` -> `...20`
+#> • `` -> `...21`
+#> • `` -> `...22`
+#> • `` -> `...23`
+#> • `` -> `...24`
+#> • `` -> `...25`
+#> • `` -> `...26`
+#> • `` -> `...27`
+#> • `` -> `...28`
+#> • `` -> `...29`
+#> • `` -> `...30`
+#> • `` -> `...31`
+#> • `` -> `...32`
+#> • `` -> `...33`
+#> • `` -> `...34`
+#> • `` -> `...35`
 ```
 
 ## Data Structure Details
@@ -222,15 +419,63 @@ To verify gender data is being processed correctly:
 
 ``` r
 enr <- fetch_enr(2024, tidy = FALSE)
+#> Downloading LDOE enrollment data for 2024 ...
+#>   Downloading from: https://www.louisianabelieves.com/docs/default-source/data-management/oct-2024-multi-stats-(total-by-site-and-school-system)_web.xlsx
+#>   Trying alternate URL: https://www.louisianabelieves.com/docs/default-source/data-management/oct-2024-multi-stats-(total-by-site-and-school-system)_web.xlsx
+#>   Trying alternate URL: https://www.louisianabelieves.com/docs/default-source/data-management/oct-2024-multi-stats-(total-by-site-and-school-system).xlsx
+#>   Reading Excel file...
+#>   Reading LEA sheet: Total by School System
+#> New names:
+#> Reading site sheet: Total by Site
+#> New names:
+#> • `` -> `...1`
+#> • `` -> `...2`
+#> • `` -> `...3`
+#> • `` -> `...4`
+#> • `` -> `...5`
+#> • `` -> `...6`
+#> • `` -> `...7`
+#> • `` -> `...8`
+#> • `` -> `...9`
+#> • `` -> `...10`
+#> • `` -> `...11`
+#> • `` -> `...12`
+#> • `` -> `...13`
+#> • `` -> `...14`
+#> • `` -> `...15`
+#> • `` -> `...16`
+#> • `` -> `...17`
+#> • `` -> `...18`
+#> • `` -> `...19`
+#> • `` -> `...20`
+#> • `` -> `...21`
+#> • `` -> `...22`
+#> • `` -> `...23`
+#> • `` -> `...24`
+#> • `` -> `...25`
+#> • `` -> `...26`
+#> • `` -> `...27`
+#> • `` -> `...28`
+#> • `` -> `...29`
+#> • `` -> `...30`
+#> • `` -> `...31`
+#> • `` -> `...32`
+#> • `` -> `...33`
+#> • `` -> `...34`
+#> • `` -> `...35`
 state <- enr[enr$type == "State", ]
 
 # These should be approximately equal
 state$row_total
+#> [1] 676751
 state$male + state$female
+#> [1] 676751
 
 # Percentages should be in 0-100 range
 state$pct_male  # ~51%
+#> [1] 51.2
 state$pct_female  # ~49%
+#> [1] 48.8
 ```
 
 ## Troubleshooting
@@ -261,4 +506,41 @@ in the 40-60% range (not 0.40-0.60).
 
 ``` r
 sessionInfo()
+#> R version 4.5.0 (2025-04-11)
+#> Platform: aarch64-apple-darwin22.6.0
+#> Running under: macOS 26.1
+#> 
+#> Matrix products: default
+#> BLAS:   /opt/homebrew/Cellar/openblas/0.3.30/lib/libopenblasp-r0.3.30.dylib 
+#> LAPACK: /opt/homebrew/Cellar/r/4.5.0/lib/R/lib/libRlapack.dylib;  LAPACK version 3.12.1
+#> 
+#> locale:
+#> [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
+#> 
+#> time zone: America/New_York
+#> tzcode source: internal
+#> 
+#> attached base packages:
+#> [1] stats     graphics  grDevices utils     datasets  methods   base     
+#> 
+#> other attached packages:
+#> [1] dplyr_1.1.4        laschooldata_0.1.0
+#> 
+#> loaded via a namespace (and not attached):
+#>  [1] rappdirs_0.3.3    sass_0.4.10       utf8_1.2.6        generics_0.1.4   
+#>  [5] tidyr_1.3.2       stringi_1.8.7     digest_0.6.39     magrittr_2.0.4   
+#>  [9] timechange_0.3.0  evaluate_1.0.5    pkgload_1.4.1     fastmap_1.2.0    
+#> [13] cellranger_1.1.0  jsonlite_2.0.0    processx_3.8.6    pkgbuild_1.4.8   
+#> [17] sessioninfo_1.2.3 ps_1.9.1          httr_1.4.7        purrr_1.2.0      
+#> [21] textshaping_1.0.4 jquerylib_0.1.4   cli_3.6.5         rlang_1.1.6      
+#> [25] ellipsis_0.3.2    remotes_2.5.0     withr_3.0.2       cachem_1.1.0     
+#> [29] yaml_2.3.12       devtools_2.4.6    otel_0.2.0        tools_4.5.0      
+#> [33] memoise_2.0.1     curl_7.0.0        vctrs_0.6.5       R6_2.6.1         
+#> [37] lifecycle_1.0.4   lubridate_1.9.4   stringr_1.6.0     snakecase_0.11.1 
+#> [41] fs_1.6.6          htmlwidgets_1.6.4 usethis_3.2.1     ragg_1.5.0       
+#> [45] janitor_2.2.1     pkgconfig_2.0.3   desc_1.4.3        callr_3.7.6      
+#> [49] pkgdown_2.2.0     bslib_0.9.0       pillar_1.11.1     glue_1.8.0       
+#> [53] systemfonts_1.3.1 xfun_0.55         tibble_3.3.0      tidyselect_1.2.1 
+#> [57] knitr_1.51        htmltools_0.5.9   rmarkdown_2.30    compiler_4.5.0   
+#> [61] readxl_1.4.5
 ```

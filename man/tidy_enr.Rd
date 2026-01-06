@@ -20,6 +20,7 @@ Data frame in tidy format with columns:
 \item{subgroup}{Subgroup name (e.g., "total_enrollment", "male", "white")}
 \item{grade_level}{Grade level (e.g., "TOTAL", "K", "01", "02")}
 \item{n_students}{Student count for this subgroup/grade}
+\item{pct}{Proportion of total enrollment (0-1 scale)}
 }
 \description{
 Pivots wide enrollment data to long format with subgroup and grade_level

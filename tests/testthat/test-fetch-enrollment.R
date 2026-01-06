@@ -310,7 +310,7 @@ test_that("tidy format includes all expected subgroups", {
   enr <- fetch_enr(2024, tidy = TRUE, use_cache = TRUE)
 
   # Get unique subgroups at state level
-  state_subgroups <- unique(enr[enr$is_state & enr$grade_level == "TOTAL", "subgroup"])
+  state_subgroups <- unique(enr[enr$is_state & enr$grade_level == "TOTAL", "subgroup"][[1]])
 
   expected_subgroups <- c(
     "total_enrollment",
