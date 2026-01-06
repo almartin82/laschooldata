@@ -28,7 +28,6 @@ A list with:
 
 ``` r
 years <- get_directory_available_years()
-#> Error in get_directory_available_years(): could not find function "get_directory_available_years"
 print(years$max_year)
-#> Error: object 'years' not found
+#> [1] 2025
 ```

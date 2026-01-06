@@ -5,6 +5,12 @@
 #' @importFrom rlang .data
 NULL
 
+# Declare global variables for NSE (dplyr programming)
+utils::globalVariables(
+  c("end_year", "district_id", "campus_id", "type", "grade_level",
+    "n_students", "subgroup", "pct")
+)
+
 
 #' Get available years for Louisiana enrollment data
 #'
