@@ -55,6 +55,10 @@ Data frame in tidy format with columns:
 
   Student count for this subgroup/grade
 
+- pct:
+
+  Proportion of total enrollment (0-1 scale)
+
 ## Examples
 
 ``` r

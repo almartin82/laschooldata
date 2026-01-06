@@ -1,5 +1,14 @@
 # Claude Code Instructions
 
+### CONCURRENT TASK LIMIT
+
+- **Maximum 5 background tasks running simultaneously**
+- When launching multiple agents (e.g., for mass audits), batch them in
+  groups of 5
+- Wait for the current batch to complete before launching the next batch
+
+------------------------------------------------------------------------
+
 ## CRITICAL DATA SOURCE RULES
 
 **NEVER use Urban Institute API, NCES CCD, or ANY federal data source**
@@ -31,7 +40,7 @@ BEFORE opening a PR:
 
 | Check        | Local Command                                                                  | What It Tests                                  |
 |--------------|--------------------------------------------------------------------------------|------------------------------------------------|
-| R-CMD-check  | `devtools::check()`                                                            | Package builds, tests pass, no errors/warnings |
+| R-CMD-check  | [`devtools::check()`](https://devtools.r-lib.org/reference/check.html)         | Package builds, tests pass, no errors/warnings |
 | Python tests | `pytest tests/test_pylaschooldata.py -v`                                       | Python wrapper works correctly                 |
 | pkgdown      | [`pkgdown::build_site()`](https://pkgdown.r-lib.org/reference/build_site.html) | Documentation and vignettes render             |
 
@@ -50,9 +59,10 @@ pkgdown::build_site()
 
 ### Pre-PR Checklist
 
-Before opening a PR, verify: - \[ \] `devtools::check()` — 0 errors, 0
-warnings - \[ \] `pytest tests/test_pylaschooldata.py` — all tests
-pass - \[ \]
+Before opening a PR, verify: - \[ \]
+[`devtools::check()`](https://devtools.r-lib.org/reference/check.html) —
+0 errors, 0 warnings - \[ \] `pytest tests/test_pylaschooldata.py` — all
+tests pass - \[ \]
 [`pkgdown::build_site()`](https://pkgdown.r-lib.org/reference/build_site.html)
 — builds without errors - \[ \] Vignettes render (no `eval=FALSE` hacks)
 
