@@ -1,6 +1,8 @@
 Package: laschooldata
 Title: Louisiana School Data
 Version: 0.1.0
+Author: Al Martin [aut, cre]
+Maintainer: Al Martin <almartin@example.com>
 Authors@R:
     person("Al", "Martin", , "almartin@example.com", role = c("aut", "cre"))
 Description: A simple, consistent interface for accessing Louisiana
@@ -24,7 +26,9 @@ Suggests:
     knitr,
     rmarkdown,
     ggplot2,
-    scales
+    scales,
+    devtools,
+    tidyr
 VignetteBuilder: knitr
 Config/testthat/edition: 3
 URL: https://almartin82.github.io/laschooldata/, https://github.com/almartin82/laschooldata
