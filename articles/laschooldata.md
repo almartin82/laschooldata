@@ -19,7 +19,7 @@ devtools::install_github("almartin82/laschooldata")
 #> Installing package into '/home/runner/work/_temp/Library'
 #> (as 'lib' is unspecified)
 #> ── R CMD build ─────────────────────────────────────────────────────────────────
-#> * checking for file ‘/tmp/RtmpXh9fN9/remotes21187a23302e/almartin82-laschooldata-7058c4c/DESCRIPTION’ ... OK
+#> * checking for file ‘/tmp/RtmpzewkY5/remotes1e1841faff84/almartin82-laschooldata-ce20889/DESCRIPTION’ ... OK
 #> * preparing ‘laschooldata’:
 #> * checking DESCRIPTION meta-information ... OK
 #> * checking for LF line-endings in source and make files and shell scripts
