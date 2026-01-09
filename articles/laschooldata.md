@@ -14,13 +14,12 @@ October.
 devtools::install_github("almartin82/laschooldata")
 #> Using github PAT from envvar GITHUB_PAT. Use `gitcreds::gitcreds_set()` and unset GITHUB_PAT in .Renviron (or elsewhere) if you want to use the more secure git credential store instead.
 #> Downloading GitHub repo almartin82/laschooldata@HEAD
-#> cpp11    (NA -> 0.5.2) [CRAN]
-#> progress (NA -> 1.2.3) [CRAN]
-#> Installing 2 packages: cpp11, progress
-#> Installing packages into '/home/runner/work/_temp/Library'
+#> lifecycle (1.0.4 -> 1.0.5) [CRAN]
+#> Installing 1 packages: lifecycle
+#> Installing package into '/home/runner/work/_temp/Library'
 #> (as 'lib' is unspecified)
 #> ── R CMD build ─────────────────────────────────────────────────────────────────
-#> * checking for file ‘/tmp/RtmpqUY7Fm/remotes1ef46fc978d3/almartin82-laschooldata-2e36814/DESCRIPTION’ ... OK
+#> * checking for file ‘/tmp/RtmpXh9fN9/remotes21187a23302e/almartin82-laschooldata-7058c4c/DESCRIPTION’ ... OK
 #> * preparing ‘laschooldata’:
 #> * checking DESCRIPTION meta-information ... OK
 #> * checking for LF line-endings in source and make files and shell scripts
@@ -586,7 +585,7 @@ sessionInfo()
 #> [25] ellipsis_0.3.2    withr_3.0.2       remotes_2.5.0     cachem_1.1.0     
 #> [29] yaml_2.3.12       devtools_2.4.6    otel_0.2.0        tools_4.5.2      
 #> [33] memoise_2.0.1     curl_7.0.0        vctrs_0.6.5       R6_2.6.1         
-#> [37] lifecycle_1.0.4   lubridate_1.9.4   stringr_1.6.0     snakecase_0.11.1 
+#> [37] lifecycle_1.0.5   lubridate_1.9.4   stringr_1.6.0     snakecase_0.11.1 
 #> [41] fs_1.6.6          htmlwidgets_1.6.4 usethis_3.2.1     ragg_1.5.0       
 #> [45] janitor_2.2.1     pkgconfig_2.0.3   desc_1.4.3        callr_3.7.6      
 #> [49] pkgdown_2.2.0     bslib_0.9.0       pillar_1.11.1     glue_1.8.0       
