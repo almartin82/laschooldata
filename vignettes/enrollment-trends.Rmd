@@ -54,10 +54,10 @@ if (is.list(years)) {
 
 # Fetch data - use only available years
 # NOTE: Using 2019-2024 range for stability
-enr <- fetch_enr_multi(2019:2024)
+enr <- fetch_enr_multi(2019:2024, use_cache = TRUE)
 key_years <- c(2019, 2024)
-enr_long <- fetch_enr_multi(key_years)
-enr_current <- fetch_enr(2024)
+enr_long <- fetch_enr_multi(key_years, use_cache = TRUE)
+enr_current <- fetch_enr(2024, use_cache = TRUE)
 ```
 
 ## 1. Hurricane Katrina's lasting mark on New Orleans
