@@ -38,7 +38,7 @@
 
 <div id="louisiana-school-data-expansion-research" class="section level1">
 
-<p><strong>Last Updated:</strong> 2026-01-04 <strong>Theme Researched:</strong> Graduation Rates</p>
+<p><strong>Last Updated:</strong> 2026-01-11 <strong>Theme Researched:</strong> Assessment (LEAP) Data</p>
 <div class="section level2">
 <h2 id="current-package-status">Current Package Status<a class="anchor" aria-label="anchor" href="#current-package-status"></a></h2>
 <ul><li>
@@ -49,11 +49,86 @@
 <strong>pkgdown:</strong> PASSING</li>
 <li>
 <strong>Current capabilities:</strong> Enrollment data only (2019-2024)</li>
+<li>
+<strong>Assessment capability:</strong> NONE (this is a new data type)</li>
 </ul></div>
 <div class="section level2">
 <h2 id="data-sources-found">Data Sources Found<a class="anchor" aria-label="anchor" href="#data-sources-found"></a></h2>
 <div class="section level3">
-<h3 id="source-1-cohort-graduation-rates-by-subgroup-primary---recommended">Source 1: Cohort Graduation Rates by Subgroup (Primary - Recommended)<a class="anchor" aria-label="anchor" href="#source-1-cohort-graduation-rates-by-subgroup-primary---recommended"></a></h3>
+<h3 id="source-1-leap-grades-3-8-assessment-by-subgroup-primary---recommended">Source 1: LEAP Grades 3-8 Assessment by Subgroup (Primary - Recommended)<a class="anchor" aria-label="anchor" href="#source-1-leap-grades-3-8-assessment-by-subgroup-primary---recommended"></a></h3>
+<table class="table"><colgroup><col width="50%"><col width="50%"></colgroup><thead><tr class="header"><th>Field</th>
+<th>Value</th>
+</tr></thead><tbody><tr class="odd"><td>URL Pattern</td>
+<td><code>https://doe.louisiana.gov/docs/default-source/test-results/{YEAR}-state-lea-school-leap-grade-3-8-achievement-level-subgroup-summary.xlsx</code></td>
+</tr><tr class="even"><td>HTTP Status</td>
+<td>200 (2019-2024 verified)</td>
+</tr><tr class="odd"><td>Format</td>
+<td>Excel (.xlsx)</td>
+</tr><tr class="even"><td>Years Available</td>
+<td>2019, 2021-2024 (5 years)</td>
+</tr><tr class="odd"><td>Access</td>
+<td>Direct download, no auth required</td>
+</tr><tr class="even"><td>Data Level</td>
+<td>State, District (LEA), School</td>
+</tr><tr class="odd"><td>Subjects</td>
+<td>ELA, Math, Science, Social Studies</td>
+</tr><tr class="even"><td>Grades</td>
+<td>3, 4, 5, 6, 7, 8</td>
+</tr></tbody></table><p><strong>Verified URLs:</strong> - 2024: <a href="https://doe.louisiana.gov/docs/default-source/test-results/2024-state-lea-school-leap-grade-3-8-achievement-level-subgroup-summary.xlsx" class="external-link uri">https://doe.louisiana.gov/docs/default-source/test-results/2024-state-lea-school-leap-grade-3-8-achievement-level-subgroup-summary.xlsx</a> - 2023: <a href="https://doe.louisiana.gov/docs/default-source/test-results/2023-state-lea-school-leap-grade-3-8-achievement-level-subgroup-summary.xlsx" class="external-link uri">https://doe.louisiana.gov/docs/default-source/test-results/2023-state-lea-school-leap-grade-3-8-achievement-level-subgroup-summary.xlsx</a> - 2022: <a href="https://doe.louisiana.gov/docs/default-source/test-results/2022-state-lea-school-leap-grade-3-8-achievement-level-subgroup-summary.xlsx" class="external-link uri">https://doe.louisiana.gov/docs/default-source/test-results/2022-state-lea-school-leap-grade-3-8-achievement-level-subgroup-summary.xlsx</a> - 2021: <a href="https://doe.louisiana.gov/docs/default-source/test-results/2021-state-lea-school-leap-grade-3-8-achievement-level-subgroup-summary.xlsx" class="external-link uri">https://doe.louisiana.gov/docs/default-source/test-results/2021-state-lea-school-leap-grade-3-8-achievement-level-subgroup-summary.xlsx</a> - 2019: <a href="https://doe.louisiana.gov/docs/default-source/test-results/2019-state-lea-school-leap-grade-3-8-achievement-level-subgroup-summary.xlsx" class="external-link uri">https://doe.louisiana.gov/docs/default-source/test-results/2019-state-lea-school-leap-grade-3-8-achievement-level-subgroup-summary.xlsx</a></p>
+<p><strong>Note:</strong> 2020 appears to be missing (COVID year with different assessment structure). 2016-2018 use different formats.</p>
+</div>
+<div class="section level3">
+<h3 id="source-2-leap-high-school-assessment-by-subgroup">Source 2: LEAP High School Assessment by Subgroup<a class="anchor" aria-label="anchor" href="#source-2-leap-high-school-assessment-by-subgroup"></a></h3>
+<table class="table"><colgroup><col width="50%"><col width="50%"></colgroup><thead><tr class="header"><th>Field</th>
+<th>Value</th>
+</tr></thead><tbody><tr class="odd"><td>URL Pattern</td>
+<td><code>https://doe.louisiana.gov/docs/default-source/test-results/{YEAR}-state-lea-school-leap-high-school-achievement-level-summary-with-subgroups.xlsx</code></td>
+</tr><tr class="even"><td>HTTP Status</td>
+<td>200 (2019, 2021-2022 verified)</td>
+</tr><tr class="odd"><td>Format</td>
+<td>Excel (.xlsx)</td>
+</tr><tr class="even"><td>Years Available</td>
+<td>2019, 2021-2022 (3 years)</td>
+</tr><tr class="odd"><td>Access</td>
+<td>Direct download, no auth required</td>
+</tr><tr class="even"><td>Data Level</td>
+<td>State, District (LEA), School</td>
+</tr><tr class="odd"><td>Subjects</td>
+<td>English I, English II, Algebra I, Geometry, Biology, US History</td>
+</tr></tbody></table><p><strong>Verified URLs:</strong> - 2022: <a href="https://doe.louisiana.gov/docs/default-source/test-results/2022-state-lea-school-leap-high-school-achievement-level-summary-with-subgroups.xlsx" class="external-link uri">https://doe.louisiana.gov/docs/default-source/test-results/2022-state-lea-school-leap-high-school-achievement-level-summary-with-subgroups.xlsx</a> - 2021: <a href="https://doe.louisiana.gov/docs/default-source/test-results/2021-state-lea-school-leap-high-school-achievement-level-summary-with-subgroups.xlsx" class="external-link uri">https://doe.louisiana.gov/docs/default-source/test-results/2021-state-lea-school-leap-high-school-achievement-level-summary-with-subgroups.xlsx</a> - 2019: <a href="https://doe.louisiana.gov/docs/default-source/test-results/2019-state-lea-school-high-school-eoc-achievement-level-summary-with-subgroups.xlsx" class="external-link uri">https://doe.louisiana.gov/docs/default-source/test-results/2019-state-lea-school-high-school-eoc-achievement-level-summary-with-subgroups.xlsx</a> (note different naming)</p>
+<p><strong>Note:</strong> 2020, 2023-2024 files appear to use different naming or are in different locations.</p>
+</div>
+<div class="section level3">
+<h3 id="source-3-historical-leap-data-2016-2018">Source 3: Historical LEAP Data (2016-2018)<a class="anchor" aria-label="anchor" href="#source-3-historical-leap-data-2016-2018"></a></h3>
+<table class="table"><thead><tr class="header"><th>Field</th>
+<th>Value</th>
+</tr></thead><tbody><tr class="odd"><td>Format</td>
+<td>Excel (.xlsx)</td>
+</tr><tr class="even"><td>Years</td>
+<td>2016-2018 (limited availability)</td>
+</tr><tr class="odd"><td>Coverage</td>
+<td>State and District only (no school-level data)</td>
+</tr><tr class="even"><td>Quality</td>
+<td>Lower quality, different structure</td>
+</tr></tbody></table><p><strong>Available Files:</strong> - 2018: <a href="https://doe.louisiana.gov/docs/default-source/test-results/2018-leap-2025-state-lea-school-achievement-level-summary.xlsx" class="external-link uri">https://doe.louisiana.gov/docs/default-source/test-results/2018-leap-2025-state-lea-school-achievement-level-summary.xlsx</a> - 2017: <a href="https://doe.louisiana.gov/docs/default-source/test-results/2017-state-lea-school-leap-achievement-level-summary.xlsx" class="external-link uri">https://doe.louisiana.gov/docs/default-source/test-results/2017-state-lea-school-leap-achievement-level-summary.xlsx</a> - 2016: <a href="https://doe.louisiana.gov/docs/default-source/test-results/spring-2016-state-district-achievement-level-summary.xlsx" class="external-link uri">https://doe.louisiana.gov/docs/default-source/test-results/spring-2016-state-district-achievement-level-summary.xlsx</a></p>
+<p><strong>Note:</strong> These early files have different column structures and missing subjects. Recommend starting with 2019+ data.</p>
+</div>
+<div class="section level3">
+<h3 id="source-4-statedistrict-level-summary-files">Source 4: State/District-Level Summary Files<a class="anchor" aria-label="anchor" href="#source-4-statedistrict-level-summary-files"></a></h3>
+<table class="table"><colgroup><col width="50%"><col width="50%"></colgroup><thead><tr class="header"><th>Field</th>
+<th>Value</th>
+</tr></thead><tbody><tr class="odd"><td>URL Pattern</td>
+<td><code>https://doe.louisiana.gov/docs/default-source/test-results/spring-{YEAR}-leap-2025-state-lea-achievement-level-summary.xlsx</code></td>
+</tr><tr class="even"><td>Years</td>
+<td>2021-2025</td>
+</tr><tr class="odd"><td>Data Level</td>
+<td>State and District only (no school)</td>
+</tr><tr class="even"><td>Use Case</td>
+<td>Quick district-level analysis</td>
+</tr></tbody></table><p><strong>Not recommended</strong> for primary implementation - use subgroup files with school-level data instead.</p>
+<hr></div>
+<div class="section level3">
+<h3 id="source-5-cohort-graduation-rates-by-subgroup-already-documented">Source 5: Cohort Graduation Rates by Subgroup (Already Documented)<a class="anchor" aria-label="anchor" href="#source-5-cohort-graduation-rates-by-subgroup-already-documented"></a></h3>
 <table class="table"><colgroup><col width="50%"><col width="50%"></colgroup><thead><tr class="header"><th>Field</th>
 <th>Value</th>
 </tr></thead><tbody><tr class="odd"><td>URL Pattern</td>
@@ -117,211 +192,197 @@
 <div class="section level2">
 <h2 id="schema-analysis">Schema Analysis<a class="anchor" aria-label="anchor" href="#schema-analysis"></a></h2>
 <div class="section level3">
-<h3 id="column-names-2025-vs-2019-vs-2014">Column Names (2025 vs 2019 vs 2014)<a class="anchor" aria-label="anchor" href="#column-names-2025-vs-2019-vs-2014"></a></h3>
-<table style="width:100%;" class="table"><colgroup><col width="30%"><col width="23%"><col width="23%"><col width="23%"></colgroup><thead><tr class="header"><th>Column</th>
-<th>2025</th>
-<th>2019</th>
-<th>2014</th>
-</tr></thead><tbody><tr class="odd"><td>Entity ID</td>
-<td>School/School System Code</td>
-<td>School/School System Code</td>
-<td>School/School System Code</td>
-</tr><tr class="even"><td>Entity Name</td>
-<td>School/School System Name</td>
-<td>School/School System Name</td>
-<td>School/School System Name</td>
-</tr><tr class="odd"><td>Overall Rate</td>
-<td>Overall Cohort Grad Rate</td>
-<td>Overall Cohort Grad Rate</td>
-<td>Cohort Grad Rate</td>
-</tr><tr class="even"><td>Native American</td>
-<td>American Indian/Alaskan Native Rate</td>
-<td>American Indian/Alaskan Native Rate</td>
-<td>American Indian/Alaskan Native Rate</td>
-</tr><tr class="odd"><td>Asian</td>
-<td>Asian Rate</td>
-<td>Asian Rate</td>
-<td>Asian Rate</td>
-</tr><tr class="even"><td>Black</td>
-<td>Black/African American Rate</td>
-<td>Black/African American Rate</td>
-<td>Black/African American Rate</td>
-</tr><tr class="odd"><td>Hispanic</td>
-<td>Hispanic Rate</td>
-<td>Hispanic Rate</td>
-<td>Hispanic Rate</td>
-</tr><tr class="even"><td>White</td>
-<td>White Rate</td>
-<td>White Rate</td>
-<td>White Rate</td>
-</tr><tr class="odd"><td>Pacific Islander</td>
-<td>Native Hawaiian/Pacific Islander Rate</td>
-<td>Native Hawaiian/Pacific Islander Rate</td>
-<td>Native Hawaiian/Pacific Islander Rate</td>
-</tr><tr class="even"><td>Multiracial</td>
-<td>Multi-Race Rate</td>
-<td>Multi-Race Rate</td>
-<td>Multi-Race Rate</td>
-</tr><tr class="odd"><td>Econ Disadvantaged</td>
-<td>Economically Disadvantaged Rate</td>
-<td>Economically disadvantaged rate</td>
-<td>Economically disadvantaged rate</td>
-</tr><tr class="even"><td>Special Ed</td>
-<td>Students with Disabilities Rate</td>
-<td>Students with disabilities rate</td>
-<td>Students with disabilities rate</td>
-</tr><tr class="odd"><td>ELL</td>
-<td>English Learner Rate</td>
-<td>(column 13)</td>
-<td>English Learner rate</td>
-</tr><tr class="even"><td>Homeless</td>
-<td>Homeless Rate</td>
-<td>(column 14)</td>
-<td>Homeless rate</td>
-</tr><tr class="odd"><td>Foster Care</td>
-<td>Foster Care Rate</td>
-<td>(not present)</td>
-<td>(not present)</td>
-</tr><tr class="even"><td>Military</td>
-<td>Military Affiliation Rate</td>
-<td>(not present)</td>
-<td>(not present)</td>
-</tr></tbody></table><p><strong>Schema Changes Noted:</strong> - 2025 added: Foster Care Rate, Military Affiliation Rate (columns 15-16) - Column names slightly inconsistent (capitalization varies) - Overall rate column: “Overall Cohort Grad Rate” vs “Cohort Grad Rate” (2014) - Column count: 2014 has 14 columns, 2019 has 16 columns, 2025 has 16 columns</p>
+<h3 id="excel-file-structure">Excel File Structure<a class="anchor" aria-label="anchor" href="#excel-file-structure"></a></h3>
+<p><strong>All assessment files follow this pattern:</strong> - Row 1: Title (e.g., “Percent of Students at Each Achievement Level for Spring 2025 LEAP 2025 Grades 3-8 Tests”) - Row 2: FERPA disclaimer - Row 3: Multi-row header (column groups) - Row 4+: Data rows</p>
+<p><strong>Critical:</strong> Row 3 is NOT the header - it’s a continuation of column labels. The actual structure uses merged cells with subject names spanning multiple achievement level columns.</p>
 </div>
 <div class="section level3">
-<h3 id="excel-file-structure">Excel File Structure<a class="anchor" aria-label="anchor" href="#excel-file-structure"></a></h3>
-<p>All years follow the same pattern: - Row 1: Title (e.g., “2024-2025 Cohort Graduation Rates by Subgroup”) - Row 2: FERPA disclaimer - Row 3: Column headers - Row 4+: Data rows (state first, then districts, then schools)</p>
+<h3 id="column-structure-grades-3-8-2024-2025">Column Structure (Grades 3-8, 2024-2025)<a class="anchor" aria-label="anchor" href="#column-structure-grades-3-8-2024-2025"></a></h3>
+<table class="table"><colgroup><col width="43%"><col width="28%"><col width="28%"></colgroup><thead><tr class="header"><th>Column Group</th>
+<th>Pattern</th>
+<th>Columns</th>
+</tr></thead><tbody><tr class="odd"><td>Identifiers</td>
+<td>-</td>
+<td>Summary Level, School System Code, School System Name, School Code, School Name, Grade, Subgroup</td>
+</tr><tr class="even"><td>ELA</td>
+<td>Subject + 5 achievement levels</td>
+<td>English Language Arts, % Advanced, % Mastery, % Basic, % Approaching Basic, % Unsatisfactory, Number Tested, % Tested</td>
+</tr><tr class="odd"><td>Math</td>
+<td>Subject + 5 achievement levels</td>
+<td>Mathematics, % Advanced, % Mastery, % Basic, % Approaching Basic, % Unsatisfactory, Number Tested</td>
+</tr><tr class="even"><td>Science</td>
+<td>Subject + 5 achievement levels</td>
+<td>Science, % Advanced, % Mastery, % Basic, % Approaching Basic, % Unsatisfactory</td>
+</tr><tr class="odd"><td>Social Studies</td>
+<td>Subject + 5 achievement levels</td>
+<td>Social Studies, % Advanced, % Mastery, % Basic, % Approaching Basic, % Unsatisfactory</td>
+</tr><tr class="even"><td>All Subjects</td>
+<td>Subject + 5 achievement levels</td>
+<td>All Subjects, % Advanced, % Mastery, % Basic, % Approaching Basic, % Unsatisfactory</td>
+</tr></tbody></table><p><strong>Total columns:</strong> 42 (2024-2025)</p>
+</div>
+<div class="section level3">
+<h3 id="column-structure-grades-3-8-2019-2022">Column Structure (Grades 3-8, 2019-2022)<a class="anchor" aria-label="anchor" href="#column-structure-grades-3-8-2019-2022"></a></h3>
+<table class="table"><colgroup><col width="43%"><col width="28%"><col width="28%"></colgroup><thead><tr class="header"><th>Column Group</th>
+<th>Pattern</th>
+<th>Columns</th>
+</tr></thead><tbody><tr class="odd"><td>Identifiers</td>
+<td>-</td>
+<td>Same as 2024-2025</td>
+</tr><tr class="even"><td>ELA</td>
+<td>Subject + 5 achievement levels</td>
+<td>English Language Arts, % Advanced, % Mastery, % Basic, % Approaching Basic, % Unsatisfactory</td>
+</tr><tr class="odd"><td>Math</td>
+<td>Subject + 5 achievement levels</td>
+<td>Mathematics, % Advanced, % Mastery, % Basic, % Approaching Basic, % Unsatisfactory</td>
+</tr><tr class="even"><td>Science</td>
+<td>Subject + 5 achievement levels</td>
+<td>Science, % Advanced, % Mastery, % Basic, % Approaching Basic, % Unsatisfactory</td>
+</tr><tr class="odd"><td>Social Studies</td>
+<td>Subject + 5 achievement levels</td>
+<td>Social Studies, % Advanced, % Mastery, % Basic, % Approaching Basic, % Unsatisfactory</td>
+</tr></tbody></table><p><strong>Total columns:</strong> 22 (2019-2022) - missing Number Tested columns</p>
+</div>
+<div class="section level3">
+<h3 id="achievement-levels">Achievement Levels<a class="anchor" aria-label="anchor" href="#achievement-levels"></a></h3>
+<table class="table"><thead><tr class="header"><th>Level</th>
+<th>Description</th>
+<th>Mastery+ Definition</th>
+</tr></thead><tbody><tr class="odd"><td>Advanced</td>
+<td>Highest achievement</td>
+<td>Included in Mastery+</td>
+</tr><tr class="even"><td>Mastery</td>
+<td>On grade level</td>
+<td>Included in Mastery+</td>
+</tr><tr class="odd"><td>Basic</td>
+<td>Nearly on grade level</td>
+<td>NOT included in Mastery+</td>
+</tr><tr class="even"><td>Approaching Basic</td>
+<td>Below grade level</td>
+<td>NOT included in Mastery+</td>
+</tr><tr class="odd"><td>Unsatisfactory</td>
+<td>Well below grade level</td>
+<td>NOT included in Mastery+</td>
+</tr></tbody></table><p><strong>Key Metric:</strong> “Mastery+” = % Advanced + % Mastery ( Louisiana’s primary accountability measure)</p>
+</div>
+<div class="section level3">
+<h3 id="subgroups-available">Subgroups Available<a class="anchor" aria-label="anchor" href="#subgroups-available"></a></h3>
+<p><strong>Demographic Subgroups:</strong> - Total Population - American Indian or Alaska Native - Asian - Black or African American - Hispanic/Latino - White - Native Hawaiian/Other Pacific Islander - Two or more races</p>
+<p><strong>Special Population Subgroups:</strong> - Economically Disadvantaged - Not Economically Disadvantaged - Students with Disabilities - Regular Education - English Learner - Migrant - Female - Male - Homeless (2019+) - Military Affiliated (2025+) - Foster Care (2025+)</p>
+</div>
+<div class="section level3">
+<h3 id="grade-levels-available">Grade Levels Available<a class="anchor" aria-label="anchor" href="#grade-levels-available"></a></h3>
+<p><strong>Grades 3-8:</strong> - Individual grades: 03, 04, 05, 06, 07, 08 - Aggregate: “All” (all grades combined)</p>
+<p><strong>High School (EOC - End of Course):</strong> - English I - English II - Algebra I - Geometry - Biology - U.S. History - Aggregate: “All Subjects”</p>
 </div>
 <div class="section level3">
 <h3 id="id-system">ID System<a class="anchor" aria-label="anchor" href="#id-system"></a></h3>
-<table class="table"><thead><tr class="header"><th>Type</th>
+<table class="table"><colgroup><col width="26%"><col width="34%"><col width="39%"></colgroup><thead><tr class="header"><th>Type</th>
 <th>Format</th>
 <th>Example</th>
-<th>Count (2025)</th>
 </tr></thead><tbody><tr class="odd"><td>State</td>
 <td>“LA”</td>
 <td>LA</td>
-<td>1</td>
-</tr><tr class="even"><td>District</td>
-<td>3 digits</td>
-<td>001, 036</td>
-<td>69</td>
+</tr><tr class="even"><td>District (LEA)</td>
+<td>3-digit code</td>
+<td>001 (Acadia Parish), 036 (Orleans Parish)</td>
 </tr><tr class="odd"><td>School</td>
-<td>6 digits (district + school)</td>
-<td>001005, 036132</td>
-<td>335</td>
-</tr><tr class="even"><td>Charter/Special</td>
-<td>Letter prefix</td>
-<td>R36, W31001, 3C7001</td>
-<td>33</td>
-</tr><tr class="odd"><td>Total entities</td>
-<td>-</td>
-<td>-</td>
-<td>438</td>
-</tr></tbody></table><p><strong>ID Decomposition:</strong> - School ID <code>001005</code> = District <code>001</code> (Acadia Parish) + School <code>005</code> - School ID <code>036132</code> = District <code>036</code> (Orleans Parish) + School <code>132</code> - Charter IDs have various prefixes: R, W, A, 3C</p>
+<td>Varies by year</td>
+<td>Often blank in summary files, sometimes 6-digit composite</td>
+</tr><tr class="even"><td>School System</td>
+<td>3-digit code (same as district)</td>
+<td>Same as district</td>
+</tr></tbody></table><p><strong>Note:</strong> The assessment files focus on district-level aggregation. School codes are often NA or use a different system than enrollment data. Use district_id (School System Code) as the primary join key.</p>
 </div>
 <div class="section level3">
 <h3 id="known-data-issues">Known Data Issues<a class="anchor" aria-label="anchor" href="#known-data-issues"></a></h3>
 <table class="table"><colgroup><col width="26%"><col width="34%"><col width="38%"></colgroup><thead><tr class="header"><th>Issue</th>
 <th>Example</th>
 <th>Handling</th>
-</tr></thead><tbody><tr class="odd"><td>Suppressed (small N)</td>
-<td><code>~</code></td>
-<td>Convert to NA</td>
+</tr></thead><tbody><tr class="odd"><td>FERPA suppression (small N)</td>
+<td>
+<code>&lt; 5</code>, <code>&lt; 10</code>
+</td>
+<td>Convert to NA, flag as suppressed</td>
 </tr><tr class="even"><td>Not reported</td>
 <td><code>NR</code></td>
-<td>Convert to NA</td>
-</tr><tr class="odd"><td>Capped high</td>
-<td><code>&gt;95</code></td>
-<td>Convert to 95 or NA with flag</td>
-</tr><tr class="even"><td>Capped low</td>
-<td><code>&lt;5</code></td>
-<td>Convert to 5 or NA with flag</td>
-</tr><tr class="odd"><td>Asterisk suppression</td>
-<td><code>*</code></td>
-<td>Convert to NA</td>
-</tr><tr class="even"><td>Floating point precision</td>
-<td><code>74.599999999999994</code></td>
-<td>Round to 1 decimal</td>
-</tr><tr class="odd"><td>Summary file 2022-2025</td>
-<td>Values in wrong columns</td>
-<td>Use subgroup files instead</td>
-</tr><tr class="even"><td>Hurricane districts</td>
-<td>Missing 2005-2009</td>
-<td>Cameron, Bogalusa, Orleans, Plaquemines, St. Bernard</td>
+<td>Convert to NA, flag as suppressed</td>
+</tr><tr class="odd"><td>Merged headers</td>
+<td>Subject names span multiple columns</td>
+<td>Parse column groups by position</td>
+</tr><tr class="even"><td>Column count changes</td>
+<td>2019: 22 cols, 2025: 42 cols</td>
+<td>Handle era-specific parsing</td>
+</tr><tr class="odd"><td>Missing school codes</td>
+<td>School Code often NA</td>
+<td>Use district-level aggregation</td>
+</tr><tr class="even"><td>Row 1-4 headers</td>
+<td>Multi-row header structure</td>
+<td>Skip first 3 rows</td>
+</tr><tr class="odd"><td>Percentage format</td>
+<td>Stored as strings (“7”, “36”, etc.)</td>
+<td>Convert to numeric</td>
 </tr></tbody></table></div>
 </div>
 <div class="section level2">
 <h2 id="time-series-heuristics">Time Series Heuristics<a class="anchor" aria-label="anchor" href="#time-series-heuristics"></a></h2>
 <div class="section level3">
-<h3 id="state-graduation-rate-expected-range">State Graduation Rate Expected Range<a class="anchor" aria-label="anchor" href="#state-graduation-rate-expected-range"></a></h3>
+<h3 id="state-level-mastery-rates-grades-3-8-all-subjects">State-Level Mastery+ Rates (Grades 3-8, All Subjects)<a class="anchor" aria-label="anchor" href="#state-level-mastery-rates-grades-3-8-all-subjects"></a></h3>
+<p>Historical state Mastery+ rates (percentage of students scoring Advanced or Mastery):</p>
 <table class="table"><thead><tr class="header"><th>Year</th>
-<th>Rate</th>
-<th>YoY Change</th>
-</tr></thead><tbody><tr class="odd"><td>2006</td>
-<td>64.8%</td>
-<td>-</td>
-</tr><tr class="even"><td>2007</td>
-<td>66.3%</td>
-<td>+1.5</td>
-</tr><tr class="odd"><td>2008</td>
-<td>66.0%</td>
-<td>-0.3</td>
-</tr><tr class="even"><td>2009</td>
-<td>67.3%</td>
-<td>+1.3</td>
-</tr><tr class="odd"><td>2010</td>
-<td>67.2%</td>
-<td>-0.1</td>
-</tr><tr class="even"><td>2011</td>
-<td>71.4%</td>
-<td>+4.2</td>
-</tr><tr class="odd"><td>2012</td>
-<td>72.3%</td>
-<td>+0.9</td>
-</tr><tr class="even"><td>2013</td>
-<td>73.5%</td>
-<td>+1.2</td>
-</tr><tr class="odd"><td>2014</td>
-<td>74.6%</td>
-<td>+1.1</td>
-</tr><tr class="even"><td>2015</td>
-<td>77.5%</td>
-<td>+2.9</td>
-</tr><tr class="odd"><td>2016</td>
-<td>77.0%</td>
-<td>-0.5</td>
-</tr><tr class="even"><td>2017</td>
-<td>78.2%</td>
-<td>+1.2</td>
-</tr><tr class="odd"><td>2018</td>
-<td>81.4%</td>
-<td>+3.2</td>
+<th>ELA Mastery+</th>
+<th>Math Mastery+</th>
+<th>Notes</th>
+</tr></thead><tbody><tr class="odd"><td>2025</td>
+<td>~43%</td>
+<td>~36%</td>
+<td>Preliminary data</td>
+</tr><tr class="even"><td>2024</td>
+<td>~42%</td>
+<td>~35%</td>
+<td>Post-pandemic recovery</td>
+</tr><tr class="odd"><td>2023</td>
+<td>~40%</td>
+<td>~32%</td>
+<td>Continuing recovery</td>
+</tr><tr class="even"><td>2022</td>
+<td>~38%</td>
+<td>~30%</td>
+<td>Early recovery</td>
+</tr><tr class="odd"><td>2021</td>
+<td>~35%</td>
+<td>~25%</td>
+<td>COVID impact year</td>
 </tr><tr class="even"><td>2019</td>
-<td>80.1%</td>
-<td>-1.3</td>
+<td>~41%</td>
+<td>~33%</td>
+<td>Pre-pandemic baseline</td>
 </tr><tr class="odd"><td>2020</td>
-<td>84.0%</td>
-<td>+3.9</td>
-</tr><tr class="even"><td>2021</td>
-<td>83.5%</td>
-<td>-0.5</td>
-</tr><tr class="odd"><td>2022</td>
-<td>82.7%</td>
-<td>-0.8</td>
-</tr><tr class="even"><td>2023</td>
-<td>83.2%</td>
-<td>+0.5</td>
-</tr><tr class="odd"><td>2024</td>
-<td>83.5%</td>
-<td>+0.3</td>
-</tr><tr class="even"><td>2025</td>
-<td>85.0%</td>
-<td>+1.5</td>
-</tr></tbody></table><p><strong>Validation Rules:</strong> - State total: 64% - 90% (historical range) - Year-over-year change: typically &lt; 5 percentage points - District count: 69-70 districts - School count: 300-350 schools (with graduation data) - Major districts (East Baton Rouge, Jefferson, Orleans area) should exist in all years</p>
+<td>No testing</td>
+<td>No testing</td>
+<td>COVID - assessments cancelled</td>
+</tr></tbody></table><p><strong>Validation Rules:</strong> - State Mastery+ should be 25% - 50% (historical range) - Year-over-year change typically &lt; 5 percentage points (except COVID years) - District count: 69-70 districts expected - Major subgroups (Total Population, Black, White, Hispanic) should exist for all districts - All grades (3-8) should be present for each district - Achievement level percentages should sum to approximately 100% per subject</p>
 </div>
 <div class="section level3">
-<h3 id="major-district-ids-to-verify">Major District IDs to Verify<a class="anchor" aria-label="anchor" href="#major-district-ids-to-verify"></a></h3>
+<h3 id="subject-specific-expected-ranges">Subject-Specific Expected Ranges<a class="anchor" aria-label="anchor" href="#subject-specific-expected-ranges"></a></h3>
+<table class="table"><thead><tr class="header"><th>Subject</th>
+<th>Mastery+ Range</th>
+<th>Notes</th>
+</tr></thead><tbody><tr class="odd"><td>ELA</td>
+<td>35% - 45%</td>
+<td>Generally higher than math</td>
+</tr><tr class="even"><td>Math</td>
+<td>25% - 40%</td>
+<td>More challenging, lower mastery</td>
+</tr><tr class="odd"><td>Science</td>
+<td>25% - 35%</td>
+<td>Similar to math</td>
+</tr><tr class="even"><td>Social Studies</td>
+<td>30% - 40%</td>
+<td>Between ELA and math</td>
+</tr></tbody></table></div>
+<div class="section level3">
+<h3 id="major-districts-to-verify">Major Districts to Verify<a class="anchor" aria-label="anchor" href="#major-districts-to-verify"></a></h3>
 <table class="table"><thead><tr class="header"><th>District ID</th>
 <th>Name</th>
 <th>Expected Presence</th>
@@ -333,14 +394,22 @@
 <td>All years</td>
 </tr><tr class="odd"><td>036/R36</td>
 <td>Orleans Parish / RSD</td>
-<td>Post-2009 (hurricane impact)</td>
+<td>All years</td>
 </tr><tr class="even"><td>009</td>
 <td>Caddo Parish</td>
 <td>All years</td>
 </tr><tr class="odd"><td>052</td>
 <td>St. Tammany Parish</td>
 <td>All years</td>
+</tr><tr class="even"><td>001</td>
+<td>Acadia Parish</td>
+<td>All years</td>
 </tr></tbody></table></div>
+<div class="section level3">
+<h3 id="data-quality-checks">Data Quality Checks<a class="anchor" aria-label="anchor" href="#data-quality-checks"></a></h3>
+<p><strong>Red Flags:</strong> - Mastery+ &gt; 60% (statewide or district level) - likely data error - Achievement levels don’t sum to ~100% - Missing grades for a district - Negative percentages - Percentages &gt; 100% - “NR” or “&lt; 5” for state-level totals (should only appear for small subgroups)</p>
+<p><strong>Expected Zeros:</strong> - Some small subgroups may have 100% suppression in small districts - Not all districts test all EOC subjects in high school</p>
+</div>
 </div>
 <div class="section level2">
 <h2 id="recommended-implementation">Recommended Implementation<a class="anchor" aria-label="anchor" href="#recommended-implementation"></a></h2>
@@ -348,234 +417,400 @@
 <h3 id="priority-high">Priority: HIGH<a class="anchor" aria-label="anchor" href="#priority-high"></a></h3>
 </div>
 <div class="section level3">
-<h3 id="complexity-medium">Complexity: MEDIUM<a class="anchor" aria-label="anchor" href="#complexity-medium"></a></h3>
+<h3 id="complexity-medium-high">Complexity: MEDIUM-HIGH<a class="anchor" aria-label="anchor" href="#complexity-medium-high"></a></h3>
 </div>
 <div class="section level3">
-<h3 id="estimated-files-to-createmodify-4-5">Estimated Files to Create/Modify: 4-5<a class="anchor" aria-label="anchor" href="#estimated-files-to-createmodify-4-5"></a></h3>
+<h3 id="estimated-files-to-createmodify-6-7">Estimated Files to Create/Modify: 6-7<a class="anchor" aria-label="anchor" href="#estimated-files-to-createmodify-6-7"></a></h3>
 </div>
 <div class="section level3">
 <h3 id="recommended-approach">Recommended Approach<a class="anchor" aria-label="anchor" href="#recommended-approach"></a></h3>
-<p>Use the <strong>subgroup files</strong> (Source 1) as the primary data source because: 1. They contain state, district, AND school level data 2. They have the most complete subgroup breakdowns 3. They are consistently formatted across years 4. The summary file has known issues for recent years</p>
+<p>Use the <strong>subgroup files with school-level data</strong> (Source 1 and Source 2) as the primary data sources because: 1. They contain state, district, AND school level data 2. They have the most complete subgroup breakdowns 3. They cover the most recent years with consistent formatting 4. School-level data enables more granular analysis</p>
+<p><strong>Start with Grades 3-8 only</strong> (2019, 2021-2024), then add High School EOC data later.</p>
 </div>
 <div class="section level3">
 <h3 id="implementation-steps">Implementation Steps<a class="anchor" aria-label="anchor" href="#implementation-steps"></a></h3>
+<p><strong>Phase 1: Grades 3-8 Assessment (Primary Focus)</strong></p>
 <ol style="list-style-type: decimal"><li>
-<strong>Create <code>get_raw_grad()</code> function</strong> (in new file <code>R/get_raw_graduation.R</code>)
-<ul><li>Build URL based on year (handle naming variations)</li>
+<strong>Create <code>get_raw_asmt_g38()</code> function</strong> (in new file <code>R/get_raw_assessment.R</code>)
+<ul><li>Build URL based on year (handle 2019 vs 2021-2024 naming)</li>
 <li>Download Excel file with retry logic</li>
-<li>Read with proper header handling (skip 2 rows, use row 3 as headers)</li>
-<li>Handle suppression markers (~, NR, *, &gt;95, &lt;5)</li>
+<li>Read with <code>skip = 3</code> to handle multi-row headers</li>
+<li>Handle era-specific column structures (2019-2022: 22 cols, 2024-2025: 42 cols)</li>
 </ul></li>
 <li>
-<strong>Create <code>process_grad()</code> function</strong> (in new file <code>R/process_graduation.R</code>)
-<ul><li>Standardize column names across years</li>
-<li>Convert suppressed values to NA</li>
-<li>Parse entity IDs into type (state/district/school)</li>
-<li>Split composite school IDs into district_id + campus_id</li>
+<strong>Create <code>process_asmt_g38()</code> function</strong> (in new file <code>R/process_assessment.R</code>)
+<ul><li>Detect column era (2019-2022 vs 2024-2025) based on ncol()</li>
+<li>Parse achievement level columns by position (not name, since names are messy)</li>
+<li>Convert suppression markers (<code>&lt; 5</code>, <code>NR</code>) to NA</li>
+<li>Convert percentage strings to numeric</li>
+<li>Calculate Mastery+ = Advanced + Mastery</li>
+<li>Parse Summary Level into is_state, is_district, is_school flags</li>
+<li>Clean grade values (convert “03” to “3”, handle “All”)</li>
 </ul></li>
 <li>
-<strong>Create <code>tidy_grad()</code> function</strong>
-<ul><li>Pivot subgroup columns to long format</li>
-<li>Create subgroup and rate columns</li>
-<li>Add is_state, is_district, is_campus flags</li>
+<strong>Create <code>tidy_asmt_g38()</code> function</strong>
+<ul><li>Reshape from wide to long format</li>
+<li>One row per subject-grade-subgroup combination</li>
+<li>Columns: end_year, district_id, district_name, grade, subject, subgroup, achievement_level, pct_mastery, pct_advanced, pct_mastery_plus</li>
+<li>Add aggregation flags (is_state, is_district, is_school)</li>
 </ul></li>
 <li>
-<strong>Create <code>fetch_grad()</code> and <code>fetch_grad_multi()</code> functions</strong> (in <code>R/fetch_graduation.R</code>)
+<strong>Create <code>fetch_asmt_g38()</code> and <code>fetch_asmt_g38_multi()</code> functions</strong> (in <code>R/fetch_assessment.R</code>)
 <ul><li>Main user-facing functions</li>
 <li>Similar API to existing <code><a href="reference/fetch_enr.html">fetch_enr()</a></code>
 </li>
+<li>Support subject, grade, and subgroup filtering</li>
 <li>Support tidy/wide output and caching</li>
 </ul></li>
 <li>
-<strong>Add tests</strong> (in <code>tests/testthat/test-graduation.R</code>)
+<strong>Add tests</strong> (in <code>tests/testthat/test-assessment.R</code>)
 <ul><li>Raw data fidelity tests with specific values</li>
 <li>URL availability tests</li>
-<li>Subgroup value verification</li>
-<li>ID parsing tests</li>
+<li>Achievement level verification (sums to ~100%)</li>
+<li>Mastery+ calculation tests</li>
+<li>Era detection tests</li>
 </ul></li>
-</ol></div>
+</ol><p><strong>Phase 2: High School EOC Assessment (Future Enhancement)</strong></p>
+<ul><li>Similar structure to Phase 1</li>
+<li>Subjects: English I, English II, Algebra I, Geometry, Biology, US History</li>
+<li>Fewer years available (2019, 2021-2022)</li>
+<li>Separate <code>get_raw_asmt_hs()</code>, <code>process_asmt_hs()</code>, <code>tidy_asmt_hs()</code> functions</li>
+</ul></div>
 <div class="section level3">
 <h3 id="api-design">API Design<a class="anchor" aria-label="anchor" href="#api-design"></a></h3>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># Single year</span></span>
-<span><span class="va">grad_2024</span> <span class="op">&lt;-</span> <span class="fu">fetch_grad</span><span class="op">(</span><span class="fl">2024</span><span class="op">)</span></span>
-<span><span class="va">grad_2024</span> <span class="op">&lt;-</span> <span class="fu">fetch_grad</span><span class="op">(</span><span class="fl">2024</span>, tidy <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>  <span class="co"># default</span></span>
+<code class="sourceCode R"><span><span class="co"># Single year, Grades 3-8</span></span>
+<span><span class="va">asmt_2024</span> <span class="op">&lt;-</span> <span class="fu">fetch_asmt_g38</span><span class="op">(</span><span class="fl">2024</span><span class="op">)</span></span>
+<span><span class="va">asmt_2024</span> <span class="op">&lt;-</span> <span class="fu">fetch_asmt_g38</span><span class="op">(</span><span class="fl">2024</span>, tidy <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>  <span class="co"># default</span></span>
 <span></span>
 <span><span class="co"># Multiple years</span></span>
-<span><span class="va">grad_multi</span> <span class="op">&lt;-</span> <span class="fu">fetch_grad_multi</span><span class="op">(</span><span class="fl">2020</span><span class="op">:</span><span class="fl">2024</span><span class="op">)</span></span>
+<span><span class="va">asmt_multi</span> <span class="op">&lt;-</span> <span class="fu">fetch_asmt_g38_multi</span><span class="op">(</span><span class="fl">2019</span><span class="op">:</span><span class="fl">2024</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Filter by subject</span></span>
+<span><span class="va">asmt_elas</span> <span class="op">&lt;-</span> <span class="fu">fetch_asmt_g38</span><span class="op">(</span><span class="fl">2024</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">subject</span> <span class="op">==</span> <span class="st">"ELA"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Filter by grade</span></span>
+<span><span class="va">asmt_grade4</span> <span class="op">&lt;-</span> <span class="fu">fetch_asmt_g38</span><span class="op">(</span><span class="fl">2024</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">grade</span> <span class="op">==</span> <span class="st">"4"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Filter by subgroup</span></span>
+<span><span class="va">asmt_ed</span> <span class="op">&lt;-</span> <span class="fu">fetch_asmt_g38</span><span class="op">(</span><span class="fl">2024</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">subgroup</span> <span class="op">==</span> <span class="st">"Economically Disadvantaged"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Available years</span></span>
-<span><span class="fu">get_grad_available_years</span><span class="op">(</span><span class="op">)</span>  <span class="co"># Returns 2014:2025</span></span></code></pre></div>
+<span><span class="fu">get_asmt_g38_available_years</span><span class="op">(</span><span class="op">)</span>  <span class="co"># Returns c(2019, 2021, 2022, 2023, 2024)</span></span></code></pre></div>
 </div>
 <div class="section level3">
-<h3 id="output-schema-tidy--true">Output Schema (tidy = TRUE)<a class="anchor" aria-label="anchor" href="#output-schema-tidy--true"></a></h3>
-<table class="table"><thead><tr class="header"><th>Column</th>
+<h3 id="output-schema-tidy--true-grades-3-8">Output Schema (tidy = TRUE, Grades 3-8)<a class="anchor" aria-label="anchor" href="#output-schema-tidy--true-grades-3-8"></a></h3>
+<table class="table"><colgroup><col width="29%"><col width="22%"><col width="48%"></colgroup><thead><tr class="header"><th>Column</th>
 <th>Type</th>
 <th>Description</th>
 </tr></thead><tbody><tr class="odd"><td>end_year</td>
 <td>integer</td>
 <td>School year end (2024 = 2023-24)</td>
-</tr><tr class="even"><td>type</td>
-<td>character</td>
-<td>“State”, “District”, “Campus”</td>
-</tr><tr class="odd"><td>district_id</td>
+</tr><tr class="even"><td>district_id</td>
 <td>character</td>
 <td>3-digit district code</td>
-</tr><tr class="even"><td>campus_id</td>
-<td>character</td>
-<td>School code (3 digits) or NA</td>
 </tr><tr class="odd"><td>district_name</td>
 <td>character</td>
 <td>District name</td>
-</tr><tr class="even"><td>campus_name</td>
+</tr><tr class="even"><td>grade</td>
 <td>character</td>
-<td>School name or NA</td>
-</tr><tr class="odd"><td>subgroup</td>
+<td>Grade level (“3” through “8”, or “All”)</td>
+</tr><tr class="odd"><td>subject</td>
 <td>character</td>
-<td>“overall”, “white”, “black”, etc.</td>
-</tr><tr class="even"><td>grad_rate</td>
+<td>“ELA”, “Math”, “Science”, “Social Studies”, “All Subjects”</td>
+</tr><tr class="even"><td>subgroup</td>
+<td>character</td>
+<td>“Total Population”, “White”, “Black”, etc.</td>
+</tr><tr class="odd"><td>pct_advanced</td>
 <td>numeric</td>
-<td>Graduation rate (0-100)</td>
+<td>Percent Advanced (NA if suppressed)</td>
+</tr><tr class="even"><td>pct_mastery</td>
+<td>numeric</td>
+<td>Percent Mastery (NA if suppressed)</td>
+</tr><tr class="odd"><td>pct_basic</td>
+<td>numeric</td>
+<td>Percent Basic (NA if suppressed)</td>
+</tr><tr class="even"><td>pct_approaching_basic</td>
+<td>numeric</td>
+<td>Percent Approaching Basic (NA if suppressed)</td>
+</tr><tr class="odd"><td>pct_unsatisfactory</td>
+<td>numeric</td>
+<td>Percent Unsatisfactory (NA if suppressed)</td>
+</tr><tr class="even"><td>pct_mastery_plus</td>
+<td>numeric</td>
+<td>Mastery+ = Advanced + Mastery (calculated)</td>
+</tr><tr class="odd"><td>n_tested</td>
+<td>integer</td>
+<td>Number tested (2024+ only, NA for earlier years)</td>
+</tr><tr class="even"><td>pct_tested</td>
+<td>numeric</td>
+<td>Percent tested (2024+ only, NA for earlier years)</td>
 </tr><tr class="odd"><td>is_suppressed</td>
 <td>logical</td>
-<td>TRUE if original was ~, NR, etc.</td>
-</tr><tr class="even"><td>is_capped</td>
+<td>TRUE if any achievement level was suppressed</td>
+</tr><tr class="even"><td>is_state</td>
 <td>logical</td>
-<td>TRUE if original was &gt;95 or &lt;5</td>
-</tr><tr class="odd"><td>is_state</td>
+<td>Aggregation flag (state row)</td>
+</tr><tr class="odd"><td>is_district</td>
 <td>logical</td>
-<td>Aggregation flag</td>
-</tr><tr class="even"><td>is_district</td>
+<td>Aggregation flag (district row)</td>
+</tr><tr class="even"><td>is_school</td>
 <td>logical</td>
-<td>Aggregation flag</td>
-</tr><tr class="odd"><td>is_campus</td>
-<td>logical</td>
-<td>Aggregation flag</td>
+<td>Aggregation flag (school row, often NA)</td>
 </tr></tbody></table></div>
 <div class="section level3">
-<h3 id="output-schema-tidy--false">Output Schema (tidy = FALSE)<a class="anchor" aria-label="anchor" href="#output-schema-tidy--false"></a></h3>
+<h3 id="output-schema-tidy--false-grades-3-8">Output Schema (tidy = FALSE, Grades 3-8)<a class="anchor" aria-label="anchor" href="#output-schema-tidy--false-grades-3-8"></a></h3>
+<p>Wide format with one row per grade-subgroup combination:</p>
 <table class="table"><thead><tr class="header"><th>Column</th>
 <th>Type</th>
 <th>Description</th>
 </tr></thead><tbody><tr class="odd"><td>end_year</td>
 <td>integer</td>
 <td>School year end</td>
-</tr><tr class="even"><td>type</td>
-<td>character</td>
-<td>Entity type</td>
-</tr><tr class="odd"><td>district_id</td>
+</tr><tr class="even"><td>district_id</td>
 <td>character</td>
 <td>District code</td>
-</tr><tr class="even"><td>campus_id</td>
-<td>character</td>
-<td>School code</td>
 </tr><tr class="odd"><td>district_name</td>
 <td>character</td>
 <td>District name</td>
-</tr><tr class="even"><td>campus_name</td>
+</tr><tr class="even"><td>grade</td>
 <td>character</td>
-<td>School name</td>
-</tr><tr class="odd"><td>overall</td>
+<td>Grade level</td>
+</tr><tr class="odd"><td>subgroup</td>
+<td>character</td>
+<td>Subgroup name</td>
+</tr><tr class="even"><td>ela_advanced</td>
 <td>numeric</td>
-<td>Overall graduation rate</td>
-</tr><tr class="even"><td>white</td>
+<td>ELA Advanced %</td>
+</tr><tr class="odd"><td>ela_mastery</td>
 <td>numeric</td>
-<td>White graduation rate</td>
-</tr><tr class="odd"><td>black</td>
+<td>ELA Mastery %</td>
+</tr><tr class="even"><td>ela_basic</td>
 <td>numeric</td>
-<td>Black graduation rate</td>
-</tr><tr class="even"><td>hispanic</td>
+<td>ELA Basic %</td>
+</tr><tr class="odd"><td>ela_app_basic</td>
 <td>numeric</td>
-<td>Hispanic graduation rate</td>
-</tr><tr class="odd"><td>…</td>
+<td>ELA Approaching Basic %</td>
+</tr><tr class="even"><td>ela_unsat</td>
+<td>numeric</td>
+<td>ELA Unsatisfactory %</td>
+</tr><tr class="odd"><td>ela_mastery_plus</td>
+<td>numeric</td>
+<td>ELA Mastery+ (calculated)</td>
+</tr><tr class="even"><td>math_advanced</td>
+<td>numeric</td>
+<td>Math Advanced %</td>
+</tr><tr class="odd"><td>math_mastery</td>
+<td>numeric</td>
+<td>Math Mastery %</td>
+</tr><tr class="even"><td>…</td>
 <td>…</td>
-<td>(other subgroups)</td>
+<td>(similar columns for Science, Social Studies)</td>
 </tr></tbody></table></div>
 </div>
 <div class="section level2">
 <h2 id="test-requirements">Test Requirements<a class="anchor" aria-label="anchor" href="#test-requirements"></a></h2>
 <div class="section level3">
 <h3 id="raw-data-fidelity-tests-needed">Raw Data Fidelity Tests Needed<a class="anchor" aria-label="anchor" href="#raw-data-fidelity-tests-needed"></a></h3>
+<p><strong>These tests verify exact values from the raw Excel files to ensure data fidelity.</strong></p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># Verify specific values from raw Excel</span></span>
-<span><span class="fu">test_that</span><span class="op">(</span><span class="st">"2025 Louisiana state graduation rate is 85.0%"</span>, <span class="op">{</span></span>
-<span>  <span class="va">data</span> <span class="op">&lt;-</span> <span class="fu">fetch_grad</span><span class="op">(</span><span class="fl">2025</span>, tidy <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span>  <span class="va">state</span> <span class="op">&lt;-</span> <span class="va">data</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/stats/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">is_state</span>, <span class="va">subgroup</span> <span class="op">==</span> <span class="st">"overall"</span><span class="op">)</span></span>
-<span>  <span class="fu">expect_equal</span><span class="op">(</span><span class="va">state</span><span class="op">$</span><span class="va">grad_rate</span>, <span class="fl">85.0</span>, tolerance <span class="op">=</span> <span class="fl">0.1</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="co"># 2025 State Mastery+ rates (Grades 3-8, All Subjects)</span></span>
+<span><span class="fu">test_that</span><span class="op">(</span><span class="st">"2025: State ELA Mastery+ is correct"</span>, <span class="op">{</span></span>
+<span>  <span class="fu">skip_if_offline</span><span class="op">(</span><span class="op">)</span></span>
+<span>  <span class="va">data</span> <span class="op">&lt;-</span> <span class="fu">fetch_asmt_g38</span><span class="op">(</span><span class="fl">2025</span>, tidy <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span>  <span class="va">state_ela</span> <span class="op">&lt;-</span> <span class="va">data</span> <span class="op">%&gt;%</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/stats/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">is_state</span>, <span class="va">grade</span> <span class="op">==</span> <span class="st">"All"</span>, <span class="va">subject</span> <span class="op">==</span> <span class="st">"ELA"</span>, <span class="va">subgroup</span> <span class="op">==</span> <span class="st">"Total Population"</span><span class="op">)</span></span>
+<span></span>
+<span>  <span class="co"># Expected: Advanced (7) + Mastery (36) = 43%</span></span>
+<span>  <span class="fu">expect_equal</span><span class="op">(</span><span class="va">state_ela</span><span class="op">$</span><span class="va">pct_mastery_plus</span>, <span class="fl">43</span>, tolerance <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span></span>
 <span><span class="op">}</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">test_that</span><span class="op">(</span><span class="st">"2025 Louisiana Asian graduation rate is 94.4%"</span>, <span class="op">{</span></span>
-<span>  <span class="va">data</span> <span class="op">&lt;-</span> <span class="fu">fetch_grad</span><span class="op">(</span><span class="fl">2025</span>, tidy <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span>  <span class="va">state</span> <span class="op">&lt;-</span> <span class="va">data</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/stats/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">is_state</span>, <span class="va">subgroup</span> <span class="op">==</span> <span class="st">"asian"</span><span class="op">)</span></span>
-<span>  <span class="fu">expect_equal</span><span class="op">(</span><span class="va">state</span><span class="op">$</span><span class="va">grad_rate</span>, <span class="fl">94.4</span>, tolerance <span class="op">=</span> <span class="fl">0.1</span><span class="op">)</span></span>
+<span><span class="fu">test_that</span><span class="op">(</span><span class="st">"2025: State Math Mastery+ is correct"</span>, <span class="op">{</span></span>
+<span>  <span class="fu">skip_if_offline</span><span class="op">(</span><span class="op">)</span></span>
+<span>  <span class="va">data</span> <span class="op">&lt;-</span> <span class="fu">fetch_asmt_g38</span><span class="op">(</span><span class="fl">2025</span>, tidy <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span>  <span class="va">state_math</span> <span class="op">&lt;-</span> <span class="va">data</span> <span class="op">%&gt;%</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/stats/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">is_state</span>, <span class="va">grade</span> <span class="op">==</span> <span class="st">"All"</span>, <span class="va">subject</span> <span class="op">==</span> <span class="st">"Math"</span>, <span class="va">subgroup</span> <span class="op">==</span> <span class="st">"Total Population"</span><span class="op">)</span></span>
+<span></span>
+<span>  <span class="co"># Expected: Advanced (6) + Mastery (30) = 36%</span></span>
+<span>  <span class="fu">expect_equal</span><span class="op">(</span><span class="va">state_math</span><span class="op">$</span><span class="va">pct_mastery_plus</span>, <span class="fl">36</span>, tolerance <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span></span>
 <span><span class="op">}</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">test_that</span><span class="op">(</span><span class="st">"2024 Louisiana state graduation rate is 83.5%"</span>, <span class="op">{</span></span>
-<span>  <span class="va">data</span> <span class="op">&lt;-</span> <span class="fu">fetch_grad</span><span class="op">(</span><span class="fl">2024</span>, tidy <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span>  <span class="va">state</span> <span class="op">&lt;-</span> <span class="va">data</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/stats/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">is_state</span>, <span class="va">subgroup</span> <span class="op">==</span> <span class="st">"overall"</span><span class="op">)</span></span>
-<span>  <span class="fu">expect_equal</span><span class="op">(</span><span class="va">state</span><span class="op">$</span><span class="va">grad_rate</span>, <span class="fl">83.5</span>, tolerance <span class="op">=</span> <span class="fl">0.1</span><span class="op">)</span></span>
+<span><span class="fu">test_that</span><span class="op">(</span><span class="st">"2024: District 001 (Acadia) Grade 4 ELA"</span>, <span class="op">{</span></span>
+<span>  <span class="fu">skip_if_offline</span><span class="op">(</span><span class="op">)</span></span>
+<span>  <span class="va">data</span> <span class="op">&lt;-</span> <span class="fu">fetch_asmt_g38</span><span class="op">(</span><span class="fl">2024</span>, tidy <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span>  <span class="va">acadia_gr4</span> <span class="op">&lt;-</span> <span class="va">data</span> <span class="op">%&gt;%</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/stats/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">district_id</span> <span class="op">==</span> <span class="st">"001"</span>, <span class="va">grade</span> <span class="op">==</span> <span class="st">"4"</span>, <span class="va">subject</span> <span class="op">==</span> <span class="st">"ELA"</span>, <span class="va">subgroup</span> <span class="op">==</span> <span class="st">"Total Population"</span><span class="op">)</span></span>
+<span></span>
+<span>  <span class="co"># Verify specific value from raw Excel</span></span>
+<span>  <span class="fu">expect_true</span><span class="op">(</span><span class="va">acadia_gr4</span><span class="op">$</span><span class="va">pct_mastery_plus</span> <span class="op">&gt;</span> <span class="fl">20</span> <span class="op">&amp;</span> <span class="va">acadia_gr4</span><span class="op">$</span><span class="va">pct_mastery_plus</span> <span class="op">&lt;</span> <span class="fl">70</span><span class="op">)</span></span>
 <span><span class="op">}</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">test_that</span><span class="op">(</span><span class="st">"2019 Louisiana state graduation rate is 80.1%"</span>, <span class="op">{</span></span>
-<span>  <span class="va">data</span> <span class="op">&lt;-</span> <span class="fu">fetch_grad</span><span class="op">(</span><span class="fl">2019</span>, tidy <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span>  <span class="va">state</span> <span class="op">&lt;-</span> <span class="va">data</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/stats/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">is_state</span>, <span class="va">subgroup</span> <span class="op">==</span> <span class="st">"overall"</span><span class="op">)</span></span>
-<span>  <span class="fu">expect_equal</span><span class="op">(</span><span class="va">state</span><span class="op">$</span><span class="va">grad_rate</span>, <span class="fl">80.1</span>, tolerance <span class="op">=</span> <span class="fl">0.1</span><span class="op">)</span></span>
+<span><span class="fu">test_that</span><span class="op">(</span><span class="st">"2019: Achievement levels sum to ~100%"</span>, <span class="op">{</span></span>
+<span>  <span class="fu">skip_if_offline</span><span class="op">(</span><span class="op">)</span></span>
+<span>  <span class="va">data</span> <span class="op">&lt;-</span> <span class="fu">fetch_asmt_g38</span><span class="op">(</span><span class="fl">2019</span>, tidy <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span></span>
+<span>  <span class="co"># Pick a random row</span></span>
+<span>  <span class="va">sample_row</span> <span class="op">&lt;-</span> <span class="va">data</span><span class="op">[</span><span class="fl">100</span>, <span class="op">]</span></span>
+<span></span>
+<span>  <span class="co"># Sum achievement levels</span></span>
+<span>  <span class="va">total</span> <span class="op">&lt;-</span> <span class="va">sample_row</span><span class="op">$</span><span class="va">pct_advanced</span> <span class="op">+</span> <span class="va">sample_row</span><span class="op">$</span><span class="va">pct_mastery</span> <span class="op">+</span></span>
+<span>           <span class="va">sample_row</span><span class="op">$</span><span class="va">pct_basic</span> <span class="op">+</span> <span class="va">sample_row</span><span class="op">$</span><span class="va">pct_approaching_basic</span> <span class="op">+</span></span>
+<span>           <span class="va">sample_row</span><span class="op">$</span><span class="va">pct_unsatisfactory</span></span>
+<span></span>
+<span>  <span class="co"># Should be approximately 100 (allowing for rounding)</span></span>
+<span>  <span class="fu">expect_true</span><span class="op">(</span><span class="va">total</span> <span class="op">&gt;=</span> <span class="fl">98</span> <span class="op">&amp;</span> <span class="va">total</span> <span class="op">&lt;=</span> <span class="fl">102</span><span class="op">)</span></span>
 <span><span class="op">}</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level3">
-<h3 id="data-quality-checks">Data Quality Checks<a class="anchor" aria-label="anchor" href="#data-quality-checks"></a></h3>
+<h3 id="data-quality-checks-1">Data Quality Checks<a class="anchor" aria-label="anchor" href="#data-quality-checks-1"></a></h3>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># No Inf or NaN</span></span>
-<span><span class="fu">test_that</span><span class="op">(</span><span class="st">"No Inf or NaN in graduation data"</span>, <span class="op">{</span></span>
-<span>  <span class="va">data</span> <span class="op">&lt;-</span> <span class="fu">fetch_grad</span><span class="op">(</span><span class="fl">2024</span>, tidy <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span>  <span class="fu">expect_false</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/any.html" class="external-link">any</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/is.finite.html" class="external-link">is.infinite</a></span><span class="op">(</span><span class="va">data</span><span class="op">$</span><span class="va">grad_rate</span><span class="op">)</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span>
-<span>  <span class="fu">expect_false</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/any.html" class="external-link">any</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/is.finite.html" class="external-link">is.nan</a></span><span class="op">(</span><span class="va">data</span><span class="op">$</span><span class="va">grad_rate</span><span class="op">)</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu">test_that</span><span class="op">(</span><span class="st">"No Inf or NaN in assessment data"</span>, <span class="op">{</span></span>
+<span>  <span class="fu">skip_if_offline</span><span class="op">(</span><span class="op">)</span></span>
+<span>  <span class="va">data</span> <span class="op">&lt;-</span> <span class="fu">fetch_asmt_g38</span><span class="op">(</span><span class="fl">2024</span>, tidy <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span></span>
+<span>  <span class="fu">expect_false</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/any.html" class="external-link">any</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/is.finite.html" class="external-link">is.infinite</a></span><span class="op">(</span><span class="va">data</span><span class="op">$</span><span class="va">pct_mastery_plus</span><span class="op">)</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span>
+<span>  <span class="fu">expect_false</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/any.html" class="external-link">any</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/is.finite.html" class="external-link">is.nan</a></span><span class="op">(</span><span class="va">data</span><span class="op">$</span><span class="va">pct_mastery_plus</span><span class="op">)</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="op">}</span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># Rates in valid range</span></span>
-<span><span class="fu">test_that</span><span class="op">(</span><span class="st">"Graduation rates are 0-100"</span>, <span class="op">{</span></span>
-<span>  <span class="va">data</span> <span class="op">&lt;-</span> <span class="fu">fetch_grad</span><span class="op">(</span><span class="fl">2024</span>, tidy <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span>  <span class="va">valid_rates</span> <span class="op">&lt;-</span> <span class="va">data</span><span class="op">$</span><span class="va">grad_rate</span><span class="op">[</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">data</span><span class="op">$</span><span class="va">grad_rate</span><span class="op">)</span><span class="op">]</span></span>
+<span><span class="co"># Mastery+ in reasonable range</span></span>
+<span><span class="fu">test_that</span><span class="op">(</span><span class="st">"Mastery+ rates are 0-100"</span>, <span class="op">{</span></span>
+<span>  <span class="fu">skip_if_offline</span><span class="op">(</span><span class="op">)</span></span>
+<span>  <span class="va">data</span> <span class="op">&lt;-</span> <span class="fu">fetch_asmt_g38</span><span class="op">(</span><span class="fl">2024</span>, tidy <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span>  <span class="va">valid_rates</span> <span class="op">&lt;-</span> <span class="va">data</span><span class="op">$</span><span class="va">pct_mastery_plus</span><span class="op">[</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">data</span><span class="op">$</span><span class="va">pct_mastery_plus</span><span class="op">)</span><span class="op">]</span></span>
+<span></span>
 <span>  <span class="fu">expect_true</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/all.html" class="external-link">all</a></span><span class="op">(</span><span class="va">valid_rates</span> <span class="op">&gt;=</span> <span class="fl">0</span> <span class="op">&amp;</span> <span class="va">valid_rates</span> <span class="op">&lt;=</span> <span class="fl">100</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="op">}</span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># Entity counts reasonable</span></span>
-<span><span class="fu">test_that</span><span class="op">(</span><span class="st">"2025 has expected entity counts"</span>, <span class="op">{</span></span>
-<span>  <span class="va">data</span> <span class="op">&lt;-</span> <span class="fu">fetch_grad</span><span class="op">(</span><span class="fl">2025</span>, tidy <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
-<span>  <span class="fu">expect_equal</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">data</span><span class="op">$</span><span class="va">type</span> <span class="op">==</span> <span class="st">"State"</span><span class="op">)</span>, <span class="fl">1</span><span class="op">)</span></span>
-<span>  <span class="fu">expect_gte</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">data</span><span class="op">$</span><span class="va">type</span> <span class="op">==</span> <span class="st">"District"</span><span class="op">)</span>, <span class="fl">65</span><span class="op">)</span></span>
-<span>  <span class="fu">expect_lte</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">data</span><span class="op">$</span><span class="va">type</span> <span class="op">==</span> <span class="st">"District"</span><span class="op">)</span>, <span class="fl">75</span><span class="op">)</span></span>
-<span>  <span class="fu">expect_gte</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">data</span><span class="op">$</span><span class="va">type</span> <span class="op">==</span> <span class="st">"Campus"</span><span class="op">)</span>, <span class="fl">250</span><span class="op">)</span></span>
+<span><span class="co"># State Mastery+ in expected range</span></span>
+<span><span class="fu">test_that</span><span class="op">(</span><span class="st">"State Mastery+ is in historical range"</span>, <span class="op">{</span></span>
+<span>  <span class="fu">skip_if_offline</span><span class="op">(</span><span class="op">)</span></span>
+<span>  <span class="va">data</span> <span class="op">&lt;-</span> <span class="fu">fetch_asmt_g38</span><span class="op">(</span><span class="fl">2024</span>, tidy <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span></span>
+<span>  <span class="va">state_ela</span> <span class="op">&lt;-</span> <span class="va">data</span> <span class="op">%&gt;%</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/stats/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">is_state</span>, <span class="va">grade</span> <span class="op">==</span> <span class="st">"All"</span>, <span class="va">subject</span> <span class="op">==</span> <span class="st">"ELA"</span>, <span class="va">subgroup</span> <span class="op">==</span> <span class="st">"Total Population"</span><span class="op">)</span></span>
+<span></span>
+<span>  <span class="va">state_math</span> <span class="op">&lt;-</span> <span class="va">data</span> <span class="op">%&gt;%</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/stats/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">is_state</span>, <span class="va">grade</span> <span class="op">==</span> <span class="st">"All"</span>, <span class="va">subject</span> <span class="op">==</span> <span class="st">"Math"</span>, <span class="va">subgroup</span> <span class="op">==</span> <span class="st">"Total Population"</span><span class="op">)</span></span>
+<span></span>
+<span>  <span class="co"># ELA should be 35-45%, Math should be 25-40%</span></span>
+<span>  <span class="fu">expect_true</span><span class="op">(</span><span class="va">state_ela</span><span class="op">$</span><span class="va">pct_mastery_plus</span> <span class="op">&gt;=</span> <span class="fl">35</span> <span class="op">&amp;</span> <span class="va">state_ela</span><span class="op">$</span><span class="va">pct_mastery_plus</span> <span class="op">&lt;=</span> <span class="fl">45</span><span class="op">)</span></span>
+<span>  <span class="fu">expect_true</span><span class="op">(</span><span class="va">state_math</span><span class="op">$</span><span class="va">pct_mastery_plus</span> <span class="op">&gt;=</span> <span class="fl">25</span> <span class="op">&amp;</span> <span class="va">state_math</span><span class="op">$</span><span class="va">pct_mastery_plus</span> <span class="op">&lt;=</span> <span class="fl">40</span><span class="op">)</span></span>
+<span><span class="op">}</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># All expected grades present</span></span>
+<span><span class="fu">test_that</span><span class="op">(</span><span class="st">"All grades 3-8 present"</span>, <span class="op">{</span></span>
+<span>  <span class="fu">skip_if_offline</span><span class="op">(</span><span class="op">)</span></span>
+<span>  <span class="va">data</span> <span class="op">&lt;-</span> <span class="fu">fetch_asmt_g38</span><span class="op">(</span><span class="fl">2024</span>, tidy <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span>  <span class="va">grades</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="va">data</span><span class="op">$</span><span class="va">grade</span><span class="op">)</span></span>
+<span></span>
+<span>  <span class="fu">expect_true</span><span class="op">(</span><span class="st">"3"</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="va">grades</span><span class="op">)</span></span>
+<span>  <span class="fu">expect_true</span><span class="op">(</span><span class="st">"4"</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="va">grades</span><span class="op">)</span></span>
+<span>  <span class="fu">expect_true</span><span class="op">(</span><span class="st">"5"</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="va">grades</span><span class="op">)</span></span>
+<span>  <span class="fu">expect_true</span><span class="op">(</span><span class="st">"6"</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="va">grades</span><span class="op">)</span></span>
+<span>  <span class="fu">expect_true</span><span class="op">(</span><span class="st">"7"</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="va">grades</span><span class="op">)</span></span>
+<span>  <span class="fu">expect_true</span><span class="op">(</span><span class="st">"8"</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="va">grades</span><span class="op">)</span></span>
+<span>  <span class="fu">expect_true</span><span class="op">(</span><span class="st">"All"</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="va">grades</span><span class="op">)</span></span>
+<span><span class="op">}</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># All expected subjects present</span></span>
+<span><span class="fu">test_that</span><span class="op">(</span><span class="st">"All core subjects present"</span>, <span class="op">{</span></span>
+<span>  <span class="fu">skip_if_offline</span><span class="op">(</span><span class="op">)</span></span>
+<span>  <span class="va">data</span> <span class="op">&lt;-</span> <span class="fu">fetch_asmt_g38</span><span class="op">(</span><span class="fl">2024</span>, tidy <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span>  <span class="va">subjects</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="va">data</span><span class="op">$</span><span class="va">subject</span><span class="op">)</span></span>
+<span></span>
+<span>  <span class="fu">expect_true</span><span class="op">(</span><span class="st">"ELA"</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="va">subjects</span><span class="op">)</span></span>
+<span>  <span class="fu">expect_true</span><span class="op">(</span><span class="st">"Math"</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="va">subjects</span><span class="op">)</span></span>
+<span>  <span class="fu">expect_true</span><span class="op">(</span><span class="st">"Science"</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="va">subjects</span><span class="op">)</span></span>
+<span>  <span class="fu">expect_true</span><span class="op">(</span><span class="st">"Social Studies"</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="va">subjects</span><span class="op">)</span></span>
+<span><span class="op">}</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Major districts present</span></span>
+<span><span class="fu">test_that</span><span class="op">(</span><span class="st">"Major districts present in data"</span>, <span class="op">{</span></span>
+<span>  <span class="fu">skip_if_offline</span><span class="op">(</span><span class="op">)</span></span>
+<span>  <span class="va">data</span> <span class="op">&lt;-</span> <span class="fu">fetch_asmt_g38</span><span class="op">(</span><span class="fl">2024</span>, tidy <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span>  <span class="va">districts</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="va">data</span><span class="op">$</span><span class="va">district_id</span><span class="op">)</span></span>
+<span></span>
+<span>  <span class="fu">expect_true</span><span class="op">(</span><span class="st">"001"</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="va">districts</span><span class="op">)</span>  <span class="co"># Acadia</span></span>
+<span>  <span class="fu">expect_true</span><span class="op">(</span><span class="st">"017"</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="va">districts</span><span class="op">)</span>  <span class="co"># East Baton Rouge</span></span>
+<span>  <span class="fu">expect_true</span><span class="op">(</span><span class="st">"026"</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="va">districts</span><span class="op">)</span>  <span class="co"># Jefferson</span></span>
+<span>  <span class="fu">expect_true</span><span class="op">(</span><span class="st">"036"</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="va">districts</span><span class="op">)</span>  <span class="co"># Orleans</span></span>
 <span><span class="op">}</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="url-availability-tests">URL Availability Tests<a class="anchor" aria-label="anchor" href="#url-availability-tests"></a></h3>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">test_that</span><span class="op">(</span><span class="st">"2025 graduation URL returns HTTP 200"</span>, <span class="op">{</span></span>
+<code class="sourceCode R"><span><span class="fu">test_that</span><span class="op">(</span><span class="st">"2024 LEAP Grades 3-8 URL returns HTTP 200"</span>, <span class="op">{</span></span>
 <span>  <span class="fu">skip_if_offline</span><span class="op">(</span><span class="op">)</span></span>
-<span>  <span class="va">url</span> <span class="op">&lt;-</span> <span class="fu">build_grad_url</span><span class="op">(</span><span class="fl">2025</span><span class="op">)</span></span>
+<span>  <span class="va">url</span> <span class="op">&lt;-</span> <span class="st">"https://doe.louisiana.gov/docs/default-source/test-results/2024-state-lea-school-leap-grade-3-8-achievement-level-subgroup-summary.xlsx"</span></span>
 <span>  <span class="va">response</span> <span class="op">&lt;-</span> <span class="fu">httr</span><span class="fu">::</span><span class="fu"><a href="https://httr.r-lib.org/reference/HEAD.html" class="external-link">HEAD</a></span><span class="op">(</span><span class="va">url</span>, <span class="fu">httr</span><span class="fu">::</span><span class="fu"><a href="https://httr.r-lib.org/reference/timeout.html" class="external-link">timeout</a></span><span class="op">(</span><span class="fl">30</span><span class="op">)</span><span class="op">)</span></span>
 <span>  <span class="fu">expect_equal</span><span class="op">(</span><span class="fu">httr</span><span class="fu">::</span><span class="fu"><a href="https://httr.r-lib.org/reference/status_code.html" class="external-link">status_code</a></span><span class="op">(</span><span class="va">response</span><span class="op">)</span>, <span class="fl">200</span><span class="op">)</span></span>
+<span><span class="op">}</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">test_that</span><span class="op">(</span><span class="st">"2019 LEAP Grades 3-8 URL returns HTTP 200"</span>, <span class="op">{</span></span>
+<span>  <span class="fu">skip_if_offline</span><span class="op">(</span><span class="op">)</span></span>
+<span>  <span class="va">url</span> <span class="op">&lt;-</span> <span class="st">"https://doe.louisiana.gov/docs/default-source/test-results/2019-state-lea-school-leap-grade-3-8-achievement-level-subgroup-summary.xlsx"</span></span>
+<span>  <span class="va">response</span> <span class="op">&lt;-</span> <span class="fu">httr</span><span class="fu">::</span><span class="fu"><a href="https://httr.r-lib.org/reference/HEAD.html" class="external-link">HEAD</a></span><span class="op">(</span><span class="va">url</span>, <span class="fu">httr</span><span class="fu">::</span><span class="fu"><a href="https://httr.r-lib.org/reference/timeout.html" class="external-link">timeout</a></span><span class="op">(</span><span class="fl">30</span><span class="op">)</span><span class="op">)</span></span>
+<span>  <span class="fu">expect_equal</span><span class="op">(</span><span class="fu">httr</span><span class="fu">::</span><span class="fu"><a href="https://httr.r-lib.org/reference/status_code.html" class="external-link">status_code</a></span><span class="op">(</span><span class="va">response</span><span class="op">)</span>, <span class="fl">200</span><span class="op">)</span></span>
+<span><span class="op">}</span><span class="op">)</span></span></code></pre></div>
+</div>
+<div class="section level3">
+<h3 id="era-detection-tests">Era Detection Tests<a class="anchor" aria-label="anchor" href="#era-detection-tests"></a></h3>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">test_that</span><span class="op">(</span><span class="st">"Era detection correctly identifies 2019-2022 vs 2024+"</span>, <span class="op">{</span></span>
+<span>  <span class="fu">skip_if_offline</span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span>  <span class="co"># 2019 should use old era (22 columns)</span></span>
+<span>  <span class="va">data_2019</span> <span class="op">&lt;-</span> <span class="fu">get_raw_asmt_g38</span><span class="op">(</span><span class="fl">2019</span><span class="op">)</span></span>
+<span>  <span class="fu">expect_equal</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">ncol</a></span><span class="op">(</span><span class="va">data_2019</span><span class="op">)</span>, <span class="fl">22</span><span class="op">)</span></span>
+<span></span>
+<span>  <span class="co"># 2024 should use new era (42 columns)</span></span>
+<span>  <span class="va">data_2024</span> <span class="op">&lt;-</span> <span class="fu">get_raw_asmt_g38</span><span class="op">(</span><span class="fl">2024</span><span class="op">)</span></span>
+<span>  <span class="fu">expect_equal</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">ncol</a></span><span class="op">(</span><span class="va">data_2024</span><span class="op">)</span>, <span class="fl">42</span><span class="op">)</span></span>
 <span><span class="op">}</span><span class="op">)</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level2">
 <h2 id="notes">Notes<a class="anchor" aria-label="anchor" href="#notes"></a></h2>
 <div class="section level3">
-<h3 id="domain-migration">Domain Migration<a class="anchor" aria-label="anchor" href="#domain-migration"></a></h3>
-<ul><li>Old domain: <code>louisianabelieves.com</code> now redirects to <code>doe.louisiana.gov</code>
-</li>
-<li>All URLs verified to work with new domain</li>
+<h3 id="covid-19-impact">COVID-19 Impact<a class="anchor" aria-label="anchor" href="#covid-19-impact"></a></h3>
+<ul><li>
+<strong>2020:</strong> No LEAP testing conducted (COVID-19 pandemic)</li>
+<li>
+<strong>2021:</strong> Testing resumed but with significant participation changes and lower mastery rates</li>
+<li>When analyzing trends, treat 2020 as missing and 2021 as COVID-impact year</li>
 </ul></div>
 <div class="section level3">
-<h3 id="credential-rates-future-enhancement">Credential Rates (Future Enhancement)<a class="anchor" aria-label="anchor" href="#credential-rates-future-enhancement"></a></h3>
-<p>The credential rate files provide additional data on: - % earning Advanced credentials (&gt;=150 points) - % earning Basic credentials (&gt;=110 and &lt;150 points) - % earning diploma with no credential (100/105 points)</p>
-<p>This could be a future enhancement after graduation rates are implemented.</p>
+<h3 id="satact-data-excluded">SAT/ACT Data (Excluded)<a class="anchor" aria-label="anchor" href="#satact-data-excluded"></a></h3>
+<p>As requested, SAT and ACT data are NOT included in this expansion. Louisiana uses SAT/ACT for high school accountability, but: - These are national college entrance exams, not state-specific assessments - Data is often less granular than LEAP - LEAP EOC (End of Course) exams provide better measures of Louisiana-specific curriculum</p>
 </div>
 <div class="section level3">
+<h3 id="data-access-notes">Data Access Notes<a class="anchor" aria-label="anchor" href="#data-access-notes"></a></h3>
+<ul><li>All files are direct downloads with no authentication required</li>
+<li>Files are hosted on <code>doe.louisiana.gov</code> (migrated from <code>louisianabelieves.com</code>)</li>
+<li>Files update annually in late summer/early fall</li>
+<li>Large file sizes (7-14 MB) due to school-level granularity</li>
+</ul></div>
+<div class="section level3">
 <h3 id="consistency-with-enrollment">Consistency with Enrollment<a class="anchor" aria-label="anchor" href="#consistency-with-enrollment"></a></h3>
-<p>The graduation data uses the same district ID system (3-digit parish codes) as the enrollment data, so entities can be joined between datasets.</p>
+<p>The assessment data uses the same district ID system (3-digit parish codes) as the enrollment data: - District 001 = Acadia Parish (both datasets) - District 036 = Orleans Parish (both datasets) - District “LA” = State total (both datasets) - Enables joining assessment and enrollment data for combined analysis</p>
 </div>
+<div class="section level3">
+<h3 id="future-enhancements-beyond-initial-scope">Future Enhancements (Beyond Initial Scope)<a class="anchor" aria-label="anchor" href="#future-enhancements-beyond-initial-scope"></a></h3>
+<ol style="list-style-type: decimal"><li>
+<strong>High School EOC Assessments</strong> (English I, English II, Algebra I, Geometry, Biology, US History)</li>
+<li>
+<strong>LEAP Connect</strong> (alternative assessment for students with significant cognitive disabilities)</li>
+<li>
+<strong>ELPT</strong> (English Language Proficiency Test for ELL students)</li>
+<li>
+<strong>Historical data</strong> (2016-2018) with different schema handling</li>
+<li>
+<strong>Longitudinal student-level data</strong> (if available from LDOE)</li>
+</ol></div>
 </div>
 </div>
 

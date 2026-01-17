@@ -386,3 +386,9 @@ ggplot(top5_trend, aes(x = end_year, y = n_students, color = district_name)) +
        x = "School Year", y = "Students", color = "") +
   theme_readme()
 ```
+
+## Session Info
+
+```{r session-info}
+sessionInfo()
+```
