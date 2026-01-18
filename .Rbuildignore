@@ -14,4 +14,4 @@
 ^py.*schooldata$
 ^EXPANSION\.md$
 ^generate_readme_figs\.R$
-^vignettes/.*_cache$
+^GRADUATION-RESEARCH\.md$
