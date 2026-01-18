@@ -10,7 +10,8 @@ vignette: >
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
-  comment = "#>"
+  comment = "#>",
+  cache = TRUE
 )
 ```
 
@@ -20,7 +21,7 @@ The `laschooldata` package provides easy access to Louisiana K-12 public school 
 
 ## Installation
 
-```{r installation}
+```{r installation, eval = FALSE}
 # Install from GitHub
 devtools::install_github("almartin82/laschooldata")
 ```
@@ -43,7 +44,7 @@ get_available_years()
 Use `fetch_enr()` to download enrollment data for a single school year:
 ```{r single-year}
 # Get 2024 data (2023-24 school year)
-enr_2024 <- fetch_enr(2024)
+enr_2024 <- fetch_enr(2024, use_cache = TRUE)
 
 # By default, returns tidy (long) format
 head(enr_2024)
@@ -65,7 +66,7 @@ The tidy format includes:
 
 For wide format (one row per entity), use `tidy = FALSE`:
 ```{r wide-format}
-enr_wide <- fetch_enr(2024, tidy = FALSE)
+enr_wide <- fetch_enr(2024, tidy = FALSE, use_cache = TRUE)
 
 # Wide format has columns for each subgroup
 names(enr_wide)
@@ -76,7 +77,7 @@ names(enr_wide)
 
 Use `fetch_enr_multi()` for multiple years:
 ```{r multi-year}
-enr_multi <- fetch_enr_multi(2022:2024)
+enr_multi <- fetch_enr_multi(2022:2024, use_cache = TRUE)
 
 # Track state enrollment trends
 enr_multi |>
@@ -137,7 +138,7 @@ enr_2024 |>
 ### Year-over-Year Comparison
 
 ```{r yoy-comparison}
-enr_multi <- fetch_enr_multi(2019:2024)
+enr_multi <- fetch_enr_multi(2019:2024, use_cache = TRUE)
 
 state_trends <- enr_multi |>
   filter(is_state, subgroup == "total_enrollment", grade_level == "TOTAL") |>
@@ -228,7 +229,7 @@ The package automatically detects and normalizes both formats to ensure consiste
 
 To verify gender data is being processed correctly:
 ```{r validate-gender}
-enr <- fetch_enr(2024, tidy = FALSE)
+enr <- fetch_enr(2024, tidy = FALSE, use_cache = TRUE)
 state <- enr[enr$type == "State", ]
 
 # These should be approximately equal
@@ -255,7 +256,7 @@ Gender data is stored as percentages in the source file. The package converts to
 
 ### Getting Help
 
-```{r help}
+```{r help, eval = FALSE}
 # View function documentation
 ?fetch_enr
 ?get_available_years
