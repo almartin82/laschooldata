@@ -59,6 +59,11 @@ enr <- fetch_enr_multi(2019:2024, use_cache = TRUE)
 key_years <- c(2019, 2024)
 enr_long <- fetch_enr_multi(key_years, use_cache = TRUE)
 enr_current <- fetch_enr(2024, use_cache = TRUE)
+
+# Calculate state totals for percentage calculations
+state_totals <- enr %>%
+  filter(is_state, grade_level == "TOTAL", subgroup == "total_enrollment") %>%
+  select(end_year, total = n_students)
 ```
 
 ## 1. Hurricane Katrina's lasting mark on New Orleans
@@ -69,6 +74,7 @@ Orleans Parish lost over 60% of its students after 2005 and has never fully reco
 orleans <- enr_long %>%
   filter(is_district, district_name == "Orleans Parish",
          subgroup == "total_enrollment", grade_level == "TOTAL")
+orleans %>% select(end_year, district_name, n_students)
 
 ggplot(orleans, aes(x = end_year, y = n_students)) +
   geom_line(linewidth = 1.5, color = colors["total"]) +
@@ -92,6 +98,7 @@ charter <- enr %>%
          subgroup == "total_enrollment", grade_level == "TOTAL") %>%
   group_by(end_year) %>%
   summarize(n_students = sum(n_students, na.rm = TRUE), .groups = "drop")
+charter
 
 ggplot(charter, aes(x = end_year, y = n_students)) +
   geom_line(linewidth = 1.5, color = colors["total"]) +
@@ -111,6 +118,9 @@ East Baton Rouge Parish now enrolls more students than Orleans, becoming Louisia
 br_orleans <- enr %>%
   filter(is_district, district_name %in% c("East Baton Rouge Parish", "Orleans Parish"),
          subgroup == "total_enrollment", grade_level == "TOTAL")
+br_orleans %>%
+  select(end_year, district_name, n_students) %>%
+  tidyr::pivot_wider(names_from = district_name, values_from = n_students)
 
 ggplot(br_orleans, aes(x = end_year, y = n_students, color = district_name)) +
   geom_line(linewidth = 1.2) +
@@ -127,16 +137,12 @@ ggplot(br_orleans, aes(x = end_year, y = n_students, color = district_name)) +
 African American and Hispanic students together now comprise over 55% of enrollment.
 
 ```{r demographics}
-# Get total enrollment to calculate percentages
-state_totals <- enr %>%
-  filter(is_state, grade_level == "TOTAL", subgroup == "total_enrollment") %>%
-  select(end_year, total = n_students)
-
 demo <- enr %>%
   filter(is_state, grade_level == "TOTAL",
          subgroup %in% c("white", "black", "hispanic", "asian")) %>%
   left_join(state_totals, by = "end_year") %>%
   mutate(pct = n_students / total * 100)
+demo %>% filter(end_year == 2024) %>% select(subgroup, n_students, pct)
 
 ggplot(demo, aes(x = end_year, y = pct, color = subgroup)) +
   geom_line(linewidth = 1.2) +
@@ -163,6 +169,9 @@ k_trend <- enr %>%
     grade_level == "09" ~ "Grade 9",
     grade_level == "12" ~ "Grade 12"
   ))
+k_trend %>%
+  filter(grade_level == "K") %>%
+  select(end_year, grade_label, n_students)
 
 ggplot(k_trend, aes(x = end_year, y = n_students, color = grade_label)) +
   geom_line(linewidth = 1.2) +
@@ -186,6 +195,7 @@ rural_trend <- enr %>%
          subgroup == "total_enrollment", grade_level == "TOTAL") %>%
   group_by(end_year) %>%
   summarize(n_students = sum(n_students, na.rm = TRUE), .groups = "drop")
+rural_trend
 
 ggplot(rural_trend, aes(x = end_year, y = n_students)) +
   geom_line(linewidth = 1.5, color = colors["total"]) +
@@ -205,6 +215,7 @@ Louisiana's second-largest parish has maintained steady enrollment while urban c
 jefferson <- enr %>%
   filter(is_district, district_name == "Jefferson Parish",
          subgroup == "total_enrollment", grade_level == "TOTAL")
+jefferson %>% select(end_year, district_name, n_students)
 
 ggplot(jefferson, aes(x = end_year, y = n_students)) +
   geom_line(linewidth = 1.5, color = colors["total"]) +
@@ -225,6 +236,7 @@ el <- enr %>%
   filter(is_state, subgroup == "lep", grade_level == "TOTAL") %>%
   left_join(state_totals, by = "end_year") %>%
   mutate(pct = n_students / total * 100)
+el %>% select(end_year, n_students, pct)
 
 ggplot(el, aes(x = end_year, y = pct)) +
   geom_line(linewidth = 1.5, color = colors["total"]) +
@@ -252,6 +264,7 @@ econ <- enr_current %>%
   arrange(desc(pct)) %>%
   head(10) %>%
   mutate(district_label = reorder(district_name, pct))
+econ %>% select(district_name, n_students, pct)
 
 ggplot(econ, aes(x = district_label, y = pct)) +
   geom_col(fill = colors["total"]) +
@@ -271,6 +284,9 @@ i10 <- c("Livingston Parish", "Ascension Parish", "St. Tammany Parish")
 i10_trend <- enr %>%
   filter(is_district, grepl(paste(i10, collapse = "|"), district_name, ignore.case = TRUE),
          subgroup == "total_enrollment", grade_level == "TOTAL")
+i10_trend %>%
+  select(end_year, district_name, n_students) %>%
+  tidyr::pivot_wider(names_from = district_name, values_from = n_students)
 
 ggplot(i10_trend, aes(x = end_year, y = n_students, color = district_name)) +
   geom_line(linewidth = 1.2) +
@@ -292,6 +308,9 @@ gender <- enr %>%
          subgroup %in% c("male", "female")) %>%
   left_join(state_totals, by = "end_year") %>%
   mutate(pct = n_students / total * 100)
+gender %>%
+  filter(end_year == 2024) %>%
+  select(subgroup, n_students, pct)
 
 ggplot(gender, aes(x = end_year, y = pct, color = subgroup)) +
   geom_line(linewidth = 1.2) +
@@ -312,6 +331,7 @@ Louisiana has invested heavily in early childhood education, expanding Pre-K acc
 ```{r prek-expansion}
 prek <- enr %>%
   filter(is_state, subgroup == "total_enrollment", grade_level == "PK")
+prek %>% select(end_year, n_students)
 
 ggplot(prek, aes(x = end_year, y = n_students)) +
   geom_line(linewidth = 1.5, color = colors["total"]) +
@@ -331,6 +351,7 @@ Caddo Parish (Shreveport) is Louisiana's largest district outside the southeast 
 caddo <- enr %>%
   filter(is_district, district_name == "Caddo Parish",
          subgroup == "total_enrollment", grade_level == "TOTAL")
+caddo %>% select(end_year, district_name, n_students)
 
 ggplot(caddo, aes(x = end_year, y = n_students)) +
   geom_line(linewidth = 1.5, color = colors["total"]) +
@@ -350,6 +371,7 @@ Calcasieu Parish (Lake Charles) serves the petrochemical corridor of southwest L
 calcasieu <- enr %>%
   filter(is_district, district_name == "Calcasieu Parish",
          subgroup == "total_enrollment", grade_level == "TOTAL")
+calcasieu %>% select(end_year, district_name, n_students)
 
 ggplot(calcasieu, aes(x = end_year, y = n_students)) +
   geom_line(linewidth = 1.5, color = colors["total"]) +
@@ -376,6 +398,10 @@ top5 <- enr_current %>%
 top5_trend <- enr %>%
   filter(is_district, district_name %in% top5,
          subgroup == "total_enrollment", grade_level == "TOTAL")
+top5_trend %>%
+  filter(end_year == 2024) %>%
+  select(district_name, n_students) %>%
+  arrange(desc(n_students))
 
 ggplot(top5_trend, aes(x = end_year, y = n_students, color = district_name)) +
   geom_line(linewidth = 1.2) +
