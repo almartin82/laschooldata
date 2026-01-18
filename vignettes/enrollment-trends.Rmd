@@ -15,7 +15,8 @@ knitr::opts_chunk$set(
   fig.height = 6,
   out.width = "100%",
   message = FALSE,
-  warning = FALSE
+  warning = FALSE,
+  cache = TRUE
 )
 ```
 
@@ -384,4 +385,10 @@ ggplot(top5_trend, aes(x = end_year, y = n_students, color = district_name)) +
        subtitle = "Over 40% of state enrollment in five districts",
        x = "School Year", y = "Students", color = "") +
   theme_readme()
+```
+
+## Session Info
+
+```{r session-info}
+sessionInfo()
 ```
