@@ -12,21 +12,6 @@ October.
 ``` r
 # Install from GitHub
 devtools::install_github("almartin82/laschooldata")
-#> Using github PAT from envvar GITHUB_PAT. Use `gitcreds::gitcreds_set()` and unset GITHUB_PAT in .Renviron (or elsewhere) if you want to use the more secure git credential store instead.
-#> Downloading GitHub repo almartin82/laschooldata@HEAD
-#> lifecycle (1.0.4 -> 1.0.5) [CRAN]
-#> Installing 1 packages: lifecycle
-#> Installing package into '/home/runner/work/_temp/Library'
-#> (as 'lib' is unspecified)
-#> ── R CMD build ─────────────────────────────────────────────────────────────────
-#> * checking for file ‘/tmp/RtmpzewkY5/remotes1e1841faff84/almartin82-laschooldata-ce20889/DESCRIPTION’ ... OK
-#> * preparing ‘laschooldata’:
-#> * checking DESCRIPTION meta-information ... OK
-#> * checking for LF line-endings in source and make files and shell scripts
-#> * checking for empty or unneeded directories
-#> * building ‘laschooldata_0.1.0.tar.gz’
-#> Installing package into '/home/runner/work/_temp/Library'
-#> (as 'lib' is unspecified)
 ```
 
 ## Quick Start
@@ -34,14 +19,6 @@ devtools::install_github("almartin82/laschooldata")
 ``` r
 library(laschooldata)
 library(dplyr)
-#> 
-#> Attaching package: 'dplyr'
-#> The following objects are masked from 'package:stats':
-#> 
-#>     filter, lag
-#> The following objects are masked from 'package:base':
-#> 
-#>     intersect, setdiff, setequal, union
 
 # Check available years
 get_available_years()
@@ -66,7 +43,7 @@ to download enrollment data for a single school year:
 
 ``` r
 # Get 2024 data (2023-24 school year)
-enr_2024 <- fetch_enr(2024)
+enr_2024 <- fetch_enr(2024, use_cache = TRUE)
 #> Using cached data for 2024
 
 # By default, returns tidy (long) format
@@ -98,7 +75,7 @@ Aggregation level flags
 For wide format (one row per entity), use `tidy = FALSE`:
 
 ``` r
-enr_wide <- fetch_enr(2024, tidy = FALSE)
+enr_wide <- fetch_enr(2024, tidy = FALSE, use_cache = TRUE)
 #> Downloading LDOE enrollment data for 2024 ...
 #>   Downloading from: https://www.louisianabelieves.com/docs/default-source/data-management/oct-2024-multi-stats-(total-by-site-and-school-system)_web.xlsx
 #>   Trying alternate URL: https://www.louisianabelieves.com/docs/default-source/data-management/oct-2024-multi-stats-(total-by-site-and-school-system)_web.xlsx
@@ -167,7 +144,7 @@ Use
 for multiple years:
 
 ``` r
-enr_multi <- fetch_enr_multi(2022:2024)
+enr_multi <- fetch_enr_multi(2022:2024, use_cache = TRUE)
 #> Fetching 2022 ...
 #> Using cached data for 2022
 #> Fetching 2023 ...
@@ -299,7 +276,7 @@ enr_2024 |>
 ### Year-over-Year Comparison
 
 ``` r
-enr_multi <- fetch_enr_multi(2019:2024)
+enr_multi <- fetch_enr_multi(2019:2024, use_cache = TRUE)
 #> Fetching 2019 ...
 #> Using cached data for 2019
 #> Fetching 2020 ...
@@ -464,7 +441,7 @@ consistent output across all years.
 To verify gender data is being processed correctly:
 
 ``` r
-enr <- fetch_enr(2024, tidy = FALSE)
+enr <- fetch_enr(2024, tidy = FALSE, use_cache = TRUE)
 #> Downloading LDOE enrollment data for 2024 ...
 #>   Downloading from: https://www.louisianabelieves.com/docs/default-source/data-management/oct-2024-multi-stats-(total-by-site-and-school-system)_web.xlsx
 #>   Trying alternate URL: https://www.louisianabelieves.com/docs/default-source/data-management/oct-2024-multi-stats-(total-by-site-and-school-system)_web.xlsx
@@ -576,20 +553,17 @@ sessionInfo()
 #> [1] dplyr_1.1.4        laschooldata_0.1.0
 #> 
 #> loaded via a namespace (and not attached):
-#>  [1] tidyr_1.3.2       rappdirs_0.3.3    sass_0.4.10       utf8_1.2.6       
-#>  [5] generics_0.1.4    stringi_1.8.7     digest_0.6.39     magrittr_2.0.4   
-#>  [9] evaluate_1.0.5    timechange_0.3.0  pkgload_1.4.1     fastmap_1.2.0    
-#> [13] cellranger_1.1.0  jsonlite_2.0.0    processx_3.8.6    pkgbuild_1.4.8   
-#> [17] sessioninfo_1.2.3 ps_1.9.1          httr_1.4.7        purrr_1.2.0      
-#> [21] textshaping_1.0.4 jquerylib_0.1.4   cli_3.6.5         rlang_1.1.6      
-#> [25] ellipsis_0.3.2    withr_3.0.2       remotes_2.5.0     cachem_1.1.0     
-#> [29] yaml_2.3.12       devtools_2.4.6    otel_0.2.0        tools_4.5.2      
-#> [33] memoise_2.0.1     curl_7.0.0        vctrs_0.6.5       R6_2.6.1         
-#> [37] lifecycle_1.0.5   lubridate_1.9.4   stringr_1.6.0     snakecase_0.11.1 
-#> [41] fs_1.6.6          htmlwidgets_1.6.4 usethis_3.2.1     ragg_1.5.0       
-#> [45] janitor_2.2.1     pkgconfig_2.0.3   desc_1.4.3        callr_3.7.6      
-#> [49] pkgdown_2.2.0     bslib_0.9.0       pillar_1.11.1     glue_1.8.0       
-#> [53] systemfonts_1.3.1 xfun_0.55         tibble_3.3.0      tidyselect_1.2.1 
-#> [57] knitr_1.51        htmltools_0.5.9   rmarkdown_2.30    compiler_4.5.2   
-#> [61] readxl_1.4.5
+#>  [1] jsonlite_2.0.0    compiler_4.5.2    tidyselect_1.2.1  stringr_1.6.0    
+#>  [5] snakecase_0.11.1  tidyr_1.3.2       jquerylib_0.1.4   systemfonts_1.3.1
+#>  [9] textshaping_1.0.4 yaml_2.3.12       fastmap_1.2.0     readxl_1.4.5     
+#> [13] R6_2.6.1          generics_0.1.4    curl_7.0.0        knitr_1.51       
+#> [17] htmlwidgets_1.6.4 tibble_3.3.1      janitor_2.2.1     desc_1.4.3       
+#> [21] lubridate_1.9.4   bslib_0.9.0       pillar_1.11.1     rlang_1.1.7      
+#> [25] utf8_1.2.6        stringi_1.8.7     cachem_1.1.0      xfun_0.55        
+#> [29] fs_1.6.6          sass_0.4.10       otel_0.2.0        timechange_0.3.0 
+#> [33] cli_3.6.5         withr_3.0.2       pkgdown_2.2.0     magrittr_2.0.4   
+#> [37] digest_0.6.39     rappdirs_0.3.3    lifecycle_1.0.5   vctrs_0.7.0      
+#> [41] evaluate_1.0.5    glue_1.8.0        cellranger_1.1.0  codetools_0.2-20 
+#> [45] ragg_1.5.0        purrr_1.2.1       rmarkdown_2.30    httr_1.4.7       
+#> [49] tools_4.5.2       pkgconfig_2.0.3   htmltools_0.5.9
 ```

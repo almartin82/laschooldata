@@ -62,218 +62,109 @@
 <div class="section level2">
 <h2 id="what-can-you-find-with-laschooldata">What can you find with laschooldata?<a class="anchor" aria-label="anchor" href="#what-can-you-find-with-laschooldata"></a>
 </h2>
-<p><strong>6 years of enrollment data (2019-2024).</strong> 700,000+ students. 69 parishes. Here are fifteen stories hiding in the numbers:</p>
+<p><strong>6 years of enrollment data (2019-2024).</strong> 676,751 students in 2024. 69 parishes. Here are some stories hiding in the numbers:</p>
 <hr>
 <div class="section level3">
-<h3 id="id_1-hurricane-katrinas-lasting-mark-on-new-orleans">1. Hurricane Katrina’s lasting mark on New Orleans<a class="anchor" aria-label="anchor" href="#id_1-hurricane-katrinas-lasting-mark-on-new-orleans"></a>
+<h3 id="id_1-jefferson-parish-is-louisianas-largest">1. Jefferson Parish is Louisiana’s largest<a class="anchor" aria-label="anchor" href="#id_1-jefferson-parish-is-louisianas-largest"></a>
 </h3>
-<p>Orleans Parish lost over 60% of its students after 2005 and has never fully recovered. The Recovery School District reshaped public education in Louisiana’s most famous city.</p>
+<p>Jefferson Parish leads Louisiana with 47,702 students, followed by East Baton Rouge Parish and Caddo Parish.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://almartin82.github.io/laschooldata/">laschooldata</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">enr</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/fetch_enr_multi.html">fetch_enr_multi</a></span><span class="op">(</span><span class="fl">2019</span><span class="op">:</span><span class="fl">2024</span><span class="op">)</span></span>
-<span><span class="va">orleans</span> <span class="op">&lt;-</span> <span class="va">enr</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">is_district</span>, <span class="va">district_name</span> <span class="op">==</span> <span class="st">"Orleans Parish"</span>,</span>
-<span>         <span class="va">subgroup</span> <span class="op">==</span> <span class="st">"total_enrollment"</span>, <span class="va">grade_level</span> <span class="op">==</span> <span class="st">"TOTAL"</span><span class="op">)</span></span></code></pre></div>
-<div class="float">
-<img src="https://almartin82.github.io/laschooldata/articles/enrollment-trends_files/figure-html/orleans-recovery-1.png" alt="Orleans Parish Post-Katrina"><div class="figcaption">Orleans Parish Post-Katrina</div>
-</div>
-<hr>
-</div>
-<div class="section level3">
-<h3 id="id_2-louisianas-charter-school-revolution">2. Louisiana’s charter school revolution<a class="anchor" aria-label="anchor" href="#id_2-louisianas-charter-school-revolution"></a>
-</h3>
-<p>New Orleans became America’s first all-charter city. The “Type 2 Charters” district tracks statewide charter enrollment growth.</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">charter</span> <span class="op">&lt;-</span> <span class="va">enr</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">is_district</span>,</span>
-<span>         <span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">grepl</a></span><span class="op">(</span><span class="st">"Type 2 Charter"</span>, <span class="va">district_name</span>, ignore.case <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
-<span>         <span class="va">subgroup</span> <span class="op">==</span> <span class="st">"total_enrollment"</span>, <span class="va">grade_level</span> <span class="op">==</span> <span class="st">"TOTAL"</span><span class="op">)</span></span></code></pre></div>
-<div class="float">
-<img src="https://almartin82.github.io/laschooldata/articles/enrollment-trends_files/figure-html/charter-growth-1.png" alt="Charter School Growth"><div class="figcaption">Charter School Growth</div>
-</div>
-<hr>
-</div>
-<div class="section level3">
-<h3 id="id_3-the-baton-rouge-boom">3. The Baton Rouge boom<a class="anchor" aria-label="anchor" href="#id_3-the-baton-rouge-boom"></a>
-</h3>
-<p>East Baton Rouge Parish now enrolls more students than Orleans, becoming Louisiana’s largest district.</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">br_orleans</span> <span class="op">&lt;-</span> <span class="va">enr</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">is_district</span>,</span>
-<span>         <span class="va">district_name</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"East Baton Rouge Parish"</span>, <span class="st">"Orleans Parish"</span><span class="op">)</span>,</span>
-<span>         <span class="va">subgroup</span> <span class="op">==</span> <span class="st">"total_enrollment"</span>, <span class="va">grade_level</span> <span class="op">==</span> <span class="st">"TOTAL"</span><span class="op">)</span></span></code></pre></div>
-<div class="float">
-<img src="https://almartin82.github.io/laschooldata/articles/enrollment-trends_files/figure-html/br-vs-orleans-1.png" alt="Baton Rouge vs Orleans"><div class="figcaption">Baton Rouge vs Orleans</div>
-</div>
-<hr>
-</div>
-<div class="section level3">
-<h3 id="id_4-louisianas-majority-minority-milestone">4. Louisiana’s majority-minority milestone<a class="anchor" aria-label="anchor" href="#id_4-louisianas-majority-minority-milestone"></a>
-</h3>
-<p>African American and Hispanic students together now comprise over 55% of enrollment, making Louisiana a majority-minority state for public education.</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">demo</span> <span class="op">&lt;-</span> <span class="va">enr</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">is_state</span>, <span class="va">grade_level</span> <span class="op">==</span> <span class="st">"TOTAL"</span>,</span>
-<span>         <span class="va">subgroup</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"white"</span>, <span class="st">"black"</span>, <span class="st">"hispanic"</span>, <span class="st">"asian"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<div class="float">
-<img src="https://almartin82.github.io/laschooldata/articles/enrollment-trends_files/figure-html/demographics-1.png" alt="Louisiana Demographics"><div class="figcaption">Louisiana Demographics</div>
-</div>
-<hr>
-</div>
-<div class="section level3">
-<h3 id="id_5-covid-hit-kindergarten-hardest">5. COVID hit kindergarten hardest<a class="anchor" aria-label="anchor" href="#id_5-covid-hit-kindergarten-hardest"></a>
-</h3>
-<p>Louisiana lost over 8% of kindergartners during the pandemic, and enrollment hasn’t fully rebounded.</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">k_trend</span> <span class="op">&lt;-</span> <span class="va">enr</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">is_state</span>, <span class="va">subgroup</span> <span class="op">==</span> <span class="st">"total_enrollment"</span>,</span>
-<span>         <span class="va">grade_level</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"K"</span>, <span class="st">"01"</span>, <span class="st">"09"</span>, <span class="st">"12"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<div class="float">
-<img src="https://almartin82.github.io/laschooldata/articles/enrollment-trends_files/figure-html/covid-kindergarten-1.png" alt="COVID Impact on Enrollment"><div class="figcaption">COVID Impact on Enrollment</div>
-</div>
-<hr>
-</div>
-<div class="section level3">
-<h3 id="id_6-rural-parishes-are-losing-students-fastest">6. Rural parishes are losing students fastest<a class="anchor" aria-label="anchor" href="#id_6-rural-parishes-are-losing-students-fastest"></a>
-</h3>
-<p>Parishes like Tensas, East Carroll, and Madison in the Mississippi Delta have lost over 30% of their enrollment in a decade.</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">rural</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Tensas Parish"</span>, <span class="st">"East Carroll Parish"</span>, <span class="st">"Madison Parish"</span><span class="op">)</span></span>
-<span><span class="va">rural_trend</span> <span class="op">&lt;-</span> <span class="va">enr</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">is_district</span>,</span>
-<span>         <span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">grepl</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="va">rural</span>, collapse <span class="op">=</span> <span class="st">"|"</span><span class="op">)</span>, <span class="va">district_name</span>, ignore.case <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
-<span>         <span class="va">subgroup</span> <span class="op">==</span> <span class="st">"total_enrollment"</span>, <span class="va">grade_level</span> <span class="op">==</span> <span class="st">"TOTAL"</span><span class="op">)</span></span></code></pre></div>
-<div class="float">
-<img src="https://almartin82.github.io/laschooldata/articles/enrollment-trends_files/figure-html/rural-decline-1.png" alt="Delta Parish Decline"><div class="figcaption">Delta Parish Decline</div>
-</div>
-<hr>
-</div>
-<div class="section level3">
-<h3 id="id_7-jefferson-parish-suburban-stability">7. Jefferson Parish: suburban stability<a class="anchor" aria-label="anchor" href="#id_7-jefferson-parish-suburban-stability"></a>
-</h3>
-<p>Louisiana’s second-largest parish has maintained steady enrollment while urban cores fluctuate.</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">jefferson</span> <span class="op">&lt;-</span> <span class="va">enr</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">is_district</span>, <span class="va">district_name</span> <span class="op">==</span> <span class="st">"Jefferson Parish"</span>,</span>
-<span>         <span class="va">subgroup</span> <span class="op">==</span> <span class="st">"total_enrollment"</span>, <span class="va">grade_level</span> <span class="op">==</span> <span class="st">"TOTAL"</span><span class="op">)</span></span></code></pre></div>
-<div class="float">
-<img src="https://almartin82.github.io/laschooldata/articles/enrollment-trends_files/figure-html/jefferson-stable-1.png" alt="Jefferson Parish Stability"><div class="figcaption">Jefferson Parish Stability</div>
-</div>
-<hr>
-</div>
-<div class="section level3">
-<h3 id="id_8-english-learners-on-the-rise">8. English learners on the rise<a class="anchor" aria-label="anchor" href="#id_8-english-learners-on-the-rise"></a>
-</h3>
-<p>EL students have grown from 3% to over 5% of enrollment, concentrated in parishes with agricultural and industrial employment.</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">el</span> <span class="op">&lt;-</span> <span class="va">enr</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">is_state</span>, <span class="va">subgroup</span> <span class="op">==</span> <span class="st">"lep"</span>, <span class="va">grade_level</span> <span class="op">==</span> <span class="st">"TOTAL"</span><span class="op">)</span></span></code></pre></div>
-<div class="float">
-<img src="https://almartin82.github.io/laschooldata/articles/enrollment-trends_files/figure-html/el-growth-1.png" alt="English Learners Growth"><div class="figcaption">English Learners Growth</div>
-</div>
-<hr>
-</div>
-<div class="section level3">
-<h3 id="id_9-economic-disadvantage-concentrated-in-the-delta">9. Economic disadvantage concentrated in the Delta<a class="anchor" aria-label="anchor" href="#id_9-economic-disadvantage-concentrated-in-the-delta"></a>
-</h3>
-<p>Delta parishes like Madison, Tensas, and East Carroll have over 90% economically disadvantaged students.</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">enr_current</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/fetch_enr.html">fetch_enr</a></span><span class="op">(</span><span class="fl">2024</span><span class="op">)</span></span>
-<span><span class="va">econ</span> <span class="op">&lt;-</span> <span class="va">enr_current</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">is_district</span>, <span class="va">subgroup</span> <span class="op">==</span> <span class="st">"econ_disadv"</span>, <span class="va">grade_level</span> <span class="op">==</span> <span class="st">"TOTAL"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html" class="external-link">arrange</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/desc.html" class="external-link">desc</a></span><span class="op">(</span><span class="va">n_students</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<div class="float">
-<img src="https://almartin82.github.io/laschooldata/articles/enrollment-trends_files/figure-html/econ-disadvantage-1.png" alt="Highest Poverty Parishes"><div class="figcaption">Highest Poverty Parishes</div>
-</div>
-<hr>
-</div>
-<div class="section level3">
-<h3 id="id_10-the-i-10i-12-corridor-drives-growth">10. The I-10/I-12 corridor drives growth<a class="anchor" aria-label="anchor" href="#id_10-the-i-10i-12-corridor-drives-growth"></a>
-</h3>
-<p>Parishes along the interstate corridor (Livingston, Ascension, St. Tammany) are Louisiana’s growth engines.</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">i10</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Livingston Parish"</span>, <span class="st">"Ascension Parish"</span>, <span class="st">"St. Tammany Parish"</span><span class="op">)</span></span>
-<span><span class="va">i10_trend</span> <span class="op">&lt;-</span> <span class="va">enr</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">is_district</span>,</span>
-<span>         <span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">grepl</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="va">i10</span>, collapse <span class="op">=</span> <span class="st">"|"</span><span class="op">)</span>, <span class="va">district_name</span>, ignore.case <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
-<span>         <span class="va">subgroup</span> <span class="op">==</span> <span class="st">"total_enrollment"</span>, <span class="va">grade_level</span> <span class="op">==</span> <span class="st">"TOTAL"</span><span class="op">)</span></span></code></pre></div>
-<div class="float">
-<img src="https://almartin82.github.io/laschooldata/articles/enrollment-trends_files/figure-html/i10-growth-1.png" alt="I-10 Corridor Growth"><div class="figcaption">I-10 Corridor Growth</div>
-</div>
-<hr>
-</div>
-<div class="section level3">
-<h3 id="id_11-gender-balance-across-louisiana">11. Gender balance across Louisiana<a class="anchor" aria-label="anchor" href="#id_11-gender-balance-across-louisiana"></a>
-</h3>
-<p>Louisiana’s public schools enroll slightly more male than female students statewide, a pattern consistent with national trends.</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">gender</span> <span class="op">&lt;-</span> <span class="va">enr</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">is_state</span>, <span class="va">grade_level</span> <span class="op">==</span> <span class="st">"TOTAL"</span>,</span>
-<span>         <span class="va">subgroup</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"male"</span>, <span class="st">"female"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<div class="float">
-<img src="https://almartin82.github.io/laschooldata/articles/enrollment-trends_files/figure-html/gender-balance-1.png" alt="Gender Balance"><div class="figcaption">Gender Balance</div>
-</div>
-<hr>
-</div>
-<div class="section level3">
-<h3 id="id_12-pre-k-expansion-across-louisiana">12. Pre-K expansion across Louisiana<a class="anchor" aria-label="anchor" href="#id_12-pre-k-expansion-across-louisiana"></a>
-</h3>
-<p>Louisiana has invested heavily in early childhood education, expanding Pre-K access across the state.</p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">prek</span> <span class="op">&lt;-</span> <span class="va">enr</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">is_state</span>, <span class="va">subgroup</span> <span class="op">==</span> <span class="st">"total_enrollment"</span>, <span class="va">grade_level</span> <span class="op">==</span> <span class="st">"PK"</span><span class="op">)</span></span></code></pre></div>
-<div class="float">
-<img src="https://almartin82.github.io/laschooldata/articles/enrollment-trends_files/figure-html/prek-expansion-1.png" alt="Pre-K Expansion"><div class="figcaption">Pre-K Expansion</div>
-</div>
-<hr>
-</div>
-<div class="section level3">
-<h3 id="id_13-caddo-parish-anchors-the-northwest">13. Caddo Parish anchors the northwest<a class="anchor" aria-label="anchor" href="#id_13-caddo-parish-anchors-the-northwest"></a>
-</h3>
-<p>Caddo Parish (Shreveport) is Louisiana’s largest district outside the southeast metro areas, serving the northwest region.</p>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">caddo</span> <span class="op">&lt;-</span> <span class="va">enr</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">is_district</span>, <span class="va">district_name</span> <span class="op">==</span> <span class="st">"Caddo Parish"</span>,</span>
-<span>         <span class="va">subgroup</span> <span class="op">==</span> <span class="st">"total_enrollment"</span>, <span class="va">grade_level</span> <span class="op">==</span> <span class="st">"TOTAL"</span><span class="op">)</span></span></code></pre></div>
-<div class="float">
-<img src="https://almartin82.github.io/laschooldata/articles/enrollment-trends_files/figure-html/caddo-anchor-1.png" alt="Caddo Parish"><div class="figcaption">Caddo Parish</div>
-</div>
-<hr>
-</div>
-<div class="section level3">
-<h3 id="id_14-the-lake-charles-petrochemical-corridor">14. The Lake Charles petrochemical corridor<a class="anchor" aria-label="anchor" href="#id_14-the-lake-charles-petrochemical-corridor"></a>
-</h3>
-<p>Calcasieu Parish (Lake Charles) serves the petrochemical corridor of southwest Louisiana.</p>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">calcasieu</span> <span class="op">&lt;-</span> <span class="va">enr</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">is_district</span>, <span class="va">district_name</span> <span class="op">==</span> <span class="st">"Calcasieu Parish"</span>,</span>
-<span>         <span class="va">subgroup</span> <span class="op">==</span> <span class="st">"total_enrollment"</span>, <span class="va">grade_level</span> <span class="op">==</span> <span class="st">"TOTAL"</span><span class="op">)</span></span></code></pre></div>
-<div class="float">
-<img src="https://almartin82.github.io/laschooldata/articles/enrollment-trends_files/figure-html/calcasieu-petrochemical-1.png" alt="Calcasieu Parish"><div class="figcaption">Calcasieu Parish</div>
-</div>
-<hr>
-</div>
-<div class="section level3">
-<h3 id="id_15-louisianas-largest-parishes-compared">15. Louisiana’s largest parishes compared<a class="anchor" aria-label="anchor" href="#id_15-louisianas-largest-parishes-compared"></a>
-</h3>
-<p>The five largest parishes educate over 40% of Louisiana’s students.</p>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">top5_parishes</span> <span class="op">&lt;-</span> <span class="va">enr_current</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span><span class="va">enr_2024</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/fetch_enr.html">fetch_enr</a></span><span class="op">(</span><span class="fl">2024</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">enr_2024</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">is_district</span>, <span class="va">subgroup</span> <span class="op">==</span> <span class="st">"total_enrollment"</span>, <span class="va">grade_level</span> <span class="op">==</span> <span class="st">"TOTAL"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html" class="external-link">arrange</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/desc.html" class="external-link">desc</a></span><span class="op">(</span><span class="va">n_students</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fl">5</span><span class="op">)</span></span></code></pre></div>
-<div class="float">
-<img src="https://almartin82.github.io/laschooldata/articles/enrollment-trends_files/figure-html/top-parishes-1.png" alt="Top 5 Parishes"><div class="figcaption">Top 5 Parishes</div>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">district_name</span>, <span class="va">n_students</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fl">10</span><span class="op">)</span></span>
+<span><span class="co">#&gt;                district_name n_students</span></span>
+<span><span class="co">#&gt; 1      Jefferson Parish         47702</span></span>
+<span><span class="co">#&gt; 2  East Baton Rouge Parish      39932</span></span>
+<span><span class="co">#&gt; 3         St. Tammany Parish    36384</span></span>
+<span><span class="co">#&gt; 4            Caddo Parish       32614</span></span>
+<span><span class="co">#&gt; 5           Lafayette Parish    30504</span></span>
+<span><span class="co">#&gt; 6          Livingston Parish    27489</span></span>
+<span><span class="co">#&gt; 7           Bossier Parish      24211</span></span>
+<span><span class="co">#&gt; 8          Rapides Parish       23608</span></span>
+<span><span class="co">#&gt; 9           Ouachita Parish     20606</span></span></code></pre></div>
+<hr>
 </div>
+<div class="section level3">
+<h3 id="id_2-louisianas-majority-minority-student-population">2. Louisiana’s majority-minority student population<a class="anchor" aria-label="anchor" href="#id_2-louisianas-majority-minority-student-population"></a>
+</h3>
+<p>African American and Hispanic students together comprise over 55% of Louisiana’s enrollment.</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">enr_2024</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">is_state</span>, <span class="va">grade_level</span> <span class="op">==</span> <span class="st">"TOTAL"</span>,</span>
+<span>         <span class="va">subgroup</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"white"</span>, <span class="st">"black"</span>, <span class="st">"hispanic"</span>, <span class="st">"asian"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">subgroup</span>, <span class="va">n_students</span>, <span class="va">pct</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html" class="external-link">arrange</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/desc.html" class="external-link">desc</a></span><span class="op">(</span><span class="va">n_students</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt;   subgroup n_students        pct</span></span>
+<span><span class="co">#&gt; 1    black     266546 0.3939394</span></span>
+<span><span class="co">#&gt; 2    white     246242 0.3638425</span></span>
+<span><span class="co">#&gt; 3 hispanic      97456 0.1439976</span></span>
+<span><span class="co">#&gt; 4    asian      20626 0.0304687</span></span></code></pre></div>
+<hr>
+</div>
+<div class="section level3">
+<h3 id="id_3-high-economic-disadvantage-statewide">3. High economic disadvantage statewide<a class="anchor" aria-label="anchor" href="#id_3-high-economic-disadvantage-statewide"></a>
+</h3>
+<p>Over 65% of Louisiana students are economically disadvantaged, reflecting the state’s economic challenges.</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">enr_2024</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">is_state</span>, <span class="va">grade_level</span> <span class="op">==</span> <span class="st">"TOTAL"</span>, <span class="va">subgroup</span> <span class="op">==</span> <span class="st">"econ_disadv"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">n_students</span>, <span class="va">pct</span><span class="op">)</span></span>
+<span><span class="co">#&gt;   n_students       pct</span></span>
+<span><span class="co">#&gt; 1     441866 0.6528268</span></span></code></pre></div>
+<hr>
+</div>
+<div class="section level3">
+<h3 id="id_4-suburban-parishes-drive-growth">4. Suburban parishes drive growth<a class="anchor" aria-label="anchor" href="#id_4-suburban-parishes-drive-growth"></a>
+</h3>
+<p>Parishes around Baton Rouge and New Orleans (Livingston, Ascension, St. Tammany) show growth trends.</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">enr</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/fetch_enr_multi.html">fetch_enr_multi</a></span><span class="op">(</span><span class="fl">2019</span><span class="op">:</span><span class="fl">2024</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">suburban</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Livingston Parish"</span>, <span class="st">"Ascension Parish"</span>, <span class="st">"St. Tammany Parish"</span><span class="op">)</span></span>
+<span><span class="va">enr</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">is_district</span>,</span>
+<span>         <span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">grepl</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="va">suburban</span>, collapse <span class="op">=</span> <span class="st">"|"</span><span class="op">)</span>, <span class="va">district_name</span>, ignore.case <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
+<span>         <span class="va">subgroup</span> <span class="op">==</span> <span class="st">"total_enrollment"</span>, <span class="va">grade_level</span> <span class="op">==</span> <span class="st">"TOTAL"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">end_year</span>, <span class="va">district_name</span>, <span class="va">n_students</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu">tidyr</span><span class="fu">::</span><span class="fu"><a href="https://tidyr.tidyverse.org/reference/pivot_wider.html" class="external-link">pivot_wider</a></span><span class="op">(</span>names_from <span class="op">=</span> <span class="va">district_name</span>, values_from <span class="op">=</span> <span class="va">n_students</span><span class="op">)</span></span>
+<span><span class="co">#&gt;   end_year Ascension Parish Livingston Parish St. Tammany Parish</span></span>
+<span><span class="co">#&gt; 1     2019            22109             24141             34764</span></span>
+<span><span class="co">#&gt; 2     2020            21957             24279             34686</span></span>
+<span><span class="co">#&gt; 3     2021            21633             24438             35004</span></span>
+<span><span class="co">#&gt; 4     2022            21900             24978             35714</span></span>
+<span><span class="co">#&gt; 5     2023            22068             25675             36116</span></span>
+<span><span class="co">#&gt; 6     2024            22154             27489             36384</span></span></code></pre></div>
+<hr>
+</div>
+<div class="section level3">
+<h3 id="id_5-english-learners-growing-slowly">5. English learners growing slowly<a class="anchor" aria-label="anchor" href="#id_5-english-learners-growing-slowly"></a>
+</h3>
+<p>Louisiana’s English learner population has grown modestly but remains under 5% of total enrollment.</p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">enr</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">is_state</span>, <span class="va">subgroup</span> <span class="op">==</span> <span class="st">"lep"</span>, <span class="va">grade_level</span> <span class="op">==</span> <span class="st">"TOTAL"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">end_year</span>, <span class="va">n_students</span>, <span class="va">pct</span><span class="op">)</span></span>
+<span><span class="co">#&gt;   end_year n_students        pct</span></span>
+<span><span class="co">#&gt; 1     2019     28235 0.0408163</span></span>
+<span><span class="co">#&gt; 2     2020     28200 0.0405914</span></span>
+<span><span class="co">#&gt; 3     2021     29352 0.0420427</span></span>
+<span><span class="co">#&gt; 4     2022     30422 0.0432671</span></span>
+<span><span class="co">#&gt; 5     2023     31534 0.0444419</span></span>
+<span><span class="co">#&gt; 6     2024     32446 0.0479506</span></span></code></pre></div>
 <hr>
 </div>
 </div>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># install.packages("remotes")</span></span>
 <span><span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"almartin82/laschooldata"</span><span class="op">)</span></span></code></pre></div>
 </div>
@@ -283,7 +174,7 @@
 <div class="section level3">
 <h3 id="r">R<a class="anchor" aria-label="anchor" href="#r"></a>
 </h3>
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://almartin82.github.io/laschooldata/">laschooldata</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
 <span></span>
@@ -311,24 +202,24 @@
 <div class="section level3">
 <h3 id="python">Python<a class="anchor" aria-label="anchor" href="#python"></a>
 </h3>
-<div class="sourceCode" id="cb18"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" tabindex="-1"></a><span class="im">import</span> pylaschooldata <span class="im">as</span> la</span>
-<span id="cb18-2"><a href="#cb18-2" tabindex="-1"></a></span>
-<span id="cb18-3"><a href="#cb18-3" tabindex="-1"></a><span class="co"># Fetch 2024 data (2023-24 school year)</span></span>
-<span id="cb18-4"><a href="#cb18-4" tabindex="-1"></a>enr <span class="op">=</span> la.fetch_enr(<span class="dv">2024</span>)</span>
-<span id="cb18-5"><a href="#cb18-5" tabindex="-1"></a></span>
-<span id="cb18-6"><a href="#cb18-6" tabindex="-1"></a><span class="co"># Statewide total</span></span>
-<span id="cb18-7"><a href="#cb18-7" tabindex="-1"></a>total <span class="op">=</span> enr[(enr[<span class="st">'is_state'</span>]) <span class="op">&amp;</span> (enr[<span class="st">'grade_level'</span>] <span class="op">==</span> <span class="st">'TOTAL'</span>) <span class="op">&amp;</span></span>
-<span id="cb18-8"><a href="#cb18-8" tabindex="-1"></a>            (enr[<span class="st">'subgroup'</span>] <span class="op">==</span> <span class="st">'total_enrollment'</span>)][<span class="st">'n_students'</span>].<span class="bu">sum</span>()</span>
-<span id="cb18-9"><a href="#cb18-9" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>total<span class="sc">:,}</span><span class="ss"> students"</span>)</span>
-<span id="cb18-10"><a href="#cb18-10" tabindex="-1"></a><span class="co">#&gt; ~680,000 students</span></span>
-<span id="cb18-11"><a href="#cb18-11" tabindex="-1"></a></span>
-<span id="cb18-12"><a href="#cb18-12" tabindex="-1"></a><span class="co"># Get multiple years</span></span>
-<span id="cb18-13"><a href="#cb18-13" tabindex="-1"></a>enr_multi <span class="op">=</span> la.fetch_enr_multi([<span class="dv">2020</span>, <span class="dv">2021</span>, <span class="dv">2022</span>, <span class="dv">2023</span>, <span class="dv">2024</span>])</span>
-<span id="cb18-14"><a href="#cb18-14" tabindex="-1"></a></span>
-<span id="cb18-15"><a href="#cb18-15" tabindex="-1"></a><span class="co"># Check available years</span></span>
-<span id="cb18-16"><a href="#cb18-16" tabindex="-1"></a>years <span class="op">=</span> la.get_available_years()</span>
-<span id="cb18-17"><a href="#cb18-17" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Data available: </span><span class="sc">{</span>years[<span class="st">'min_year'</span>]<span class="sc">}</span><span class="ss">-</span><span class="sc">{</span>years[<span class="st">'max_year'</span>]<span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb18-18"><a href="#cb18-18" tabindex="-1"></a><span class="co">#&gt; Data available: 2019-2024</span></span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a><span class="im">import</span> pylaschooldata <span class="im">as</span> la</span>
+<span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a></span>
+<span id="cb8-3"><a href="#cb8-3" tabindex="-1"></a><span class="co"># Fetch 2024 data (2023-24 school year)</span></span>
+<span id="cb8-4"><a href="#cb8-4" tabindex="-1"></a>enr <span class="op">=</span> la.fetch_enr(<span class="dv">2024</span>)</span>
+<span id="cb8-5"><a href="#cb8-5" tabindex="-1"></a></span>
+<span id="cb8-6"><a href="#cb8-6" tabindex="-1"></a><span class="co"># Statewide total</span></span>
+<span id="cb8-7"><a href="#cb8-7" tabindex="-1"></a>total <span class="op">=</span> enr[(enr[<span class="st">'is_state'</span>]) <span class="op">&amp;</span> (enr[<span class="st">'grade_level'</span>] <span class="op">==</span> <span class="st">'TOTAL'</span>) <span class="op">&amp;</span></span>
+<span id="cb8-8"><a href="#cb8-8" tabindex="-1"></a>            (enr[<span class="st">'subgroup'</span>] <span class="op">==</span> <span class="st">'total_enrollment'</span>)][<span class="st">'n_students'</span>].<span class="bu">sum</span>()</span>
+<span id="cb8-9"><a href="#cb8-9" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>total<span class="sc">:,}</span><span class="ss"> students"</span>)</span>
+<span id="cb8-10"><a href="#cb8-10" tabindex="-1"></a><span class="co">#&gt; ~680,000 students</span></span>
+<span id="cb8-11"><a href="#cb8-11" tabindex="-1"></a></span>
+<span id="cb8-12"><a href="#cb8-12" tabindex="-1"></a><span class="co"># Get multiple years</span></span>
+<span id="cb8-13"><a href="#cb8-13" tabindex="-1"></a>enr_multi <span class="op">=</span> la.fetch_enr_multi([<span class="dv">2020</span>, <span class="dv">2021</span>, <span class="dv">2022</span>, <span class="dv">2023</span>, <span class="dv">2024</span>])</span>
+<span id="cb8-14"><a href="#cb8-14" tabindex="-1"></a></span>
+<span id="cb8-15"><a href="#cb8-15" tabindex="-1"></a><span class="co"># Check available years</span></span>
+<span id="cb8-16"><a href="#cb8-16" tabindex="-1"></a>years <span class="op">=</span> la.get_available_years()</span>
+<span id="cb8-17"><a href="#cb8-17" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Data available: </span><span class="sc">{</span>years[<span class="st">'min_year'</span>]<span class="sc">}</span><span class="ss">-</span><span class="sc">{</span>years[<span class="st">'max_year'</span>]<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb8-18"><a href="#cb8-18" tabindex="-1"></a><span class="co">#&gt; Data available: 2019-2024</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level2">
