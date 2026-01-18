@@ -39,6 +39,11 @@ enr <- fetch_enr_multi(2019:2024, use_cache = TRUE)
 key_years <- c(2019, 2024)
 enr_long <- fetch_enr_multi(key_years, use_cache = TRUE)
 enr_current <- fetch_enr(2024, use_cache = TRUE)
+
+# Calculate state totals for percentage calculations
+state_totals <- enr %>%
+  filter(is_state, grade_level == "TOTAL", subgroup == "total_enrollment") %>%
+  select(end_year, total = n_students)
 ```
 
 ## 1. Hurricane Katrina’s lasting mark on New Orleans
@@ -50,6 +55,9 @@ fully recovered. The Recovery School District reshaped public education.
 orleans <- enr_long %>%
   filter(is_district, district_name == "Orleans Parish",
          subgroup == "total_enrollment", grade_level == "TOTAL")
+orleans %>% select(end_year, district_name, n_students)
+#> # A tibble: 0 × 3
+#> # ℹ 3 variables: end_year <int>, district_name <chr>, n_students <dbl>
 
 ggplot(orleans, aes(x = end_year, y = n_students)) +
   geom_line(linewidth = 1.5, color = colors["total"]) +
@@ -76,6 +84,9 @@ charter <- enr %>%
          subgroup == "total_enrollment", grade_level == "TOTAL") %>%
   group_by(end_year) %>%
   summarize(n_students = sum(n_students, na.rm = TRUE), .groups = "drop")
+charter
+#> # A tibble: 0 × 2
+#> # ℹ 2 variables: end_year <int>, n_students <dbl>
 
 ggplot(charter, aes(x = end_year, y = n_students)) +
   geom_line(linewidth = 1.5, color = colors["total"]) +
@@ -98,6 +109,18 @@ Louisiana’s largest district.
 br_orleans <- enr %>%
   filter(is_district, district_name %in% c("East Baton Rouge Parish", "Orleans Parish"),
          subgroup == "total_enrollment", grade_level == "TOTAL")
+br_orleans %>%
+  select(end_year, district_name, n_students) %>%
+  tidyr::pivot_wider(names_from = district_name, values_from = n_students)
+#> # A tibble: 6 × 2
+#>   end_year `East Baton Rouge Parish`
+#>      <int>                     <dbl>
+#> 1     2019                     41637
+#> 2     2020                     40577
+#> 3     2021                     41332
+#> 4     2022                     40660
+#> 5     2023                     40443
+#> 6     2024                     39932
 
 ggplot(br_orleans, aes(x = end_year, y = n_students, color = district_name)) +
   geom_line(linewidth = 1.2) +
@@ -117,16 +140,19 @@ African American and Hispanic students together now comprise over 55% of
 enrollment.
 
 ``` r
-# Get total enrollment to calculate percentages
-state_totals <- enr %>%
-  filter(is_state, grade_level == "TOTAL", subgroup == "total_enrollment") %>%
-  select(end_year, total = n_students)
-
 demo <- enr %>%
   filter(is_state, grade_level == "TOTAL",
          subgroup %in% c("white", "black", "hispanic", "asian")) %>%
   left_join(state_totals, by = "end_year") %>%
   mutate(pct = n_students / total * 100)
+demo %>% filter(end_year == 2024) %>% select(subgroup, n_students, pct)
+#> # A tibble: 4 × 3
+#>   subgroup n_students   pct
+#>   <chr>         <dbl> <dbl>
+#> 1 white        275265 40.7 
+#> 2 black        282521 41.7 
+#> 3 hispanic      77836 11.5 
+#> 4 asian         10745  1.59
 
 ggplot(demo, aes(x = end_year, y = pct, color = subgroup)) +
   geom_line(linewidth = 1.2) +
@@ -156,6 +182,18 @@ k_trend <- enr %>%
     grade_level == "09" ~ "Grade 9",
     grade_level == "12" ~ "Grade 12"
   ))
+k_trend %>%
+  filter(grade_level == "K") %>%
+  select(end_year, grade_label, n_students)
+#> # A tibble: 6 × 3
+#>   end_year grade_label  n_students
+#>      <int> <chr>             <dbl>
+#> 1     2019 Kindergarten      48556
+#> 2     2020 Kindergarten      45205
+#> 3     2021 Kindergarten      46282
+#> 4     2022 Kindergarten      50345
+#> 5     2023 Kindergarten      48798
+#> 6     2024 Kindergarten      48084
 
 ggplot(k_trend, aes(x = end_year, y = n_students, color = grade_label)) +
   geom_line(linewidth = 1.2) +
@@ -182,6 +220,16 @@ rural_trend <- enr %>%
          subgroup == "total_enrollment", grade_level == "TOTAL") %>%
   group_by(end_year) %>%
   summarize(n_students = sum(n_students, na.rm = TRUE), .groups = "drop")
+rural_trend
+#> # A tibble: 6 × 2
+#>   end_year n_students
+#>      <int>      <dbl>
+#> 1     2019       2520
+#> 2     2020       2293
+#> 3     2021       2275
+#> 4     2022       2324
+#> 5     2023       2323
+#> 6     2024       2183
 
 ggplot(rural_trend, aes(x = end_year, y = n_students)) +
   geom_line(linewidth = 1.5, color = colors["total"]) +
@@ -204,6 +252,16 @@ urban cores fluctuate.
 jefferson <- enr %>%
   filter(is_district, district_name == "Jefferson Parish",
          subgroup == "total_enrollment", grade_level == "TOTAL")
+jefferson %>% select(end_year, district_name, n_students)
+#> # A tibble: 6 × 3
+#>   end_year district_name    n_students
+#>      <int> <chr>                 <dbl>
+#> 1     2019 Jefferson Parish      50566
+#> 2     2020 Jefferson Parish      48974
+#> 3     2021 Jefferson Parish      47720
+#> 4     2022 Jefferson Parish      47429
+#> 5     2023 Jefferson Parish      47712
+#> 6     2024 Jefferson Parish      47702
 
 ggplot(jefferson, aes(x = end_year, y = n_students)) +
   geom_line(linewidth = 1.5, color = colors["total"]) +
@@ -227,6 +285,16 @@ el <- enr %>%
   filter(is_state, subgroup == "lep", grade_level == "TOTAL") %>%
   left_join(state_totals, by = "end_year") %>%
   mutate(pct = n_students / total * 100)
+el %>% select(end_year, n_students, pct)
+#> # A tibble: 6 × 3
+#>   end_year n_students   pct
+#>      <int>      <dbl> <dbl>
+#> 1     2019      24908  3.87
+#> 2     2020      23336  3.74
+#> 3     2021      25194  4.09
+#> 4     2022      31939  4.66
+#> 5     2023      33847  4.97
+#> 6     2024      35868  5.30
 
 ggplot(el, aes(x = end_year, y = pct)) +
   geom_line(linewidth = 1.5, color = colors["total"]) +
@@ -257,6 +325,20 @@ econ <- enr_current %>%
   arrange(desc(pct)) %>%
   head(10) %>%
   mutate(district_label = reorder(district_name, pct))
+econ %>% select(district_name, n_students, pct)
+#> # A tibble: 10 × 3
+#>    district_name                    n_students   pct
+#>    <chr>                                 <dbl> <dbl>
+#>  1 St. Helena Parish                      1002 100  
+#>  2 Special School District                 291  97.3
+#>  3 East Carroll Parish                     715  96.9
+#>  4 Tensas Parish                           298  95.8
+#>  5 Madison Parish                         1078  95.1
+#>  6 Thrive Academy                          152  94.4
+#>  7 City of Bogalusa School District       1718  94.3
+#>  8 City of Baker School District           927  92.8
+#>  9 Red River Parish                       1143  91.4
+#> 10 Natchitoches Parish                    4230  87.6
 
 ggplot(econ, aes(x = district_label, y = pct)) +
   geom_col(fill = colors["total"]) +
@@ -279,6 +361,18 @@ i10 <- c("Livingston Parish", "Ascension Parish", "St. Tammany Parish")
 i10_trend <- enr %>%
   filter(is_district, grepl(paste(i10, collapse = "|"), district_name, ignore.case = TRUE),
          subgroup == "total_enrollment", grade_level == "TOTAL")
+i10_trend %>%
+  select(end_year, district_name, n_students) %>%
+  tidyr::pivot_wider(names_from = district_name, values_from = n_students)
+#> # A tibble: 6 × 4
+#>   end_year `Ascension Parish` `Livingston Parish` `St. Tammany Parish`
+#>      <int>              <dbl>               <dbl>                <dbl>
+#> 1     2019              23409               26148                38774
+#> 2     2020              23455               26044                37214
+#> 3     2021              23843               26540                37374
+#> 4     2022              24041               26954                37212
+#> 5     2023              24138               27105                36806
+#> 6     2024              24076               26852                36384
 
 ggplot(i10_trend, aes(x = end_year, y = n_students, color = district_name)) +
   geom_line(linewidth = 1.2) +
@@ -303,6 +397,14 @@ gender <- enr %>%
          subgroup %in% c("male", "female")) %>%
   left_join(state_totals, by = "end_year") %>%
   mutate(pct = n_students / total * 100)
+gender %>%
+  filter(end_year == 2024) %>%
+  select(subgroup, n_students, pct)
+#> # A tibble: 2 × 3
+#>   subgroup n_students   pct
+#>   <chr>         <dbl> <dbl>
+#> 1 male         346497  51.2
+#> 2 female       330254  48.8
 
 ggplot(gender, aes(x = end_year, y = pct, color = subgroup)) +
   geom_line(linewidth = 1.2) +
@@ -326,6 +428,16 @@ Pre-K access across the state.
 ``` r
 prek <- enr %>%
   filter(is_state, subgroup == "total_enrollment", grade_level == "PK")
+prek %>% select(end_year, n_students)
+#> # A tibble: 6 × 2
+#>   end_year n_students
+#>      <int>      <dbl>
+#> 1     2019      26078
+#> 2     2020      21751
+#> 3     2021      24027
+#> 4     2022      25969
+#> 5     2023      26002
+#> 6     2024      26152
 
 ggplot(prek, aes(x = end_year, y = n_students)) +
   geom_line(linewidth = 1.5, color = colors["total"]) +
@@ -348,6 +460,16 @@ southeast metro areas, serving the northwest region.
 caddo <- enr %>%
   filter(is_district, district_name == "Caddo Parish",
          subgroup == "total_enrollment", grade_level == "TOTAL")
+caddo %>% select(end_year, district_name, n_students)
+#> # A tibble: 6 × 3
+#>   end_year district_name n_students
+#>      <int> <chr>              <dbl>
+#> 1     2019 Caddo Parish       37868
+#> 2     2020 Caddo Parish       36470
+#> 3     2021 Caddo Parish       35057
+#> 4     2022 Caddo Parish       33934
+#> 5     2023 Caddo Parish       33243
+#> 6     2024 Caddo Parish       32614
 
 ggplot(caddo, aes(x = end_year, y = n_students)) +
   geom_line(linewidth = 1.5, color = colors["total"]) +
@@ -370,6 +492,16 @@ southwest Louisiana.
 calcasieu <- enr %>%
   filter(is_district, district_name == "Calcasieu Parish",
          subgroup == "total_enrollment", grade_level == "TOTAL")
+calcasieu %>% select(end_year, district_name, n_students)
+#> # A tibble: 6 × 3
+#>   end_year district_name    n_students
+#>      <int> <chr>                 <dbl>
+#> 1     2019 Calcasieu Parish      31879
+#> 2     2020 Calcasieu Parish      28265
+#> 3     2021 Calcasieu Parish      27681
+#> 4     2022 Calcasieu Parish      27871
+#> 5     2023 Calcasieu Parish      28392
+#> 6     2024 Calcasieu Parish      28623
 
 ggplot(calcasieu, aes(x = end_year, y = n_students)) +
   geom_line(linewidth = 1.5, color = colors["total"]) +
@@ -398,6 +530,18 @@ top5 <- enr_current %>%
 top5_trend <- enr %>%
   filter(is_district, district_name %in% top5,
          subgroup == "total_enrollment", grade_level == "TOTAL")
+top5_trend %>%
+  filter(end_year == 2024) %>%
+  select(district_name, n_students) %>%
+  arrange(desc(n_students))
+#> # A tibble: 5 × 2
+#>   district_name           n_students
+#>   <chr>                        <dbl>
+#> 1 State of Louisiana          676751
+#> 2 Jefferson Parish             47702
+#> 3 East Baton Rouge Parish      39932
+#> 4 St. Tammany Parish           36384
+#> 5 Caddo Parish                 32614
 
 ggplot(top5_trend, aes(x = end_year, y = n_students, color = district_name)) +
   geom_line(linewidth = 1.2) +
@@ -439,18 +583,19 @@ sessionInfo()
 #> [1] scales_1.4.0       dplyr_1.1.4        ggplot2_4.0.1      laschooldata_0.1.0
 #> 
 #> loaded via a namespace (and not attached):
-#>  [1] gtable_0.3.6       jsonlite_2.0.0     compiler_4.5.2     tidyselect_1.2.1  
-#>  [5] stringr_1.6.0      snakecase_0.11.1   jquerylib_0.1.4    systemfonts_1.3.1 
-#>  [9] textshaping_1.0.4  readxl_1.4.5       yaml_2.3.12        fastmap_1.2.0     
-#> [13] R6_2.6.1           labeling_0.4.3     generics_0.1.4     curl_7.0.0        
-#> [17] knitr_1.51         htmlwidgets_1.6.4  tibble_3.3.1       janitor_2.2.1     
-#> [21] desc_1.4.3         lubridate_1.9.4    bslib_0.9.0        pillar_1.11.1     
-#> [25] RColorBrewer_1.1-3 rlang_1.1.7        stringi_1.8.7      cachem_1.1.0      
-#> [29] xfun_0.55          fs_1.6.6           sass_0.4.10        S7_0.2.1          
-#> [33] otel_0.2.0         timechange_0.3.0   cli_3.6.5          pkgdown_2.2.0     
-#> [37] withr_3.0.2        magrittr_2.0.4     digest_0.6.39      grid_4.5.2        
-#> [41] rappdirs_0.3.3     lifecycle_1.0.5    vctrs_0.7.0        evaluate_1.0.5    
-#> [45] glue_1.8.0         cellranger_1.1.0   farver_2.1.2       codetools_0.2-20  
-#> [49] ragg_1.5.0         httr_1.4.7         purrr_1.2.1        rmarkdown_2.30    
-#> [53] tools_4.5.2        pkgconfig_2.0.3    htmltools_0.5.9
+#>  [1] utf8_1.2.6         rappdirs_0.3.3     sass_0.4.10        generics_0.1.4    
+#>  [5] tidyr_1.3.2        stringi_1.8.7      digest_0.6.39      magrittr_2.0.4    
+#>  [9] evaluate_1.0.5     grid_4.5.2         timechange_0.3.0   RColorBrewer_1.1-3
+#> [13] fastmap_1.2.0      cellranger_1.1.0   jsonlite_2.0.0     httr_1.4.7        
+#> [17] purrr_1.2.1        codetools_0.2-20   textshaping_1.0.4  jquerylib_0.1.4   
+#> [21] cli_3.6.5          rlang_1.1.7        withr_3.0.2        cachem_1.1.0      
+#> [25] yaml_2.3.12        otel_0.2.0         tools_4.5.2        curl_7.0.0        
+#> [29] vctrs_0.7.0        R6_2.6.1           lifecycle_1.0.5    lubridate_1.9.4   
+#> [33] snakecase_0.11.1   stringr_1.6.0      fs_1.6.6           htmlwidgets_1.6.4 
+#> [37] ragg_1.5.0         janitor_2.2.1      pkgconfig_2.0.3    desc_1.4.3        
+#> [41] pkgdown_2.2.0      pillar_1.11.1      bslib_0.9.0        gtable_0.3.6      
+#> [45] glue_1.8.0         systemfonts_1.3.1  xfun_0.55          tibble_3.3.1      
+#> [49] tidyselect_1.2.1   knitr_1.51         farver_2.1.2       htmltools_0.5.9   
+#> [53] rmarkdown_2.30     labeling_0.4.3     compiler_4.5.2     S7_0.2.1          
+#> [57] readxl_1.4.5
 ```
