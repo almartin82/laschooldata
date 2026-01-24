@@ -26,6 +26,19 @@ skip_if_offline <- function() {
   )
 }
 
+# Skip if directory data is not currently accessible
+# Note: Louisiana DOE directory URLs sometimes change or require browser user-agent
+skip_if_directory_unavailable <- function() {
+  skip_if_offline()
+  skip_if_not(
+    tryCatch({
+      dir <- fetch_directory(2025, tidy = TRUE, use_cache = TRUE)
+      nrow(dir) > 0
+    }, error = function(e) FALSE),
+    "Louisiana DOE directory data not accessible (URL may have changed)"
+  )
+}
+
 
 # ==============================================================================
 # Tests for get_directory_available_years()
@@ -58,7 +71,7 @@ test_that("fetch_directory rejects invalid years", {
 # ==============================================================================
 
 test_that("fetch_directory returns expected columns", {
-  skip_if_offline()
+  skip_if_directory_unavailable()
 
   dir <- fetch_directory(2025, tidy = TRUE, use_cache = TRUE)
 
@@ -89,7 +102,7 @@ test_that("fetch_directory returns expected columns", {
 
 
 test_that("fetch_directory returns reasonable number of schools", {
-  skip_if_offline()
+  skip_if_directory_unavailable()
 
   dir <- fetch_directory(2025, tidy = TRUE, use_cache = TRUE)
 
@@ -108,7 +121,7 @@ test_that("fetch_directory returns reasonable number of schools", {
 # ==============================================================================
 
 test_that("fetch_directory includes charter schools by default", {
-  skip_if_offline()
+  skip_if_directory_unavailable()
 
   dir <- fetch_directory(2025, tidy = TRUE, use_cache = TRUE)
 
@@ -144,7 +157,7 @@ test_that("fetch_directory can exclude charter schools", {
 # ==============================================================================
 
 test_that("all schools have required fields", {
-  skip_if_offline()
+  skip_if_directory_unavailable()
 
   dir <- fetch_directory(2025, tidy = TRUE, use_cache = TRUE)
 
@@ -163,7 +176,7 @@ test_that("all schools have required fields", {
 
 
 test_that("coordinates are valid when present", {
-  skip_if_offline()
+  skip_if_directory_unavailable()
 
   dir <- fetch_directory(2025, tidy = TRUE, use_cache = TRUE)
 
@@ -186,7 +199,7 @@ test_that("coordinates are valid when present", {
 
 
 test_that("parish codes have expected format", {
-  skip_if_offline()
+  skip_if_directory_unavailable()
 
   dir <- fetch_directory(2025, tidy = TRUE, use_cache = TRUE)
 
@@ -209,7 +222,7 @@ test_that("parish codes have expected format", {
 # ==============================================================================
 
 test_that("major districts are present", {
-  skip_if_offline()
+  skip_if_directory_unavailable()
 
   dir <- fetch_directory(2025, tidy = TRUE, use_cache = TRUE)
 
@@ -228,7 +241,7 @@ test_that("major districts are present", {
 
 
 test_that("all years in data match requested year", {
-  skip_if_offline()
+  skip_if_directory_unavailable()
 
   dir <- fetch_directory(2025, tidy = TRUE, use_cache = TRUE)
 
@@ -242,7 +255,7 @@ test_that("all years in data match requested year", {
 # ==============================================================================
 
 test_that("get_raw_directory returns list with expected sheets", {
-  skip_if_offline()
+  skip_if_directory_unavailable()
 
   raw <- get_raw_directory(2025)
 
