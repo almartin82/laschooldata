@@ -13,17 +13,32 @@ home:
     href: https://github.com/almartin82/njschooldata
 
 reference:
-- title: Fetch Data
+- title: Fetch Enrollment Data
   contents:
   - fetch_enr
   - fetch_enr_multi
   - fetch_directory
   - get_available_years
   - get_directory_available_years
+- title: Fetch Assessment Data
+  contents:
+  - fetch_assessment
+  - fetch_assessment_multi
+  - fetch_district_assessment
+  - fetch_school_assessment
+  - get_available_assessment_years
+  - import_local_assessment
 - title: Data Transformation
   contents:
   - tidy_enr
   - id_enr_aggs
+  - tidy_assessment
+  - id_assessment_aggs
+- title: Analysis Functions
+  contents:
+  - assessment_summary
+  - calc_proficiency
+  - calc_basic_above
 - title: Cache Management
   contents:
   - cache_status
