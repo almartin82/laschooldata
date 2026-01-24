@@ -50,39 +50,29 @@ get_raw_enr <- function(end_year) {
     fileext = ".xlsx"
   )
 
-  # Download the file
+  # Download the file with retry logic
   tryCatch({
     message(paste("  Downloading from:", url))
 
-    response <- httr::GET(
-      url,
-      httr::write_disk(tname, overwrite = TRUE),
-      httr::timeout(300),
-      httr::user_agent("Mozilla/5.0 (compatible; R laschooldata package)")
-    )
+    response <- download_with_retry(url, tname)
 
     # Check for HTTP errors
-    if (httr::http_error(response)) {
+    if (is.null(response) || httr::http_error(response)) {
       # Try alternate URL patterns
       alt_urls <- get_alternate_urls(end_year)
       success <- FALSE
 
       for (alt_url in alt_urls) {
         message(paste("  Trying alternate URL:", alt_url))
-        response <- httr::GET(
-          alt_url,
-          httr::write_disk(tname, overwrite = TRUE),
-          httr::timeout(300),
-          httr::user_agent("Mozilla/5.0 (compatible; R laschooldata package)")
-        )
-        if (!httr::http_error(response)) {
+        response <- download_with_retry(alt_url, tname, quiet = TRUE)
+        if (!is.null(response) && !httr::http_error(response)) {
           success <- TRUE
           break
         }
       }
 
       if (!success) {
-        stop(paste("HTTP error:", httr::status_code(response),
+        stop(paste("HTTP error:", if (!is.null(response)) httr::status_code(response) else "connection failed",
                    "\nCould not find Multi Stats file for year", end_year))
       }
     }
@@ -327,35 +317,3 @@ split_combined_data <- function(df, end_year) {
 }
 
 
-#' Download file with retry logic
-#'
-#' @param url URL to download
-#' @param destfile Destination file path
-#' @param max_retries Maximum number of retry attempts
-#' @return TRUE if successful
-#' @keywords internal
-download_with_retry <- function(url, destfile, max_retries = 3) {
-
-  for (i in seq_len(max_retries)) {
-    tryCatch({
-      response <- httr::GET(
-        url,
-        httr::write_disk(destfile, overwrite = TRUE),
-        httr::timeout(300),
-        httr::user_agent("Mozilla/5.0 (compatible; R laschooldata package)")
-      )
-
-      if (!httr::http_error(response)) {
-        return(TRUE)
-      }
-
-    }, error = function(e) {
-      if (i < max_retries) {
-        message(paste("  Retry", i, "of", max_retries, "..."))
-        Sys.sleep(2)
-      }
-    })
-  }
-
-  FALSE
-}

@@ -165,20 +165,15 @@ get_raw_directory <- function(end_year) {
     fileext = ".xlsx"
   )
 
-  # Download the file
+  # Download the file with retry logic
   tryCatch({
     message(paste("  Downloading from:", url))
 
-    response <- httr::GET(
-      url,
-      httr::write_disk(tname, overwrite = TRUE),
-      httr::timeout(300),
-      httr::user_agent("Mozilla/5.0 (compatible; R laschooldata package)")
-    )
+    response <- download_with_retry(url, tname)
 
     # Check for HTTP errors
-    if (httr::http_error(response)) {
-      stop(paste("HTTP error:", httr::status_code(response),
+    if (is.null(response) || httr::http_error(response)) {
+      stop(paste("HTTP error:", if (!is.null(response)) httr::status_code(response) else "connection failed",
                  "\nCould not download school directory for year", end_year))
     }
 
