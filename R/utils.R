@@ -8,8 +8,43 @@ NULL
 # Declare global variables for NSE (dplyr programming)
 utils::globalVariables(
   c("end_year", "district_id", "campus_id", "type", "grade_level",
-    "n_students", "subgroup", "pct")
+    "n_students", "subgroup", "pct", "proficiency_level", "n_tested",
+    "school_id", "subject", "grade")
 )
+
+
+#' Convert to numeric, handling suppression markers
+#'
+#' Louisiana DOE uses various markers for suppressed data (*, **, <5, etc.)
+#' and may use commas in large numbers.
+#'
+#' @param x Vector to convert
+#' @return Numeric vector with NA for non-numeric values
+#' @keywords internal
+safe_numeric <- function(x) {
+  # Handle NULL or empty
+  if (is.null(x) || length(x) == 0) {
+    return(numeric(0))
+  }
+
+  # Convert to character if needed
+  x <- as.character(x)
+
+  # Remove commas and whitespace
+  x <- gsub(",", "", x)
+  x <- trimws(x)
+
+  # Handle common suppression markers
+  x[x %in% c("*", "**", "***", ".", "-", "-1", "<5", "<10", "N/A", "NA", "", "NULL", "n/a")] <- NA_character_
+
+  # Handle values like "< 5" with spaces
+  x[grepl("^<\\s*\\d+$", x)] <- NA_character_
+
+  # Handle percentage signs
+  x <- gsub("%$", "", x)
+
+  suppressWarnings(as.numeric(x))
+}
 
 
 #' Get available years for Louisiana enrollment data
