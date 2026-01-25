@@ -559,10 +559,10 @@ sessionInfo()
 #> [13] R6_2.6.1          generics_0.1.4    curl_7.0.0        knitr_1.51       
 #> [17] htmlwidgets_1.6.4 tibble_3.3.1      janitor_2.2.1     desc_1.4.3       
 #> [21] lubridate_1.9.4   bslib_0.9.0       pillar_1.11.1     rlang_1.1.7      
-#> [25] utf8_1.2.6        stringi_1.8.7     cachem_1.1.0      xfun_0.55        
+#> [25] utf8_1.2.6        stringi_1.8.7     cachem_1.1.0      xfun_0.56        
 #> [29] fs_1.6.6          sass_0.4.10       otel_0.2.0        timechange_0.3.0 
 #> [33] cli_3.6.5         withr_3.0.2       pkgdown_2.2.0     magrittr_2.0.4   
-#> [37] digest_0.6.39     rappdirs_0.3.3    lifecycle_1.0.5   vctrs_0.7.0      
+#> [37] digest_0.6.39     rappdirs_0.3.4    lifecycle_1.0.5   vctrs_0.7.1      
 #> [41] evaluate_1.0.5    glue_1.8.0        cellranger_1.1.0  codetools_0.2-20 
 #> [45] ragg_1.5.0        purrr_1.2.1       rmarkdown_2.30    httr_1.4.7       
 #> [49] tools_4.5.2       pkgconfig_2.0.3   htmltools_0.5.9
