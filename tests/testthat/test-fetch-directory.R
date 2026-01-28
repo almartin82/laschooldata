@@ -36,8 +36,8 @@ test_that("get_directory_available_years returns expected structure", {
 
   expect_type(years, "list")
   expect_named(years, c("min_year", "max_year", "description"))
-  expect_equal(years$min_year, 2025)
-  expect_equal(years$max_year, 2025)
+  expect_equal(years$min_year, 2026)
+  expect_equal(years$max_year, 2026)
   expect_type(years$description, "character")
 })
 
@@ -47,9 +47,9 @@ test_that("get_directory_available_years returns expected structure", {
 # ==============================================================================
 
 test_that("fetch_directory rejects invalid years", {
-  expect_error(fetch_directory(2024), "2025")
-  expect_error(fetch_directory(2026), "2025")
-  expect_error(fetch_directory(2020), "2025")
+  expect_error(fetch_directory(2024), "2026")
+  expect_error(fetch_directory(2025), "2026")
+  expect_error(fetch_directory(2020), "2026")
 })
 
 
@@ -60,7 +60,7 @@ test_that("fetch_directory rejects invalid years", {
 test_that("fetch_directory returns expected columns", {
   skip_if_offline()
 
-  dir <- fetch_directory(2025, tidy = TRUE, use_cache = TRUE)
+  dir <- fetch_directory(2026, tidy = TRUE, use_cache = TRUE)
 
   # Core ID columns
   expect_true("end_year" %in% names(dir))
@@ -91,7 +91,7 @@ test_that("fetch_directory returns expected columns", {
 test_that("fetch_directory returns reasonable number of schools", {
   skip_if_offline()
 
-  dir <- fetch_directory(2025, tidy = TRUE, use_cache = TRUE)
+  dir <- fetch_directory(2026, tidy = TRUE, use_cache = TRUE)
 
   # Louisiana should have at least 1000 public schools
   expect_gt(nrow(dir), 1000,
@@ -110,7 +110,7 @@ test_that("fetch_directory returns reasonable number of schools", {
 test_that("fetch_directory includes charter schools by default", {
   skip_if_offline()
 
-  dir <- fetch_directory(2025, tidy = TRUE, use_cache = TRUE)
+  dir <- fetch_directory(2026, tidy = TRUE, use_cache = TRUE)
 
   # Should have both charter and non-charter schools
   expect_true(any(dir$is_charter == TRUE),
@@ -123,8 +123,8 @@ test_that("fetch_directory includes charter schools by default", {
 test_that("fetch_directory can exclude charter schools", {
   skip_if_offline()
 
-  dir_all <- fetch_directory(2025, tidy = TRUE, use_cache = TRUE)
-  dir_traditional <- fetch_directory(2025, tidy = TRUE, use_cache = TRUE,
+  dir_all <- fetch_directory(2026, tidy = TRUE, use_cache = TRUE)
+  dir_traditional <- fetch_directory(2026, tidy = TRUE, use_cache = TRUE,
                                      include_charter = FALSE)
 
   # Traditional should be a subset
@@ -146,7 +146,7 @@ test_that("fetch_directory can exclude charter schools", {
 test_that("all schools have required fields", {
   skip_if_offline()
 
-  dir <- fetch_directory(2025, tidy = TRUE, use_cache = TRUE)
+  dir <- fetch_directory(2026, tidy = TRUE, use_cache = TRUE)
 
   # Every school should have a site code
   expect_true(all(!is.na(dir$site_code) & dir$site_code != ""),
@@ -165,7 +165,7 @@ test_that("all schools have required fields", {
 test_that("coordinates are valid when present", {
   skip_if_offline()
 
-  dir <- fetch_directory(2025, tidy = TRUE, use_cache = TRUE)
+  dir <- fetch_directory(2026, tidy = TRUE, use_cache = TRUE)
 
   # Get rows with coordinates
   has_coords <- !is.na(dir$latitude) & !is.na(dir$longitude)
@@ -188,7 +188,7 @@ test_that("coordinates are valid when present", {
 test_that("parish codes have expected format", {
   skip_if_offline()
 
-  dir <- fetch_directory(2025, tidy = TRUE, use_cache = TRUE)
+  dir <- fetch_directory(2026, tidy = TRUE, use_cache = TRUE)
 
   # Parish codes should be 2-digit with leading zeros
   # (Louisiana has 64 parishes numbered 01-64, but also special districts)
@@ -211,7 +211,7 @@ test_that("parish codes have expected format", {
 test_that("major districts are present", {
   skip_if_offline()
 
-  dir <- fetch_directory(2025, tidy = TRUE, use_cache = TRUE)
+  dir <- fetch_directory(2026, tidy = TRUE, use_cache = TRUE)
 
   # Check for some major Louisiana school districts
   district_names <- unique(tolower(dir$district_name))
@@ -230,10 +230,10 @@ test_that("major districts are present", {
 test_that("all years in data match requested year", {
   skip_if_offline()
 
-  dir <- fetch_directory(2025, tidy = TRUE, use_cache = TRUE)
+  dir <- fetch_directory(2026, tidy = TRUE, use_cache = TRUE)
 
-  expect_true(all(dir$end_year == 2025),
-    label = "All end_year values should be 2025")
+  expect_true(all(dir$end_year == 2026),
+    label = "All end_year values should be 2026")
 })
 
 
@@ -244,7 +244,7 @@ test_that("all years in data match requested year", {
 test_that("get_raw_directory returns list with expected sheets", {
   skip_if_offline()
 
-  raw <- get_raw_directory(2025)
+  raw <- get_raw_directory(2026)
 
   expect_type(raw, "list")
   expect_true("public" %in% names(raw),
@@ -264,7 +264,7 @@ test_that("tidy=FALSE returns raw column names", {
   skip_if_offline()
 
   # This tests that raw data is accessible
-  raw <- get_raw_directory(2025)
+  raw <- get_raw_directory(2026)
 
   # Check for expected raw column names
   public_cols <- names(raw$public)

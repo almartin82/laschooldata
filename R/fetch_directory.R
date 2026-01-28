@@ -24,8 +24,8 @@
 #' names, addresses, and grades served.
 #'
 #' @param end_year A school year. Year is the end of the academic year - e.g.,
-#'   2024-25 school year is year '2025'. If NULL (default), uses the most
-#'   recent available year. Currently only 2025 is available.
+#'   2025-26 school year is year '2026'. If NULL (default), uses the most
+#'   recent available year. Currently only 2026 is available.
 #' @param tidy If TRUE (default), returns data with standardized column names.
 #'   If FALSE, returns the raw data with original column names.
 #' @param use_cache If TRUE (default), uses locally cached data when available.
@@ -69,9 +69,9 @@ fetch_directory <- function(end_year = NULL, tidy = TRUE, use_cache = TRUE,
     end_year <- get_directory_available_years()$max_year
   }
 
-  # Validate year - currently only 2025 is confirmed working
-  if (end_year < 2025 || end_year > 2025) {
-    stop("end_year must be 2025 (currently the only available year)")
+  # Validate year - currently only 2026 is confirmed working
+  if (end_year < 2026 || end_year > 2026) {
+    stop("end_year must be 2026 (currently the only available year)")
   }
 
   # Determine cache type
@@ -119,8 +119,8 @@ fetch_directory <- function(end_year = NULL, tidy = TRUE, use_cache = TRUE,
 #' Returns the range of years for which school directory data is available.
 #'
 #' @return A list with:
-#'   \item{min_year}{First available year (2025)}
-#'   \item{max_year}{Last available year (2025)}
+#'   \item{min_year}{First available year (2026)}
+#'   \item{max_year}{Last available year (2026)}
 #'   \item{description}{Description of data availability}
 #' @export
 #' @examples
@@ -128,11 +128,11 @@ fetch_directory <- function(end_year = NULL, tidy = TRUE, use_cache = TRUE,
 #' print(years$max_year)
 get_directory_available_years <- function() {
   list(
-    min_year = 2025,
-    max_year = 2025,
+    min_year = 2026,
+    max_year = 2026,
     description = paste(
       "Louisiana school directory data from LDOE.",
-      "Currently only the 2024-2025 directory (end_year = 2025) is available.",
+      "Currently only the 2025-2026 directory (end_year = 2026) is available.",
       "Historical directories may be added as they are discovered."
     )
   )
@@ -143,14 +143,14 @@ get_directory_available_years <- function() {
 #'
 #' Downloads the school directory Excel file from LDOE.
 #'
-#' @param end_year School year end (2024-25 = 2025)
+#' @param end_year School year end (2025-26 = 2026)
 #' @return List with data frames for each sheet (public, charter, nonpublic)
 #' @keywords internal
 get_raw_directory <- function(end_year) {
 
   # Validate year
-  if (end_year < 2025 || end_year > 2025) {
-    stop("end_year must be 2025 (currently the only available year)")
+  if (end_year < 2026 || end_year > 2026) {
+    stop("end_year must be 2026 (currently the only available year)")
   }
 
   message(paste("Downloading LDOE school directory for", end_year, "..."))
@@ -240,10 +240,9 @@ build_directory_url <- function(end_year) {
   # Base URL for Louisiana DOE data management
   base_url <- "https://doe.louisiana.gov/docs/default-source/data-management/"
 
-  # Currently known URL pattern for 2024-2025 directory
-  # The URL includes a date stamp (11-01-24 = November 1, 2024)
-  if (end_year == 2025) {
-    filename <- "2024-2025-school-directory-11-01-24.xlsx"
+  # Currently known URL pattern for 2025-2026 directory
+  if (end_year == 2026) {
+    filename <- "2025-2026-school-directory.xlsx"
     return(paste0(base_url, filename))
   }
 
