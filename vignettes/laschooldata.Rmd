@@ -155,7 +155,7 @@ state_trends
 ## Caching
 
 The package caches downloaded data locally to speed up repeated access:
-```{r caching}
+```{r caching, eval=FALSE}
 # View cache status
 cache_status()
 
