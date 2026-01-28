@@ -232,8 +232,8 @@ test_that("all years in data match requested year", {
 
   dir <- fetch_directory(2026, tidy = TRUE, use_cache = TRUE)
 
-  expect_true(all(dir$end_year == 2025),
-    label = "All end_year values should be 2025")
+  expect_true(all(dir$end_year == 2026),
+    label = "All end_year values should be 2026")
 })
 
 
@@ -244,7 +244,7 @@ test_that("all years in data match requested year", {
 test_that("get_raw_directory returns list with expected sheets", {
   skip_if_offline()
 
-  raw <- get_raw_directory(2025)
+  raw <- get_raw_directory(2026)
 
   expect_type(raw, "list")
   expect_true("public" %in% names(raw),
@@ -264,7 +264,7 @@ test_that("tidy=FALSE returns raw column names", {
   skip_if_offline()
 
   # This tests that raw data is accessible
-  raw <- get_raw_directory(2025)
+  raw <- get_raw_directory(2026)
 
   # Check for expected raw column names
   public_cols <- names(raw$public)
