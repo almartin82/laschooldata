@@ -4,12 +4,14 @@
 \alias{find_directory_sheet}
 \title{Find matching sheet name in directory Excel file}
 \usage{
-find_directory_sheet(sheets, patterns)
+find_directory_sheet(sheets, patterns, exclude = NULL)
 }
 \arguments{
 \item{sheets}{Vector of sheet names}
 
 \item{patterns}{Vector of patterns to match}
+
+\item{exclude}{Vector of patterns to exclude from matches (optional)}
 }
 \value{
 Matching sheet name or NULL
