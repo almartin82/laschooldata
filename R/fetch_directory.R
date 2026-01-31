@@ -197,25 +197,36 @@ get_raw_directory <- function(end_year) {
   message("  Reading Excel file...")
 
   sheets <- readxl::excel_sheets(tname)
+  message(paste("  Available sheets:", paste(sheets, collapse = ", ")))
 
   result <- list()
 
-  # Read All Public Schools sheet
-  public_sheet <- find_directory_sheet(sheets, c("All Public", "Public Schools"))
+  # Read All Public Schools sheet (exclude "NonPublic" and "Charter" from matching)
+  public_sheet <- find_directory_sheet(
+    sheets,
+    c("All Public", "Public Schools"),
+    exclude = c("NonPublic", "Charter")
+  )
   if (!is.null(public_sheet)) {
     message(paste("  Reading sheet:", public_sheet))
     result$public <- readxl::read_excel(tname, sheet = public_sheet)
+  } else {
+    warning("Could not find public schools sheet in directory file")
   }
 
-  # Read Public Charter Schools sheet
-  charter_sheet <- find_directory_sheet(sheets, c("Charter", "Public Charter"))
+  # Read Public Charter Schools sheet (exclude "NonPublic")
+  charter_sheet <- find_directory_sheet(
+    sheets,
+    c("Charter", "Public Charter"),
+    exclude = c("NonPublic")
+  )
   if (!is.null(charter_sheet)) {
     message(paste("  Reading sheet:", charter_sheet))
     result$charter <- readxl::read_excel(tname, sheet = charter_sheet)
   }
 
   # Read Nonpublic Schools sheet (for reference, not included by default)
-  nonpublic_sheet <- find_directory_sheet(sheets, c("Nonpublic"))
+  nonpublic_sheet <- find_directory_sheet(sheets, c("Nonpublic", "NonPublic"))
   if (!is.null(nonpublic_sheet)) {
     message(paste("  Reading sheet:", nonpublic_sheet))
     result$nonpublic <- readxl::read_excel(tname, sheet = nonpublic_sheet)
@@ -257,11 +268,18 @@ build_directory_url <- function(end_year) {
 #'
 #' @param sheets Vector of sheet names
 #' @param patterns Vector of patterns to match
+#' @param exclude Vector of patterns to exclude from matches (optional)
 #' @return Matching sheet name or NULL
 #' @keywords internal
-find_directory_sheet <- function(sheets, patterns) {
+find_directory_sheet <- function(sheets, patterns, exclude = NULL) {
   for (pattern in patterns) {
     matches <- grep(pattern, sheets, ignore.case = TRUE, value = TRUE)
+    # Filter out excluded patterns
+    if (!is.null(exclude) && length(matches) > 0) {
+      for (excl in exclude) {
+        matches <- matches[!grepl(excl, matches, ignore.case = TRUE)]
+      }
+    }
     if (length(matches) > 0) {
       return(matches[1])
     }

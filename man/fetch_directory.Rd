@@ -13,8 +13,8 @@ fetch_directory(
 }
 \arguments{
 \item{end_year}{A school year. Year is the end of the academic year - e.g.,
-2024-25 school year is year '2025'. If NULL (default), uses the most
-recent available year. Currently only 2025 is available.}
+2025-26 school year is year '2026'. If NULL (default), uses the most
+recent available year. Currently only 2026 is available.}
 
 \item{tidy}{If TRUE (default), returns data with standardized column names.
 If FALSE, returns the raw data with original column names.}

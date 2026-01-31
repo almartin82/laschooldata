@@ -194,8 +194,8 @@ test_that("parish codes have expected format", {
   # (Louisiana has 64 parishes numbered 01-64, but also special districts)
   parish_codes <- unique(dir$parish_code)
 
-  # Should have at least 50 different parishes
-  expect_gt(length(parish_codes), 50,
+  # Should have at least 50 different parishes (Louisiana has 64)
+  expect_gte(length(parish_codes), 50,
     label = "Should have at least 50 different parishes")
 
   # All should be 2-character strings

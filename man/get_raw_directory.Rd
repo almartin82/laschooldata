@@ -7,7 +7,7 @@
 get_raw_directory(end_year)
 }
 \arguments{
-\item{end_year}{School year end (2024-25 = 2025)}
+\item{end_year}{School year end (2025-26 = 2026)}
 }
 \value{
 List with data frames for each sheet (public, charter, nonpublic)
