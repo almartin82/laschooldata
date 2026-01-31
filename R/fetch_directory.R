@@ -202,9 +202,10 @@ get_raw_directory <- function(end_year) {
   result <- list()
 
   # Read All Public Schools sheet (exclude "NonPublic" and "Charter" from matching)
+  # Sheet name may have underscores (All_Public_Schools) or spaces (All Public Schools)
   public_sheet <- find_directory_sheet(
     sheets,
-    c("All Public", "Public Schools"),
+    c("All_Public", "All Public", "Public Schools"),
     exclude = c("NonPublic", "Charter")
   )
   if (!is.null(public_sheet)) {
