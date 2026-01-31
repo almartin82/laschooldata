@@ -11,6 +11,29 @@
 
 ---
 
+## DATA SOURCE STATUS - Cloudflare Protection
+
+**IMPORTANT:** As of January 2026, the Louisiana DOE website (doe.louisiana.gov) uses Cloudflare protection that blocks most automated downloads.
+
+### Impact
+- `fetch_enr()` may fail with HTTP 403 errors
+- `fetch_assessment()` may fail with HTTP 403 errors
+- Vignettes cannot be rebuilt without cached data
+
+### Workarounds
+1. **Use cached data**: Set `use_cache = TRUE` (default)
+2. **Manual download**: Download files manually from doe.louisiana.gov/data-and-reports, then use `import_local_assessment()`
+3. **Pre-built vignettes**: Vignette cache directories are committed to git for CI builds
+
+### Enrollment Data URLs
+- Pattern: `https://www.louisianabelieves.com/docs/default-source/data-management/oct-{YEAR}-multi-stats-(total-by-site-and-school-system).xlsx`
+- Redirects to doe.louisiana.gov (which may block)
+
+### Assessment Data URLs
+- State/LEA: `https://doe.louisiana.gov/docs/default-source/test-results/{YEAR}-state-lea-leap-2025-mastery-summary.xlsx`
+- School: `https://doe.louisiana.gov/docs/default-source/test-results/{YEAR}-school-leap-2025-mastery-summary.xlsx`
+
+---
 
 # Claude Code Instructions
 
@@ -70,10 +93,18 @@ Before opening a PR, verify:
 - Snapshot Date: October 1st of each school year
 - Data Center: https://doe.louisiana.gov/data-and-reports/enrollment-data
 
-## Available Years
+## Available Years - Enrollment
 
 **Confirmed Working**: 2019-2024 (6 years)
 - Earlier years (2007-2018) may exist but use different URL patterns and file structures
+
+## Available Years - Assessment (LEAP)
+
+**Confirmed Working**: 2018, 2019, 2021-2025
+- **2020**: No data due to COVID-19 testing waiver
+- Assessment functions: `fetch_assessment()`, `fetch_assessment_multi()`
+- Proficiency levels: Unsatisfactory, Approaching Basic, Basic, Mastery, Advanced
+- Subjects: ELA, Math, Science, Social Studies
 
 ## Available Subgroups
 
