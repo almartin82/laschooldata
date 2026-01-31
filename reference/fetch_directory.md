@@ -19,9 +19,9 @@ fetch_directory(
 
 - end_year:
 
-  A school year. Year is the end of the academic year - e.g., 2024-25
-  school year is year '2025'. If NULL (default), uses the most recent
-  available year. Currently only 2025 is available.
+  A school year. Year is the end of the academic year - e.g., 2025-26
+  school year is year '2026'. If NULL (default), uses the most recent
+  available year. Currently only 2026 is available.
 
 - tidy:
 

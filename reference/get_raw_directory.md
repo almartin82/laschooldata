@@ -12,7 +12,7 @@ get_raw_directory(end_year)
 
 - end_year:
 
-  School year end (2024-25 = 2025)
+  School year end (2025-26 = 2026)
 
 ## Value
 

@@ -5,7 +5,7 @@ Find matching sheet name in directory Excel file
 ## Usage
 
 ``` r
-find_directory_sheet(sheets, patterns)
+find_directory_sheet(sheets, patterns, exclude = NULL)
 ```
 
 ## Arguments
@@ -17,6 +17,10 @@ find_directory_sheet(sheets, patterns)
 - patterns:
 
   Vector of patterns to match
+
+- exclude:
+
+  Vector of patterns to exclude from matches (optional)
 
 ## Value
 

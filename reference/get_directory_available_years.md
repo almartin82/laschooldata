@@ -14,11 +14,11 @@ A list with:
 
 - min_year:
 
-  First available year (2025)
+  First available year (2026)
 
 - max_year:
 
-  Last available year (2025)
+  Last available year (2026)
 
 - description:
 
@@ -29,5 +29,5 @@ A list with:
 ``` r
 years <- get_directory_available_years()
 print(years$max_year)
-#> [1] 2025
+#> [1] 2026
 ```
