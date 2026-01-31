@@ -47,6 +47,41 @@
 <h2 id="critical-data-source-rules">CRITICAL DATA SOURCE RULES<a class="anchor" aria-label="anchor" href="#critical-data-source-rules"></a></h2>
 <p><strong>NEVER use Urban Institute API, NCES CCD, or ANY federal data source</strong> — the entire point of these packages is to provide STATE-LEVEL data directly from state DOEs. Federal sources aggregate/transform data differently and lose state-specific details. If a state DOE source is broken, FIX IT or find an alternative STATE source — do not fall back to federal data.</p>
 <hr></div>
+<div class="section level2">
+<h2 id="data-source-status---cloudflare-protection">DATA SOURCE STATUS - Cloudflare Protection<a class="anchor" aria-label="anchor" href="#data-source-status---cloudflare-protection"></a></h2>
+<p><strong>IMPORTANT:</strong> As of January 2026, the Louisiana DOE website (doe.louisiana.gov) uses Cloudflare protection that blocks most automated downloads.</p>
+<div class="section level3">
+<h3 id="impact">Impact<a class="anchor" aria-label="anchor" href="#impact"></a></h3>
+<ul><li>
+<code><a href="reference/fetch_enr.html">fetch_enr()</a></code> may fail with HTTP 403 errors</li>
+<li>
+<code><a href="reference/fetch_assessment.html">fetch_assessment()</a></code> may fail with HTTP 403 errors</li>
+<li>Vignettes cannot be rebuilt without cached data</li>
+</ul></div>
+<div class="section level3">
+<h3 id="workarounds">Workarounds<a class="anchor" aria-label="anchor" href="#workarounds"></a></h3>
+<ol style="list-style-type: decimal"><li>
+<strong>Use cached data</strong>: Set <code>use_cache = TRUE</code> (default)</li>
+<li>
+<strong>Manual download</strong>: Download files manually from doe.louisiana.gov/data-and-reports, then use <code><a href="reference/import_local_assessment.html">import_local_assessment()</a></code>
+</li>
+<li>
+<strong>Pre-built vignettes</strong>: Vignette cache directories are committed to git for CI builds</li>
+</ol></div>
+<div class="section level3">
+<h3 id="enrollment-data-urls">Enrollment Data URLs<a class="anchor" aria-label="anchor" href="#enrollment-data-urls"></a></h3>
+<ul><li>Pattern: <code>https://www.louisianabelieves.com/docs/default-source/data-management/oct-{YEAR}-multi-stats-(total-by-site-and-school-system).xlsx</code>
+</li>
+<li>Redirects to doe.louisiana.gov (which may block)</li>
+</ul></div>
+<div class="section level3">
+<h3 id="assessment-data-urls">Assessment Data URLs<a class="anchor" aria-label="anchor" href="#assessment-data-urls"></a></h3>
+<ul><li>State/LEA: <code>https://doe.louisiana.gov/docs/default-source/test-results/{YEAR}-state-lea-leap-2025-mastery-summary.xlsx</code>
+</li>
+<li>School: <code>https://doe.louisiana.gov/docs/default-source/test-results/{YEAR}-school-leap-2025-mastery-summary.xlsx</code>
+</li>
+</ul><hr></div>
+</div>
 <div id="claude-code-instructions" class="section level1">
 
 <div class="section level2">
@@ -103,8 +138,12 @@
 <p><strong>Primary Source</strong>: Louisiana Department of Education Multi Stats Files - URL Pattern: <code>https://www.louisianabelieves.com/docs/default-source/data-management/oct-{YEAR}-multi-stats-(total-by-site-and-school-system).xlsx</code> - Snapshot Date: October 1st of each school year - Data Center: <a href="https://doe.louisiana.gov/data-and-reports/enrollment-data" class="external-link uri">https://doe.louisiana.gov/data-and-reports/enrollment-data</a></p>
 </div>
 <div class="section level2">
-<h2 id="available-years">Available Years<a class="anchor" aria-label="anchor" href="#available-years"></a></h2>
+<h2 id="available-years---enrollment">Available Years - Enrollment<a class="anchor" aria-label="anchor" href="#available-years---enrollment"></a></h2>
 <p><strong>Confirmed Working</strong>: 2019-2024 (6 years) - Earlier years (2007-2018) may exist but use different URL patterns and file structures</p>
+</div>
+<div class="section level2">
+<h2 id="available-years---assessment-leap">Available Years - Assessment (LEAP)<a class="anchor" aria-label="anchor" href="#available-years---assessment-leap"></a></h2>
+<p><strong>Confirmed Working</strong>: 2018, 2019, 2021-2025 - <strong>2020</strong>: No data due to COVID-19 testing waiver - Assessment functions: <code><a href="reference/fetch_assessment.html">fetch_assessment()</a></code>, <code><a href="reference/fetch_assessment_multi.html">fetch_assessment_multi()</a></code> - Proficiency levels: Unsatisfactory, Approaching Basic, Basic, Mastery, Advanced - Subjects: ELA, Math, Science, Social Studies</p>
 </div>
 <div class="section level2">
 <h2 id="available-subgroups">Available Subgroups<a class="anchor" aria-label="anchor" href="#available-subgroups"></a></h2>
