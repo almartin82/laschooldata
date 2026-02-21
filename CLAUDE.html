@@ -323,6 +323,24 @@
 <hr></div>
 </div>
 <div class="section level2">
+<h2 id="valid-filter-values-tidy-enrollment-via-fetch_enrtidy--true">Valid Filter Values (tidy enrollment via <code>fetch_enr(tidy = TRUE)</code>)<a class="anchor" aria-label="anchor" href="#valid-filter-values-tidy-enrollment-via-fetch_enrtidy--true"></a></h2>
+<div class="section level3">
+<h3 id="subgroup">subgroup<a class="anchor" aria-label="anchor" href="#subgroup"></a></h3>
+<p><code>total_enrollment</code>, <code>white</code>, <code>black</code>, <code>hispanic</code>, <code>asian</code>, <code>pacific_islander</code>, <code>native_american</code>, <code>multiracial</code>, <code>minority</code>, <code>male</code>, <code>female</code>, <code>lep</code>, <code>fep</code>, <code>econ_disadv</code></p>
+<p><strong>Note:</strong> Louisiana includes <code>minority</code> (aggregate of non-white groups) and <code>fep</code> (Fully English Proficient) as subgroups, which are unusual compared to other state packages. Gender and special population counts are derived from percentages in the raw data (not direct counts).</p>
+</div>
+<div class="section level3">
+<h3 id="grade_level">grade_level<a class="anchor" aria-label="anchor" href="#grade_level"></a></h3>
+<p><code>TOTAL</code>, <code>INF</code>, <code>PS</code>, <code>PK</code>, <code>K</code>, <code>01</code>-<code>12</code>, <code>T9</code>, <code>EXT</code></p>
+<p><strong>Note:</strong> Louisiana has extra grade levels not found in most states: <code>INF</code> (Infants, special ed), <code>PS</code> (Pre-School, special ed), <code>T9</code> (Transitional 9th grade), and <code>EXT</code> (Extension Academy). The <code><a href="reference/enr_grade_aggs.html">enr_grade_aggs()</a></code> function adds computed aggregates: <code>ELEM</code> (K-05), <code>MIDDLE</code> (06-08), <code>HIGH</code> (09-12).</p>
+</div>
+<div class="section level3">
+<h3 id="entity-flags">entity flags<a class="anchor" aria-label="anchor" href="#entity-flags"></a></h3>
+<p><code>is_state</code>, <code>is_district</code>, <code>is_campus</code></p>
+<p>The <code>type</code> column has values <code>State</code>, <code>District</code>, and <code>Campus</code>. The state total row has <code>district_id = "000"</code> and <code>district_name = "State of Louisiana"</code>.</p>
+<hr></div>
+</div>
+<div class="section level2">
 <h2 id="readme-images-from-vignettes-required">README Images from Vignettes (REQUIRED)<a class="anchor" aria-label="anchor" href="#readme-images-from-vignettes-required"></a></h2>
 <p><strong>NEVER use <code>man/figures/</code> or <code>generate_readme_figs.R</code> for README images.</strong></p>
 <p>README images MUST come from pkgdown-generated vignette output so they auto-update on merge:</p>
