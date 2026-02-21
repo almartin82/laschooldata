@@ -308,6 +308,25 @@ If CI fails, fix the issue and push - auto-merge triggers when checks pass.
 
 ---
 
+## Valid Filter Values (tidy enrollment via `fetch_enr(tidy = TRUE)`)
+
+### subgroup
+`total_enrollment`, `white`, `black`, `hispanic`, `asian`, `pacific_islander`, `native_american`, `multiracial`, `minority`, `male`, `female`, `lep`, `fep`, `econ_disadv`
+
+**Note:** Louisiana includes `minority` (aggregate of non-white groups) and `fep` (Fully English Proficient) as subgroups, which are unusual compared to other state packages. Gender and special population counts are derived from percentages in the raw data (not direct counts).
+
+### grade_level
+`TOTAL`, `INF`, `PS`, `PK`, `K`, `01`-`12`, `T9`, `EXT`
+
+**Note:** Louisiana has extra grade levels not found in most states: `INF` (Infants, special ed), `PS` (Pre-School, special ed), `T9` (Transitional 9th grade), and `EXT` (Extension Academy). The `enr_grade_aggs()` function adds computed aggregates: `ELEM` (K-05), `MIDDLE` (06-08), `HIGH` (09-12).
+
+### entity flags
+`is_state`, `is_district`, `is_campus`
+
+The `type` column has values `State`, `District`, and `Campus`. The state total row has `district_id = "000"` and `district_name = "State of Louisiana"`.
+
+---
+
 ## README Images from Vignettes (REQUIRED)
 
 **NEVER use `man/figures/` or `generate_readme_figs.R` for README images.**
