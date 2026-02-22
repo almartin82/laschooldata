@@ -63,197 +63,223 @@
 <div class="section level2">
 <h2 id="what-can-you-find-with-laschooldata">What can you find with laschooldata?<a class="anchor" aria-label="anchor" href="#what-can-you-find-with-laschooldata"></a>
 </h2>
-<p><strong>6 years of enrollment data (2019-2024).</strong> 676,751 students in 2024. 69 parishes. Here are some stories hiding in the numbers:</p>
+<p><strong>6 years of enrollment data (2019-2024).</strong> 676,751 students in 2024. 75 districts across 63 parishes. Here are some stories hiding in the numbers:</p>
 <hr>
 <div class="section level3">
-<h3 id="id_1-hurricane-katrinas-lasting-mark-on-new-orleans">1. Hurricane Katrina’s lasting mark on New Orleans<a class="anchor" aria-label="anchor" href="#id_1-hurricane-katrinas-lasting-mark-on-new-orleans"></a>
+<h3 id="id_1-louisiana-added-33000-students-since-2019">1. Louisiana added 33,000 students since 2019<a class="anchor" aria-label="anchor" href="#id_1-louisiana-added-33000-students-since-2019"></a>
 </h3>
-<p>Orleans Parish lost over 60% of its students after 2005 and has never fully recovered. The Recovery School District reshaped public education.</p>
+<p>Statewide enrollment grew 5.1% from 2019 to 2024, rising from 644,000 to 677,000 students.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">orleans</span> <span class="op">&lt;-</span> <span class="va">enr_long</span> <span class="op">%&gt;%</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">is_district</span>, <span class="va">district_name</span> <span class="op">==</span> <span class="st">"Orleans Parish"</span>,</span>
-<span>         <span class="va">subgroup</span> <span class="op">==</span> <span class="st">"total_enrollment"</span>, <span class="va">grade_level</span> <span class="op">==</span> <span class="st">"TOTAL"</span><span class="op">)</span></span>
-<span><span class="va">orleans</span> <span class="op">%&gt;%</span> <span class="fu">select</span><span class="op">(</span><span class="va">end_year</span>, <span class="va">district_name</span>, <span class="va">n_students</span><span class="op">)</span></span>
-<span><span class="co">#&gt;   end_year  district_name n_students</span></span>
-<span><span class="co">#&gt; 1     2019 Orleans Parish      42935</span></span>
-<span><span class="co">#&gt; 2     2024 Orleans Parish      43698</span></span></code></pre></div>
-<div class="float">
-<img src="https://almartin82.github.io/laschooldata/articles/enrollment-trends_files/figure-html/orleans-recovery-1.png" alt="Orleans Parish Post-Katrina"><div class="figcaption">Orleans Parish Post-Katrina</div>
-</div>
-<hr>
-</div>
-<div class="section level3">
-<h3 id="id_2-louisianas-charter-school-revolution">2. Louisiana’s charter school revolution<a class="anchor" aria-label="anchor" href="#id_2-louisianas-charter-school-revolution"></a>
-</h3>
-<p>New Orleans became America’s first all-charter city. The “Type 2 Charters” district tracks statewide charter enrollment.</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># Louisiana tracks charter schools under the "Type 2 Charters" LEA</span></span>
-<span><span class="va">charter</span> <span class="op">&lt;-</span> <span class="va">enr</span> <span class="op">%&gt;%</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">is_district</span>,</span>
-<span>         <span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">grepl</a></span><span class="op">(</span><span class="st">"Type 2 Charter"</span>, <span class="va">district_name</span>, ignore.case <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
-<span>         <span class="va">subgroup</span> <span class="op">==</span> <span class="st">"total_enrollment"</span>, <span class="va">grade_level</span> <span class="op">==</span> <span class="st">"TOTAL"</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
-<span>  <span class="fu">group_by</span><span class="op">(</span><span class="va">end_year</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
-<span>  <span class="fu">summarize</span><span class="op">(</span>n_students <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">n_students</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>, .groups <span class="op">=</span> <span class="st">"drop"</span><span class="op">)</span></span>
-<span><span class="va">charter</span></span>
+<code class="sourceCode R"><span><span class="va">state_trend</span> <span class="op">&lt;-</span> <span class="va">enr</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">is_state</span>, <span class="va">subgroup</span> <span class="op">==</span> <span class="st">"total_enrollment"</span>, <span class="va">grade_level</span> <span class="op">==</span> <span class="st">"TOTAL"</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu">select</span><span class="op">(</span><span class="va">end_year</span>, <span class="va">n_students</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/stopifnot.html" class="external-link">stopifnot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">state_trend</span><span class="op">)</span> <span class="op">&gt;</span> <span class="fl">0</span><span class="op">)</span></span>
+<span><span class="va">state_trend</span></span>
 <span><span class="co">#&gt;   end_year n_students</span></span>
-<span><span class="co">#&gt; 1     2019      79843</span></span>
-<span><span class="co">#&gt; 2     2020      82318</span></span>
-<span><span class="co">#&gt; 3     2021      84125</span></span>
-<span><span class="co">#&gt; 4     2022      86340</span></span>
-<span><span class="co">#&gt; 5     2023      88212</span></span>
-<span><span class="co">#&gt; 6     2024      89756</span></span></code></pre></div>
+<span><span class="co">#&gt; 1     2019     643986</span></span>
+<span><span class="co">#&gt; 2     2020     624527</span></span>
+<span><span class="co">#&gt; 3     2021     615839</span></span>
+<span><span class="co">#&gt; 4     2022     685606</span></span>
+<span><span class="co">#&gt; 5     2023     681176</span></span>
+<span><span class="co">#&gt; 6     2024     676751</span></span></code></pre></div>
 <div class="float">
-<img src="https://almartin82.github.io/laschooldata/articles/enrollment-trends_files/figure-html/charter-growth-1.png" alt="Louisiana Charter School Enrollment"><div class="figcaption">Louisiana Charter School Enrollment</div>
+<img src="https://almartin82.github.io/laschooldata/articles/enrollment-trends_files/figure-html/state-growth-1.png" alt="Louisiana Statewide Enrollment"><div class="figcaption">Louisiana Statewide Enrollment</div>
 </div>
 <hr>
 </div>
 <div class="section level3">
-<h3 id="id_3-the-baton-rouge-boom">3. The Baton Rouge boom<a class="anchor" aria-label="anchor" href="#id_3-the-baton-rouge-boom"></a>
+<h3 id="id_2-white-students-fell-below-black-students-for-the-first-time">2. White students fell below Black students for the first time<a class="anchor" aria-label="anchor" href="#id_2-white-students-fell-below-black-students-for-the-first-time"></a>
 </h3>
-<p>East Baton Rouge Parish now enrolls more students than Orleans, becoming Louisiana’s largest district.</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">br_orleans</span> <span class="op">&lt;-</span> <span class="va">enr</span> <span class="op">%&gt;%</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">is_district</span>, <span class="va">district_name</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"East Baton Rouge Parish"</span>, <span class="st">"Orleans Parish"</span><span class="op">)</span>,</span>
-<span>         <span class="va">subgroup</span> <span class="op">==</span> <span class="st">"total_enrollment"</span>, <span class="va">grade_level</span> <span class="op">==</span> <span class="st">"TOTAL"</span><span class="op">)</span></span>
-<span><span class="va">br_orleans</span> <span class="op">%&gt;%</span></span>
-<span>  <span class="fu">select</span><span class="op">(</span><span class="va">end_year</span>, <span class="va">district_name</span>, <span class="va">n_students</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
-<span>  <span class="fu">tidyr</span><span class="fu">::</span><span class="fu"><a href="https://tidyr.tidyverse.org/reference/pivot_wider.html" class="external-link">pivot_wider</a></span><span class="op">(</span>names_from <span class="op">=</span> <span class="va">district_name</span>, values_from <span class="op">=</span> <span class="va">n_students</span><span class="op">)</span></span>
-<span><span class="co">#&gt;   end_year East Baton Rouge Parish Orleans Parish</span></span>
-<span><span class="co">#&gt; 1     2019                   41325          42935</span></span>
-<span><span class="co">#&gt; 2     2020                   40614          42712</span></span>
-<span><span class="co">#&gt; 3     2021                   39856          42156</span></span>
-<span><span class="co">#&gt; 4     2022                   39845          42845</span></span>
-<span><span class="co">#&gt; 5     2023                   39812          43256</span></span>
-<span><span class="co">#&gt; 6     2024                   39932          43698</span></span></code></pre></div>
-<div class="float">
-<img src="https://almartin82.github.io/laschooldata/articles/enrollment-trends_files/figure-html/br-vs-orleans-1.png" alt="Baton Rouge Surpasses New Orleans"><div class="figcaption">Baton Rouge Surpasses New Orleans</div>
-</div>
-<hr>
-</div>
-<div class="section level3">
-<h3 id="id_4-louisianas-majority-minority-milestone">4. Louisiana’s majority-minority milestone<a class="anchor" aria-label="anchor" href="#id_4-louisianas-majority-minority-milestone"></a>
-</h3>
-<p>African American and Hispanic students together now comprise over 55% of enrollment.</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<p>White enrollment dropped from 47.1% in 2019 to 40.7% in 2024, while Black students held steady at 41.7%, making Louisiana’s public schools majority-minority.</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">demo</span> <span class="op">&lt;-</span> <span class="va">enr</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">is_state</span>, <span class="va">grade_level</span> <span class="op">==</span> <span class="st">"TOTAL"</span>,</span>
 <span>         <span class="va">subgroup</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"white"</span>, <span class="st">"black"</span>, <span class="st">"hispanic"</span>, <span class="st">"asian"</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu">left_join</span><span class="op">(</span><span class="va">state_totals</span>, by <span class="op">=</span> <span class="st">"end_year"</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu">mutate</span><span class="op">(</span>pct <span class="op">=</span> <span class="va">n_students</span> <span class="op">/</span> <span class="va">total</span> <span class="op">*</span> <span class="fl">100</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/stopifnot.html" class="external-link">stopifnot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">demo</span><span class="op">)</span> <span class="op">&gt;</span> <span class="fl">0</span><span class="op">)</span></span>
 <span><span class="va">demo</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/stats/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">end_year</span> <span class="op">==</span> <span class="fl">2024</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu">select</span><span class="op">(</span><span class="va">subgroup</span>, <span class="va">n_students</span>, <span class="va">pct</span><span class="op">)</span></span>
 <span><span class="co">#&gt;   subgroup n_students      pct</span></span>
-<span><span class="co">#&gt; 1    asian      20626   3.0469</span></span>
-<span><span class="co">#&gt; 2    black     266546  39.3939</span></span>
-<span><span class="co">#&gt; 3 hispanic      97456  14.3998</span></span>
-<span><span class="co">#&gt; 4    white     246242  36.3843</span></span></code></pre></div>
+<span><span class="co">#&gt; 1    asian      10745   1.5878</span></span>
+<span><span class="co">#&gt; 2    black     282521  41.7441</span></span>
+<span><span class="co">#&gt; 3 hispanic      77836  11.5010</span></span>
+<span><span class="co">#&gt; 4    white     275265  40.6721</span></span></code></pre></div>
 <div class="float">
 <img src="https://almartin82.github.io/laschooldata/articles/enrollment-trends_files/figure-html/demographics-1.png" alt="Louisiana Demographics"><div class="figcaption">Louisiana Demographics</div>
 </div>
 <hr>
 </div>
 <div class="section level3">
-<h3 id="id_5-covid-hit-kindergarten-hardest">5. COVID hit kindergarten hardest<a class="anchor" aria-label="anchor" href="#id_5-covid-hit-kindergarten-hardest"></a>
+<h3 id="id_3-hispanic-enrollment-surged-45-in-five-years">3. Hispanic enrollment surged 45% in five years<a class="anchor" aria-label="anchor" href="#id_3-hispanic-enrollment-surged-45-in-five-years"></a>
 </h3>
-<p>Louisiana lost over 8% of kindergartners during the pandemic, and enrollment hasn’t fully rebounded.</p>
+<p>Hispanic students grew from 53,778 (8.4%) in 2019 to 77,836 (11.5%) in 2024, the fastest-growing demographic group in Louisiana schools.</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">hisp</span> <span class="op">&lt;-</span> <span class="va">enr</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">is_state</span>, <span class="va">grade_level</span> <span class="op">==</span> <span class="st">"TOTAL"</span>, <span class="va">subgroup</span> <span class="op">==</span> <span class="st">"hispanic"</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu">left_join</span><span class="op">(</span><span class="va">state_totals</span>, by <span class="op">=</span> <span class="st">"end_year"</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu">mutate</span><span class="op">(</span>pct <span class="op">=</span> <span class="va">n_students</span> <span class="op">/</span> <span class="va">total</span> <span class="op">*</span> <span class="fl">100</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/stopifnot.html" class="external-link">stopifnot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">hisp</span><span class="op">)</span> <span class="op">&gt;</span> <span class="fl">0</span><span class="op">)</span></span>
+<span><span class="va">hisp</span> <span class="op">%&gt;%</span> <span class="fu">select</span><span class="op">(</span><span class="va">end_year</span>, <span class="va">n_students</span>, <span class="va">pct</span><span class="op">)</span></span>
+<span><span class="co">#&gt;   end_year n_students       pct</span></span>
+<span><span class="co">#&gt; 1     2019      53778   8.35073</span></span>
+<span><span class="co">#&gt; 2     2020      54251   8.68684</span></span>
+<span><span class="co">#&gt; 3     2021      57761   9.37892</span></span>
+<span><span class="co">#&gt; 4     2022      70054  10.21793</span></span>
+<span><span class="co">#&gt; 5     2023      73627  10.80900</span></span>
+<span><span class="co">#&gt; 6     2024      77836  11.50105</span></span></code></pre></div>
+<div class="float">
+<img src="https://almartin82.github.io/laschooldata/articles/enrollment-trends_files/figure-html/hispanic-surge-1.png" alt="Hispanic Enrollment Surging"><div class="figcaption">Hispanic Enrollment Surging</div>
+</div>
+<hr>
+</div>
+<div class="section level3">
+<h3 id="id_4-jefferson-parish-is-louisianas-largest-district">4. Jefferson Parish is Louisiana’s largest district<a class="anchor" aria-label="anchor" href="#id_4-jefferson-parish-is-louisianas-largest-district"></a>
+</h3>
+<p>Jefferson Parish enrolls 47,702 students, leading all districts and outpacing East Baton Rouge (39,932) and St. Tammany (36,384).</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">top5</span> <span class="op">&lt;-</span> <span class="va">enr_current</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">is_district</span>, <span class="va">subgroup</span> <span class="op">==</span> <span class="st">"total_enrollment"</span>, <span class="va">grade_level</span> <span class="op">==</span> <span class="st">"TOTAL"</span>,</span>
+<span>         <span class="va">district_name</span> <span class="op">!=</span> <span class="st">"State of Louisiana"</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu">arrange</span><span class="op">(</span><span class="fu">desc</span><span class="op">(</span><span class="va">n_students</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fl">5</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/stopifnot.html" class="external-link">stopifnot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">top5</span><span class="op">)</span> <span class="op">&gt;</span> <span class="fl">0</span><span class="op">)</span></span>
+<span><span class="va">top5</span> <span class="op">%&gt;%</span> <span class="fu">select</span><span class="op">(</span><span class="va">district_name</span>, <span class="va">n_students</span><span class="op">)</span></span>
+<span><span class="co">#&gt;              district_name n_students</span></span>
+<span><span class="co">#&gt; 1        Jefferson Parish      47702</span></span>
+<span><span class="co">#&gt; 2 East Baton Rouge Parish      39932</span></span>
+<span><span class="co">#&gt; 3      St. Tammany Parish      36384</span></span>
+<span><span class="co">#&gt; 4            Caddo Parish      32614</span></span>
+<span><span class="co">#&gt; 5        Lafayette Parish      29877</span></span></code></pre></div>
+<div class="float">
+<img src="https://almartin82.github.io/laschooldata/articles/enrollment-trends_files/figure-html/top-districts-1.png" alt="Louisiana’s Five Largest Districts"><div class="figcaption">Louisiana’s Five Largest Districts</div>
+</div>
+<hr>
+</div>
+<div class="section level3">
+<h3 id="id_5-caddo-parish-lost-14-of-its-students-in-five-years">5. Caddo Parish lost 14% of its students in five years<a class="anchor" aria-label="anchor" href="#id_5-caddo-parish-lost-14-of-its-students-in-five-years"></a>
+</h3>
+<p>Caddo Parish (Shreveport) dropped from 37,868 students in 2019 to 32,614 in 2024, a loss of over 5,200 students.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">caddo</span> <span class="op">&lt;-</span> <span class="va">enr</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">is_district</span>, <span class="va">district_name</span> <span class="op">==</span> <span class="st">"Caddo Parish"</span>,</span>
+<span>         <span class="va">subgroup</span> <span class="op">==</span> <span class="st">"total_enrollment"</span>, <span class="va">grade_level</span> <span class="op">==</span> <span class="st">"TOTAL"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/stopifnot.html" class="external-link">stopifnot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">caddo</span><span class="op">)</span> <span class="op">&gt;</span> <span class="fl">0</span><span class="op">)</span></span>
+<span><span class="va">caddo</span> <span class="op">%&gt;%</span> <span class="fu">select</span><span class="op">(</span><span class="va">end_year</span>, <span class="va">district_name</span>, <span class="va">n_students</span><span class="op">)</span></span>
+<span><span class="co">#&gt;   end_year district_name n_students</span></span>
+<span><span class="co">#&gt; 1     2019  Caddo Parish      37868</span></span>
+<span><span class="co">#&gt; 2     2020  Caddo Parish      36470</span></span>
+<span><span class="co">#&gt; 3     2021  Caddo Parish      35057</span></span>
+<span><span class="co">#&gt; 4     2022  Caddo Parish      33934</span></span>
+<span><span class="co">#&gt; 5     2023  Caddo Parish      33243</span></span>
+<span><span class="co">#&gt; 6     2024  Caddo Parish      32614</span></span></code></pre></div>
+<div class="float">
+<img src="https://almartin82.github.io/laschooldata/articles/enrollment-trends_files/figure-html/caddo-decline-1.png" alt="Caddo Parish Decline"><div class="figcaption">Caddo Parish Decline</div>
+</div>
+<hr>
+</div>
+<div class="section level3">
+<h3 id="id_6-covid-wiped-out-17-of-pre-k-enrollment-overnight">6. COVID wiped out 17% of Pre-K enrollment overnight<a class="anchor" aria-label="anchor" href="#id_6-covid-wiped-out-17-of-pre-k-enrollment-overnight"></a>
+</h3>
+<p>Pre-K dropped from 26,078 to 21,751 students between 2019 and 2020, then slowly recovered to 26,152 by 2024.</p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">prek</span> <span class="op">&lt;-</span> <span class="va">enr</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">is_state</span>, <span class="va">subgroup</span> <span class="op">==</span> <span class="st">"total_enrollment"</span>, <span class="va">grade_level</span> <span class="op">==</span> <span class="st">"PK"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/stopifnot.html" class="external-link">stopifnot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">prek</span><span class="op">)</span> <span class="op">&gt;</span> <span class="fl">0</span><span class="op">)</span></span>
+<span><span class="va">prek</span> <span class="op">%&gt;%</span> <span class="fu">select</span><span class="op">(</span><span class="va">end_year</span>, <span class="va">n_students</span><span class="op">)</span></span>
+<span><span class="co">#&gt;   end_year n_students</span></span>
+<span><span class="co">#&gt; 1     2019      26078</span></span>
+<span><span class="co">#&gt; 2     2020      21751</span></span>
+<span><span class="co">#&gt; 3     2021      24027</span></span>
+<span><span class="co">#&gt; 4     2022      25969</span></span>
+<span><span class="co">#&gt; 5     2023      26002</span></span>
+<span><span class="co">#&gt; 6     2024      26152</span></span></code></pre></div>
+<div class="float">
+<img src="https://almartin82.github.io/laschooldata/articles/enrollment-trends_files/figure-html/prek-covid-1.png" alt="Pre-K Enrollment Cratered During COVID"><div class="figcaption">Pre-K Enrollment Cratered During COVID</div>
+</div>
+<hr>
+</div>
+<div class="section level3">
+<h3 id="id_7-kindergarten-also-took-a-covid-hit">7. Kindergarten also took a COVID hit<a class="anchor" aria-label="anchor" href="#id_7-kindergarten-also-took-a-covid-hit"></a>
+</h3>
+<p>Kindergarten enrollment fell 6.9% from 48,556 to 45,205 between 2019 and 2020, and still has not returned to pre-pandemic levels.</p>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">k_trend</span> <span class="op">&lt;-</span> <span class="va">enr</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">is_state</span>, <span class="va">subgroup</span> <span class="op">==</span> <span class="st">"total_enrollment"</span>,</span>
-<span>         <span class="va">grade_level</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"K"</span>, <span class="st">"01"</span>, <span class="st">"09"</span>, <span class="st">"12"</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>         <span class="va">grade_level</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"PK"</span>, <span class="st">"K"</span>, <span class="st">"01"</span>, <span class="st">"09"</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu">mutate</span><span class="op">(</span>grade_label <span class="op">=</span> <span class="fu">case_when</span><span class="op">(</span></span>
+<span>    <span class="va">grade_level</span> <span class="op">==</span> <span class="st">"PK"</span> <span class="op">~</span> <span class="st">"Pre-K"</span>,</span>
 <span>    <span class="va">grade_level</span> <span class="op">==</span> <span class="st">"K"</span> <span class="op">~</span> <span class="st">"Kindergarten"</span>,</span>
 <span>    <span class="va">grade_level</span> <span class="op">==</span> <span class="st">"01"</span> <span class="op">~</span> <span class="st">"Grade 1"</span>,</span>
-<span>    <span class="va">grade_level</span> <span class="op">==</span> <span class="st">"09"</span> <span class="op">~</span> <span class="st">"Grade 9"</span>,</span>
-<span>    <span class="va">grade_level</span> <span class="op">==</span> <span class="st">"12"</span> <span class="op">~</span> <span class="st">"Grade 12"</span></span>
+<span>    <span class="va">grade_level</span> <span class="op">==</span> <span class="st">"09"</span> <span class="op">~</span> <span class="st">"Grade 9"</span></span>
 <span>  <span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/stopifnot.html" class="external-link">stopifnot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">k_trend</span><span class="op">)</span> <span class="op">&gt;</span> <span class="fl">0</span><span class="op">)</span></span>
 <span><span class="va">k_trend</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">grade_level</span> <span class="op">==</span> <span class="st">"K"</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu">select</span><span class="op">(</span><span class="va">end_year</span>, <span class="va">grade_label</span>, <span class="va">n_students</span><span class="op">)</span></span>
 <span><span class="co">#&gt;   end_year  grade_label n_students</span></span>
-<span><span class="co">#&gt; 1     2019 Kindergarten      52845</span></span>
-<span><span class="co">#&gt; 2     2020 Kindergarten      51234</span></span>
-<span><span class="co">#&gt; 3     2021 Kindergarten      48567</span></span>
-<span><span class="co">#&gt; 4     2022 Kindergarten      49234</span></span>
-<span><span class="co">#&gt; 5     2023 Kindergarten      50123</span></span>
-<span><span class="co">#&gt; 6     2024 Kindergarten      51456</span></span></code></pre></div>
+<span><span class="co">#&gt; 1     2019 Kindergarten      48556</span></span>
+<span><span class="co">#&gt; 2     2020 Kindergarten      45205</span></span>
+<span><span class="co">#&gt; 3     2021 Kindergarten      46282</span></span>
+<span><span class="co">#&gt; 4     2022 Kindergarten      50345</span></span>
+<span><span class="co">#&gt; 5     2023 Kindergarten      48798</span></span>
+<span><span class="co">#&gt; 6     2024 Kindergarten      48084</span></span></code></pre></div>
 <div class="float">
-<img src="https://almartin82.github.io/laschooldata/articles/enrollment-trends_files/figure-html/covid-kindergarten-1.png" alt="COVID Impact on Louisiana Enrollment"><div class="figcaption">COVID Impact on Louisiana Enrollment</div>
+<img src="https://almartin82.github.io/laschooldata/articles/enrollment-trends_files/figure-html/covid-kindergarten-1.png" alt="COVID Impact by Grade Level"><div class="figcaption">COVID Impact by Grade Level</div>
 </div>
 <hr>
 </div>
 <div class="section level3">
-<h3 id="id_6-rural-parishes-are-losing-students-fastest">6. Rural parishes are losing students fastest<a class="anchor" aria-label="anchor" href="#id_6-rural-parishes-are-losing-students-fastest"></a>
+<h3 id="id_8-english-learners-grew-from-39-to-53-of-enrollment">8. English learners grew from 3.9% to 5.3% of enrollment<a class="anchor" aria-label="anchor" href="#id_8-english-learners-grew-from-39-to-53-of-enrollment"></a>
 </h3>
-<p>Parishes like Tensas, East Carroll, and Madison have lost over 30% of their enrollment in a decade.</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">rural</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Tensas Parish"</span>, <span class="st">"East Carroll Parish"</span>, <span class="st">"Madison Parish"</span><span class="op">)</span></span>
-<span><span class="va">rural_trend</span> <span class="op">&lt;-</span> <span class="va">enr</span> <span class="op">%&gt;%</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">is_district</span>, <span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">grepl</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="va">rural</span>, collapse <span class="op">=</span> <span class="st">"|"</span><span class="op">)</span>, <span class="va">district_name</span>, ignore.case <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
-<span>         <span class="va">subgroup</span> <span class="op">==</span> <span class="st">"total_enrollment"</span>, <span class="va">grade_level</span> <span class="op">==</span> <span class="st">"TOTAL"</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
-<span>  <span class="fu">group_by</span><span class="op">(</span><span class="va">end_year</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
-<span>  <span class="fu">summarize</span><span class="op">(</span>n_students <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">n_students</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>, .groups <span class="op">=</span> <span class="st">"drop"</span><span class="op">)</span></span>
-<span><span class="va">rural_trend</span></span>
-<span><span class="co">#&gt;   end_year n_students</span></span>
-<span><span class="co">#&gt; 1     2019       4892</span></span>
-<span><span class="co">#&gt; 2     2020       4756</span></span>
-<span><span class="co">#&gt; 3     2021       4623</span></span>
-<span><span class="co">#&gt; 4     2022       4512</span></span>
-<span><span class="co">#&gt; 5     2023       4389</span></span>
-<span><span class="co">#&gt; 6     2024       4234</span></span></code></pre></div>
-<div class="float">
-<img src="https://almartin82.github.io/laschooldata/articles/enrollment-trends_files/figure-html/rural-decline-1.png" alt="Delta Parishes Combined"><div class="figcaption">Delta Parishes Combined</div>
-</div>
-<hr>
-</div>
-<div class="section level3">
-<h3 id="id_7-jefferson-parish-suburban-stability">7. Jefferson Parish: suburban stability<a class="anchor" aria-label="anchor" href="#id_7-jefferson-parish-suburban-stability"></a>
-</h3>
-<p>Louisiana’s second-largest parish has maintained steady enrollment while urban cores fluctuate.</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">jefferson</span> <span class="op">&lt;-</span> <span class="va">enr</span> <span class="op">%&gt;%</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">is_district</span>, <span class="va">district_name</span> <span class="op">==</span> <span class="st">"Jefferson Parish"</span>,</span>
-<span>         <span class="va">subgroup</span> <span class="op">==</span> <span class="st">"total_enrollment"</span>, <span class="va">grade_level</span> <span class="op">==</span> <span class="st">"TOTAL"</span><span class="op">)</span></span>
-<span><span class="va">jefferson</span> <span class="op">%&gt;%</span> <span class="fu">select</span><span class="op">(</span><span class="va">end_year</span>, <span class="va">district_name</span>, <span class="va">n_students</span><span class="op">)</span></span>
-<span><span class="co">#&gt;   end_year   district_name n_students</span></span>
-<span><span class="co">#&gt; 1     2019 Jefferson Parish      47856</span></span>
-<span><span class="co">#&gt; 2     2020 Jefferson Parish      47623</span></span>
-<span><span class="co">#&gt; 3     2021 Jefferson Parish      47345</span></span>
-<span><span class="co">#&gt; 4     2022 Jefferson Parish      47512</span></span>
-<span><span class="co">#&gt; 5     2023 Jefferson Parish      47623</span></span>
-<span><span class="co">#&gt; 6     2024 Jefferson Parish      47702</span></span></code></pre></div>
-<div class="float">
-<img src="https://almartin82.github.io/laschooldata/articles/enrollment-trends_files/figure-html/jefferson-stable-1.png" alt="Jefferson Parish - Suburban Stability"><div class="figcaption">Jefferson Parish - Suburban Stability</div>
-</div>
-<hr>
-</div>
-<div class="section level3">
-<h3 id="id_8-english-learners-on-the-rise">8. English learners on the rise<a class="anchor" aria-label="anchor" href="#id_8-english-learners-on-the-rise"></a>
-</h3>
-<p>EL students have grown from 3% to over 5% of enrollment, concentrated in certain parishes.</p>
+<p>LEP students increased from 24,908 to 35,868 between 2019 and 2024, a 44% jump tracking closely with Hispanic growth.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">el</span> <span class="op">&lt;-</span> <span class="va">enr</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">is_state</span>, <span class="va">subgroup</span> <span class="op">==</span> <span class="st">"lep"</span>, <span class="va">grade_level</span> <span class="op">==</span> <span class="st">"TOTAL"</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu">left_join</span><span class="op">(</span><span class="va">state_totals</span>, by <span class="op">=</span> <span class="st">"end_year"</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu">mutate</span><span class="op">(</span>pct <span class="op">=</span> <span class="va">n_students</span> <span class="op">/</span> <span class="va">total</span> <span class="op">*</span> <span class="fl">100</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/stopifnot.html" class="external-link">stopifnot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">el</span><span class="op">)</span> <span class="op">&gt;</span> <span class="fl">0</span><span class="op">)</span></span>
 <span><span class="va">el</span> <span class="op">%&gt;%</span> <span class="fu">select</span><span class="op">(</span><span class="va">end_year</span>, <span class="va">n_students</span>, <span class="va">pct</span><span class="op">)</span></span>
 <span><span class="co">#&gt;   end_year n_students      pct</span></span>
-<span><span class="co">#&gt; 1     2019      28235   4.0816</span></span>
-<span><span class="co">#&gt; 2     2020      28200   4.0591</span></span>
-<span><span class="co">#&gt; 3     2021      29352   4.2043</span></span>
-<span><span class="co">#&gt; 4     2022      30422   4.3267</span></span>
-<span><span class="co">#&gt; 5     2023      31534   4.4442</span></span>
-<span><span class="co">#&gt; 6     2024      32446   4.7951</span></span></code></pre></div>
+<span><span class="co">#&gt; 1     2019      24908  3.86780</span></span>
+<span><span class="co">#&gt; 2     2020      23336  3.73660</span></span>
+<span><span class="co">#&gt; 3     2021      25194  4.09127</span></span>
+<span><span class="co">#&gt; 4     2022      31939  4.65867</span></span>
+<span><span class="co">#&gt; 5     2023      33847  4.96870</span></span>
+<span><span class="co">#&gt; 6     2024      35868  5.30062</span></span></code></pre></div>
 <div class="float">
 <img src="https://almartin82.github.io/laschooldata/articles/enrollment-trends_files/figure-html/el-growth-1.png" alt="English Learners on the Rise"><div class="figcaption">English Learners on the Rise</div>
 </div>
 <hr>
 </div>
 <div class="section level3">
-<h3 id="id_9-economic-disadvantage-concentrated-in-the-delta">9. Economic disadvantage concentrated in the Delta<a class="anchor" aria-label="anchor" href="#id_9-economic-disadvantage-concentrated-in-the-delta"></a>
+<h3 id="id_9-seven-in-ten-louisiana-students-are-economically-disadvantaged">9. Seven in ten Louisiana students are economically disadvantaged<a class="anchor" aria-label="anchor" href="#id_9-seven-in-ten-louisiana-students-are-economically-disadvantaged"></a>
 </h3>
-<p>Delta parishes like Madison, Tensas, and East Carroll have over 90% economically disadvantaged students.</p>
+<p>The statewide economic disadvantage rate has hovered around 70% since 2019, one of the highest rates in the nation.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># Get district totals for current year to calculate percentages</span></span>
-<span><span class="va">district_totals</span> <span class="op">&lt;-</span> <span class="va">enr_current</span> <span class="op">%&gt;%</span></span>
+<code class="sourceCode R"><span><span class="va">econ_state</span> <span class="op">&lt;-</span> <span class="va">enr</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">is_state</span>, <span class="va">subgroup</span> <span class="op">==</span> <span class="st">"econ_disadv"</span>, <span class="va">grade_level</span> <span class="op">==</span> <span class="st">"TOTAL"</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu">left_join</span><span class="op">(</span><span class="va">state_totals</span>, by <span class="op">=</span> <span class="st">"end_year"</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu">mutate</span><span class="op">(</span>pct <span class="op">=</span> <span class="va">n_students</span> <span class="op">/</span> <span class="va">total</span> <span class="op">*</span> <span class="fl">100</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/stopifnot.html" class="external-link">stopifnot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">econ_state</span><span class="op">)</span> <span class="op">&gt;</span> <span class="fl">0</span><span class="op">)</span></span>
+<span><span class="va">econ_state</span> <span class="op">%&gt;%</span> <span class="fu">select</span><span class="op">(</span><span class="va">end_year</span>, <span class="va">n_students</span>, <span class="va">pct</span><span class="op">)</span></span>
+<span><span class="co">#&gt;   end_year n_students      pct</span></span>
+<span><span class="co">#&gt; 1     2019     436524  67.7976</span></span>
+<span><span class="co">#&gt; 2     2020     453025  72.5388</span></span>
+<span><span class="co">#&gt; 3     2021     429803  69.7954</span></span>
+<span><span class="co">#&gt; 4     2022     494310  72.0907</span></span>
+<span><span class="co">#&gt; 5     2023     494076  72.5338</span></span>
+<span><span class="co">#&gt; 6     2024     474402  70.1035</span></span></code></pre></div>
+<div class="float">
+<img src="https://almartin82.github.io/laschooldata/articles/enrollment-trends_files/figure-html/econ-state-1.png" alt="Economic Disadvantage Rate"><div class="figcaption">Economic Disadvantage Rate</div>
+</div>
+<hr>
+</div>
+<div class="section level3">
+<h3 id="id_10-st-helena-parish-100-economically-disadvantaged">10. St. Helena Parish: 100% economically disadvantaged<a class="anchor" aria-label="anchor" href="#id_10-st-helena-parish-100-economically-disadvantaged"></a>
+</h3>
+<p>St. Helena leads Louisiana with every single student classified as economically disadvantaged, followed by East Carroll (96.9%) and Tensas (95.8%).</p>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">district_totals</span> <span class="op">&lt;-</span> <span class="va">enr_current</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">is_district</span>, <span class="va">subgroup</span> <span class="op">==</span> <span class="st">"total_enrollment"</span>, <span class="va">grade_level</span> <span class="op">==</span> <span class="st">"TOTAL"</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu">select</span><span class="op">(</span><span class="va">district_name</span>, total <span class="op">=</span> <span class="va">n_students</span><span class="op">)</span></span>
 <span></span>
@@ -264,157 +290,147 @@
 <span>  <span class="fu">arrange</span><span class="op">(</span><span class="fu">desc</span><span class="op">(</span><span class="va">pct</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fl">10</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu">mutate</span><span class="op">(</span>district_label <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/reorder.factor.html" class="external-link">reorder</a></span><span class="op">(</span><span class="va">district_name</span>, <span class="va">pct</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="va">econ</span> <span class="op">%&gt;%</span> <span class="fu">select</span><span class="op">(</span><span class="va">district_name</span>, <span class="va">n_students</span>, <span class="va">pct</span><span class="op">)</span></span>
-<span><span class="co">#&gt;              district_name n_students      pct</span></span>
-<span><span class="co">#&gt; 1         Madison Parish        1423   95.234</span></span>
-<span><span class="co">#&gt; 2          Tensas Parish         654   94.567</span></span>
-<span><span class="co">#&gt; 3     East Carroll Parish        1234   93.456</span></span>
-<span><span class="co">#&gt; 4       Concordia Parish        2345   91.234</span></span>
-<span><span class="co">#&gt; 5       Catahoula Parish        1234   90.123</span></span>
-<span><span class="co">#&gt; 6    West Carroll Parish        1456   89.567</span></span>
-<span><span class="co">#&gt; 7         Richland Parish        2567   88.234</span></span>
-<span><span class="co">#&gt; 8        Franklin Parish        1890   87.345</span></span>
-<span><span class="co">#&gt; 9        Morehouse Parish        2345   86.789</span></span>
-<span><span class="co">#&gt; 10       Claiborne Parish        1678   85.234</span></span></code></pre></div>
+<span><span class="fu"><a href="https://rdrr.io/r/base/stopifnot.html" class="external-link">stopifnot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">econ</span><span class="op">)</span> <span class="op">&gt;</span> <span class="fl">0</span><span class="op">)</span></span>
+<span><span class="va">econ</span> <span class="op">%&gt;%</span> <span class="fu">select</span><span class="op">(</span><span class="va">district_name</span>, <span class="va">n_students</span>, <span class="va">total</span>, <span class="va">pct</span><span class="op">)</span></span>
+<span><span class="co">#&gt;                       district_name n_students total       pct</span></span>
+<span><span class="co">#&gt; 1                 St. Helena Parish       1002  1002 100.00000</span></span>
+<span><span class="co">#&gt; 2           Special School District        291   299  97.32441</span></span>
+<span><span class="co">#&gt; 3               East Carroll Parish        715   738  96.88076</span></span>
+<span><span class="co">#&gt; 4                     Tensas Parish        298   311  95.81994</span></span>
+<span><span class="co">#&gt; 5                    Madison Parish       1078  1134  95.06173</span></span>
+<span><span class="co">#&gt; 6                    Thrive Academy        152   161  94.40994</span></span>
+<span><span class="co">#&gt; 7  City of Bogalusa School District       1718  1822  94.29198</span></span>
+<span><span class="co">#&gt; 8     City of Baker School District        927   999  92.79279</span></span>
+<span><span class="co">#&gt; 9                  Red River Parish       1143  1251  91.36691</span></span>
+<span><span class="co">#&gt; 10              Natchitoches Parish       4230  4829  87.59165</span></span></code></pre></div>
 <div class="float">
-<img src="https://almartin82.github.io/laschooldata/articles/enrollment-trends_files/figure-html/econ-disadvantage-1.png" alt="Highest Poverty Parishes"><div class="figcaption">Highest Poverty Parishes</div>
+<img src="https://almartin82.github.io/laschooldata/articles/enrollment-trends_files/figure-html/econ-disadvantage-1.png" alt="Highest Poverty Districts"><div class="figcaption">Highest Poverty Districts</div>
 </div>
 <hr>
 </div>
 <div class="section level3">
-<h3 id="id_10-the-i-10i-12-corridor-drives-growth">10. The I-10/I-12 corridor drives growth<a class="anchor" aria-label="anchor" href="#id_10-the-i-10i-12-corridor-drives-growth"></a>
+<h3 id="id_11-delta-parishes-are-emptying-out">11. Delta parishes are emptying out<a class="anchor" aria-label="anchor" href="#id_11-delta-parishes-are-emptying-out"></a>
 </h3>
-<p>Parishes along the interstate corridor (Livingston, Ascension, St. Tammany) are Louisiana’s growth engines.</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<p>East Carroll (-20.8%), Tensas (-22.6%), and Madison (-4.4%) have shed students steadily since 2019.</p>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">delta_names</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Tensas Parish"</span>, <span class="st">"East Carroll Parish"</span>, <span class="st">"Madison Parish"</span><span class="op">)</span></span>
+<span><span class="va">delta_trend</span> <span class="op">&lt;-</span> <span class="va">enr</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">is_district</span>, <span class="va">district_name</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="va">delta_names</span>,</span>
+<span>         <span class="va">subgroup</span> <span class="op">==</span> <span class="st">"total_enrollment"</span>, <span class="va">grade_level</span> <span class="op">==</span> <span class="st">"TOTAL"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/stopifnot.html" class="external-link">stopifnot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">delta_trend</span><span class="op">)</span> <span class="op">&gt;</span> <span class="fl">0</span><span class="op">)</span></span>
+<span><span class="va">delta_trend</span> <span class="op">%&gt;%</span> <span class="fu">select</span><span class="op">(</span><span class="va">end_year</span>, <span class="va">district_name</span>, <span class="va">n_students</span><span class="op">)</span></span>
+<span><span class="co">#&gt;    end_year       district_name n_students</span></span>
+<span><span class="co">#&gt; 1      2019 East Carroll Parish        932</span></span>
+<span><span class="co">#&gt; 2      2020 East Carroll Parish        836</span></span>
+<span><span class="co">#&gt; 3      2021 East Carroll Parish        778</span></span>
+<span><span class="co">#&gt; 4      2022 East Carroll Parish        770</span></span>
+<span><span class="co">#&gt; 5      2023 East Carroll Parish        751</span></span>
+<span><span class="co">#&gt; 6      2024 East Carroll Parish        738</span></span>
+<span><span class="co">#&gt; 7      2019      Madison Parish       1186</span></span>
+<span><span class="co">#&gt; 8      2020      Madison Parish       1102</span></span>
+<span><span class="co">#&gt; 9      2021      Madison Parish       1163</span></span>
+<span><span class="co">#&gt; 10     2022      Madison Parish       1223</span></span>
+<span><span class="co">#&gt; 11     2023      Madison Parish       1244</span></span>
+<span><span class="co">#&gt; 12     2024      Madison Parish       1134</span></span>
+<span><span class="co">#&gt; 13     2019       Tensas Parish        402</span></span>
+<span><span class="co">#&gt; 14     2020       Tensas Parish        355</span></span>
+<span><span class="co">#&gt; 15     2021       Tensas Parish        334</span></span>
+<span><span class="co">#&gt; 16     2022       Tensas Parish        331</span></span>
+<span><span class="co">#&gt; 17     2023       Tensas Parish        328</span></span>
+<span><span class="co">#&gt; 18     2024       Tensas Parish        311</span></span></code></pre></div>
+<div class="float">
+<img src="https://almartin82.github.io/laschooldata/articles/enrollment-trends_files/figure-html/rural-decline-1.png" alt="Delta Parishes Losing Students"><div class="figcaption">Delta Parishes Losing Students</div>
+</div>
+<hr>
+</div>
+<div class="section level3">
+<h3 id="id_12-calcasieu-parish-never-recovered-from-hurricane-laura">12. Calcasieu Parish never recovered from Hurricane Laura<a class="anchor" aria-label="anchor" href="#id_12-calcasieu-parish-never-recovered-from-hurricane-laura"></a>
+</h3>
+<p>Calcasieu Parish (Lake Charles) lost 11.3% of enrollment in a single year (2019-2020) after Hurricane Laura devastated southwest Louisiana.</p>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">calcasieu</span> <span class="op">&lt;-</span> <span class="va">enr</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">is_district</span>, <span class="va">district_name</span> <span class="op">==</span> <span class="st">"Calcasieu Parish"</span>,</span>
+<span>         <span class="va">subgroup</span> <span class="op">==</span> <span class="st">"total_enrollment"</span>, <span class="va">grade_level</span> <span class="op">==</span> <span class="st">"TOTAL"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/stopifnot.html" class="external-link">stopifnot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">calcasieu</span><span class="op">)</span> <span class="op">&gt;</span> <span class="fl">0</span><span class="op">)</span></span>
+<span><span class="va">calcasieu</span> <span class="op">%&gt;%</span> <span class="fu">select</span><span class="op">(</span><span class="va">end_year</span>, <span class="va">district_name</span>, <span class="va">n_students</span><span class="op">)</span></span>
+<span><span class="co">#&gt;   end_year    district_name n_students</span></span>
+<span><span class="co">#&gt; 1     2019 Calcasieu Parish      31879</span></span>
+<span><span class="co">#&gt; 2     2020 Calcasieu Parish      28265</span></span>
+<span><span class="co">#&gt; 3     2021 Calcasieu Parish      27681</span></span>
+<span><span class="co">#&gt; 4     2022 Calcasieu Parish      27871</span></span>
+<span><span class="co">#&gt; 5     2023 Calcasieu Parish      28392</span></span>
+<span><span class="co">#&gt; 6     2024 Calcasieu Parish      28623</span></span></code></pre></div>
+<div class="float">
+<img src="https://almartin82.github.io/laschooldata/articles/enrollment-trends_files/figure-html/calcasieu-hurricane-1.png" alt="Calcasieu Parish (Lake Charles)"><div class="figcaption">Calcasieu Parish (Lake Charles)</div>
+</div>
+<hr>
+</div>
+<div class="section level3">
+<h3 id="id_13-jefferson-parish-the-slow-suburban-slide">13. Jefferson Parish: the slow suburban slide<a class="anchor" aria-label="anchor" href="#id_13-jefferson-parish-the-slow-suburban-slide"></a>
+</h3>
+<p>Louisiana’s largest district has been quietly losing students, dropping from 50,566 in 2019 to 47,702 in 2024.</p>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">jefferson</span> <span class="op">&lt;-</span> <span class="va">enr</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">is_district</span>, <span class="va">district_name</span> <span class="op">==</span> <span class="st">"Jefferson Parish"</span>,</span>
+<span>         <span class="va">subgroup</span> <span class="op">==</span> <span class="st">"total_enrollment"</span>, <span class="va">grade_level</span> <span class="op">==</span> <span class="st">"TOTAL"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/stopifnot.html" class="external-link">stopifnot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">jefferson</span><span class="op">)</span> <span class="op">&gt;</span> <span class="fl">0</span><span class="op">)</span></span>
+<span><span class="va">jefferson</span> <span class="op">%&gt;%</span> <span class="fu">select</span><span class="op">(</span><span class="va">end_year</span>, <span class="va">district_name</span>, <span class="va">n_students</span><span class="op">)</span></span>
+<span><span class="co">#&gt;   end_year    district_name n_students</span></span>
+<span><span class="co">#&gt; 1     2019 Jefferson Parish      50566</span></span>
+<span><span class="co">#&gt; 2     2020 Jefferson Parish      48974</span></span>
+<span><span class="co">#&gt; 3     2021 Jefferson Parish      47720</span></span>
+<span><span class="co">#&gt; 4     2022 Jefferson Parish      47429</span></span>
+<span><span class="co">#&gt; 5     2023 Jefferson Parish      47712</span></span>
+<span><span class="co">#&gt; 6     2024 Jefferson Parish      47702</span></span></code></pre></div>
+<div class="float">
+<img src="https://almartin82.github.io/laschooldata/articles/enrollment-trends_files/figure-html/jefferson-decline-1.png" alt="Jefferson Parish Largest but Shrinking"><div class="figcaption">Jefferson Parish Largest but Shrinking</div>
+</div>
+<hr>
+</div>
+<div class="section level3">
+<h3 id="id_14-the-suburban-corridor-holds-steady">14. The suburban corridor holds steady<a class="anchor" aria-label="anchor" href="#id_14-the-suburban-corridor-holds-steady"></a>
+</h3>
+<p>Ascension, Livingston, and St. Tammany parishes along the I-10/I-12 corridor are among the few growing districts.</p>
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">i10</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Livingston Parish"</span>, <span class="st">"Ascension Parish"</span>, <span class="st">"St. Tammany Parish"</span><span class="op">)</span></span>
 <span><span class="va">i10_trend</span> <span class="op">&lt;-</span> <span class="va">enr</span> <span class="op">%&gt;%</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">is_district</span>, <span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">grepl</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="va">i10</span>, collapse <span class="op">=</span> <span class="st">"|"</span><span class="op">)</span>, <span class="va">district_name</span>, ignore.case <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">is_district</span>, <span class="va">district_name</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="va">i10</span>,</span>
 <span>         <span class="va">subgroup</span> <span class="op">==</span> <span class="st">"total_enrollment"</span>, <span class="va">grade_level</span> <span class="op">==</span> <span class="st">"TOTAL"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/stopifnot.html" class="external-link">stopifnot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">i10_trend</span><span class="op">)</span> <span class="op">&gt;</span> <span class="fl">0</span><span class="op">)</span></span>
 <span><span class="va">i10_trend</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu">select</span><span class="op">(</span><span class="va">end_year</span>, <span class="va">district_name</span>, <span class="va">n_students</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu">tidyr</span><span class="fu">::</span><span class="fu"><a href="https://tidyr.tidyverse.org/reference/pivot_wider.html" class="external-link">pivot_wider</a></span><span class="op">(</span>names_from <span class="op">=</span> <span class="va">district_name</span>, values_from <span class="op">=</span> <span class="va">n_students</span><span class="op">)</span></span>
 <span><span class="co">#&gt;   end_year Ascension Parish Livingston Parish St. Tammany Parish</span></span>
-<span><span class="co">#&gt; 1     2019            22109             24141              34764</span></span>
-<span><span class="co">#&gt; 2     2020            21957             24279              34686</span></span>
-<span><span class="co">#&gt; 3     2021            21633             24438              35004</span></span>
-<span><span class="co">#&gt; 4     2022            21900             24978              35714</span></span>
-<span><span class="co">#&gt; 5     2023            22068             25675              36116</span></span>
-<span><span class="co">#&gt; 6     2024            22154             27489              36384</span></span></code></pre></div>
+<span><span class="co">#&gt; 1     2019            23409             26148              38774</span></span>
+<span><span class="co">#&gt; 2     2020            23455             26044              37214</span></span>
+<span><span class="co">#&gt; 3     2021            23843             26540              37374</span></span>
+<span><span class="co">#&gt; 4     2022            24041             26954              37212</span></span>
+<span><span class="co">#&gt; 5     2023            24138             27105              36806</span></span>
+<span><span class="co">#&gt; 6     2024            24076             26852              36384</span></span></code></pre></div>
 <div class="float">
-<img src="https://almartin82.github.io/laschooldata/articles/enrollment-trends_files/figure-html/i10-growth-1.png" alt="I-10/I-12 Corridor Growth"><div class="figcaption">I-10/I-12 Corridor Growth</div>
+<img src="https://almartin82.github.io/laschooldata/articles/enrollment-trends_files/figure-html/i10-growth-1.png" alt="I-10/I-12 Corridor Parishes"><div class="figcaption">I-10/I-12 Corridor Parishes</div>
 </div>
 <hr>
 </div>
 <div class="section level3">
-<h3 id="id_11-gender-balance-across-louisiana">11. Gender balance across Louisiana<a class="anchor" aria-label="anchor" href="#id_11-gender-balance-across-louisiana"></a>
+<h3 id="id_15-gender-balance-is-remarkably-stable">15. Gender balance is remarkably stable<a class="anchor" aria-label="anchor" href="#id_15-gender-balance-is-remarkably-stable"></a>
 </h3>
-<p>Louisiana’s public schools enroll slightly more male than female students statewide, a pattern consistent with national trends.</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<p>Louisiana’s 51.2% male / 48.8% female split has barely budged across all six years of data.</p>
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">gender</span> <span class="op">&lt;-</span> <span class="va">enr</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">is_state</span>, <span class="va">grade_level</span> <span class="op">==</span> <span class="st">"TOTAL"</span>,</span>
 <span>         <span class="va">subgroup</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"male"</span>, <span class="st">"female"</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu">left_join</span><span class="op">(</span><span class="va">state_totals</span>, by <span class="op">=</span> <span class="st">"end_year"</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu">mutate</span><span class="op">(</span>pct <span class="op">=</span> <span class="va">n_students</span> <span class="op">/</span> <span class="va">total</span> <span class="op">*</span> <span class="fl">100</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/stopifnot.html" class="external-link">stopifnot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">gender</span><span class="op">)</span> <span class="op">&gt;</span> <span class="fl">0</span><span class="op">)</span></span>
 <span><span class="va">gender</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">end_year</span> <span class="op">==</span> <span class="fl">2024</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu">select</span><span class="op">(</span><span class="va">subgroup</span>, <span class="va">n_students</span>, <span class="va">pct</span><span class="op">)</span></span>
 <span><span class="co">#&gt;   subgroup n_students      pct</span></span>
-<span><span class="co">#&gt; 1   female     330234   48.789</span></span>
-<span><span class="co">#&gt; 2     male     346517   51.211</span></span></code></pre></div>
+<span><span class="co">#&gt; 1   female     330254  48.8002</span></span>
+<span><span class="co">#&gt; 2     male     346497  51.1998</span></span></code></pre></div>
 <div class="float">
 <img src="https://almartin82.github.io/laschooldata/articles/enrollment-trends_files/figure-html/gender-balance-1.png" alt="Gender Balance in Louisiana Schools"><div class="figcaption">Gender Balance in Louisiana Schools</div>
-</div>
-<hr>
-</div>
-<div class="section level3">
-<h3 id="id_12-pre-k-expansion-across-louisiana">12. Pre-K expansion across Louisiana<a class="anchor" aria-label="anchor" href="#id_12-pre-k-expansion-across-louisiana"></a>
-</h3>
-<p>Louisiana has invested heavily in early childhood education, expanding Pre-K access across the state.</p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">prek</span> <span class="op">&lt;-</span> <span class="va">enr</span> <span class="op">%&gt;%</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">is_state</span>, <span class="va">subgroup</span> <span class="op">==</span> <span class="st">"total_enrollment"</span>, <span class="va">grade_level</span> <span class="op">==</span> <span class="st">"PK"</span><span class="op">)</span></span>
-<span><span class="va">prek</span> <span class="op">%&gt;%</span> <span class="fu">select</span><span class="op">(</span><span class="va">end_year</span>, <span class="va">n_students</span><span class="op">)</span></span>
-<span><span class="co">#&gt;   end_year n_students</span></span>
-<span><span class="co">#&gt; 1     2019      23456</span></span>
-<span><span class="co">#&gt; 2     2020      22987</span></span>
-<span><span class="co">#&gt; 3     2021      21345</span></span>
-<span><span class="co">#&gt; 4     2022      22567</span></span>
-<span><span class="co">#&gt; 5     2023      23789</span></span>
-<span><span class="co">#&gt; 6     2024      24567</span></span></code></pre></div>
-<div class="float">
-<img src="https://almartin82.github.io/laschooldata/articles/enrollment-trends_files/figure-html/prek-expansion-1.png" alt="Pre-K Enrollment in Louisiana"><div class="figcaption">Pre-K Enrollment in Louisiana</div>
-</div>
-<hr>
-</div>
-<div class="section level3">
-<h3 id="id_13-caddo-parish-anchors-the-northwest">13. Caddo Parish anchors the northwest<a class="anchor" aria-label="anchor" href="#id_13-caddo-parish-anchors-the-northwest"></a>
-</h3>
-<p>Caddo Parish (Shreveport) is Louisiana’s largest district outside the southeast metro areas, serving the northwest region.</p>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">caddo</span> <span class="op">&lt;-</span> <span class="va">enr</span> <span class="op">%&gt;%</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">is_district</span>, <span class="va">district_name</span> <span class="op">==</span> <span class="st">"Caddo Parish"</span>,</span>
-<span>         <span class="va">subgroup</span> <span class="op">==</span> <span class="st">"total_enrollment"</span>, <span class="va">grade_level</span> <span class="op">==</span> <span class="st">"TOTAL"</span><span class="op">)</span></span>
-<span><span class="va">caddo</span> <span class="op">%&gt;%</span> <span class="fu">select</span><span class="op">(</span><span class="va">end_year</span>, <span class="va">district_name</span>, <span class="va">n_students</span><span class="op">)</span></span>
-<span><span class="co">#&gt;   end_year district_name n_students</span></span>
-<span><span class="co">#&gt; 1     2019  Caddo Parish      34567</span></span>
-<span><span class="co">#&gt; 2     2020  Caddo Parish      33987</span></span>
-<span><span class="co">#&gt; 3     2021  Caddo Parish      33456</span></span>
-<span><span class="co">#&gt; 4     2022  Caddo Parish      33234</span></span>
-<span><span class="co">#&gt; 5     2023  Caddo Parish      32856</span></span>
-<span><span class="co">#&gt; 6     2024  Caddo Parish      32614</span></span></code></pre></div>
-<div class="float">
-<img src="https://almartin82.github.io/laschooldata/articles/enrollment-trends_files/figure-html/caddo-anchor-1.png" alt="Caddo Parish (Shreveport)"><div class="figcaption">Caddo Parish (Shreveport)</div>
-</div>
-<hr>
-</div>
-<div class="section level3">
-<h3 id="id_14-the-lake-charles-petrochemical-corridor">14. The Lake Charles petrochemical corridor<a class="anchor" aria-label="anchor" href="#id_14-the-lake-charles-petrochemical-corridor"></a>
-</h3>
-<p>Calcasieu Parish (Lake Charles) serves the petrochemical corridor of southwest Louisiana.</p>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">calcasieu</span> <span class="op">&lt;-</span> <span class="va">enr</span> <span class="op">%&gt;%</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">is_district</span>, <span class="va">district_name</span> <span class="op">==</span> <span class="st">"Calcasieu Parish"</span>,</span>
-<span>         <span class="va">subgroup</span> <span class="op">==</span> <span class="st">"total_enrollment"</span>, <span class="va">grade_level</span> <span class="op">==</span> <span class="st">"TOTAL"</span><span class="op">)</span></span>
-<span><span class="va">calcasieu</span> <span class="op">%&gt;%</span> <span class="fu">select</span><span class="op">(</span><span class="va">end_year</span>, <span class="va">district_name</span>, <span class="va">n_students</span><span class="op">)</span></span>
-<span><span class="co">#&gt;   end_year    district_name n_students</span></span>
-<span><span class="co">#&gt; 1     2019 Calcasieu Parish      32456</span></span>
-<span><span class="co">#&gt; 2     2020 Calcasieu Parish      31987</span></span>
-<span><span class="co">#&gt; 3     2021 Calcasieu Parish      31234</span></span>
-<span><span class="co">#&gt; 4     2022 Calcasieu Parish      30856</span></span>
-<span><span class="co">#&gt; 5     2023 Calcasieu Parish      30567</span></span>
-<span><span class="co">#&gt; 6     2024 Calcasieu Parish      30234</span></span></code></pre></div>
-<div class="float">
-<img src="https://almartin82.github.io/laschooldata/articles/enrollment-trends_files/figure-html/calcasieu-petrochemical-1.png" alt="Calcasieu Parish (Lake Charles)"><div class="figcaption">Calcasieu Parish (Lake Charles)</div>
-</div>
-<hr>
-</div>
-<div class="section level3">
-<h3 id="id_15-louisianas-largest-parishes-compared">15. Louisiana’s largest parishes compared<a class="anchor" aria-label="anchor" href="#id_15-louisianas-largest-parishes-compared"></a>
-</h3>
-<p>The five largest parishes educate over 40% of Louisiana’s students.</p>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># Get the 5 largest parishes for the most recent year</span></span>
-<span><span class="va">top5</span> <span class="op">&lt;-</span> <span class="va">enr_current</span> <span class="op">%&gt;%</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">is_district</span>, <span class="va">subgroup</span> <span class="op">==</span> <span class="st">"total_enrollment"</span>, <span class="va">grade_level</span> <span class="op">==</span> <span class="st">"TOTAL"</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
-<span>  <span class="fu">arrange</span><span class="op">(</span><span class="fu">desc</span><span class="op">(</span><span class="va">n_students</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fl">5</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
-<span>  <span class="fu">pull</span><span class="op">(</span><span class="va">district_name</span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">top5_trend</span> <span class="op">&lt;-</span> <span class="va">enr</span> <span class="op">%&gt;%</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">is_district</span>, <span class="va">district_name</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="va">top5</span>,</span>
-<span>         <span class="va">subgroup</span> <span class="op">==</span> <span class="st">"total_enrollment"</span>, <span class="va">grade_level</span> <span class="op">==</span> <span class="st">"TOTAL"</span><span class="op">)</span></span>
-<span><span class="va">top5_trend</span> <span class="op">%&gt;%</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">end_year</span> <span class="op">==</span> <span class="fl">2024</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
-<span>  <span class="fu">select</span><span class="op">(</span><span class="va">district_name</span>, <span class="va">n_students</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
-<span>  <span class="fu">arrange</span><span class="op">(</span><span class="fu">desc</span><span class="op">(</span><span class="va">n_students</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt;              district_name n_students</span></span>
-<span><span class="co">#&gt; 1        Jefferson Parish      47702</span></span>
-<span><span class="co">#&gt; 2 East Baton Rouge Parish      39932</span></span>
-<span><span class="co">#&gt; 3      St. Tammany Parish      36384</span></span>
-<span><span class="co">#&gt; 4           Caddo Parish      32614</span></span>
-<span><span class="co">#&gt; 5        Lafayette Parish      30504</span></span></code></pre></div>
-<div class="float">
-<img src="https://almartin82.github.io/laschooldata/articles/enrollment-trends_files/figure-html/top-parishes-1.png" alt="Louisiana’s Five Largest Parishes"><div class="figcaption">Louisiana’s Five Largest Parishes</div>
 </div>
 <hr>
 </div>
@@ -455,7 +471,7 @@
 <span><span class="va">enr_2024</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">is_state</span>, <span class="va">grade_level</span> <span class="op">==</span> <span class="st">"TOTAL"</span>,</span>
 <span>         <span class="va">subgroup</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"white"</span>, <span class="st">"black"</span>, <span class="st">"hispanic"</span>, <span class="st">"asian"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">subgroup</span>, <span class="va">n_students</span>, <span class="va">pct</span><span class="op">)</span></span></code></pre></div>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">subgroup</span>, <span class="va">n_students</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="python">Python<a class="anchor" aria-label="anchor" href="#python"></a>
@@ -469,7 +485,7 @@
 <span id="cb18-7"><a href="#cb18-7" tabindex="-1"></a>total <span class="op">=</span> enr[(enr[<span class="st">'is_state'</span>]) <span class="op">&amp;</span> (enr[<span class="st">'grade_level'</span>] <span class="op">==</span> <span class="st">'TOTAL'</span>) <span class="op">&amp;</span></span>
 <span id="cb18-8"><a href="#cb18-8" tabindex="-1"></a>            (enr[<span class="st">'subgroup'</span>] <span class="op">==</span> <span class="st">'total_enrollment'</span>)][<span class="st">'n_students'</span>].<span class="bu">sum</span>()</span>
 <span id="cb18-9"><a href="#cb18-9" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>total<span class="sc">:,}</span><span class="ss"> students"</span>)</span>
-<span id="cb18-10"><a href="#cb18-10" tabindex="-1"></a><span class="co">#&gt; ~680,000 students</span></span>
+<span id="cb18-10"><a href="#cb18-10" tabindex="-1"></a><span class="co">#&gt; 676,751 students</span></span>
 <span id="cb18-11"><a href="#cb18-11" tabindex="-1"></a></span>
 <span id="cb18-12"><a href="#cb18-12" tabindex="-1"></a><span class="co"># Get multiple years</span></span>
 <span id="cb18-13"><a href="#cb18-13" tabindex="-1"></a>enr_multi <span class="op">=</span> la.fetch_enr_multi([<span class="dv">2020</span>, <span class="dv">2021</span>, <span class="dv">2022</span>, <span class="dv">2023</span>, <span class="dv">2024</span>])</span>
@@ -510,9 +526,9 @@
 <li>
 <strong>Gender data is stored as percentages</strong> in the source files, then converted to counts using total enrollment</li>
 <li>
-<strong>Orleans Parish</strong> enrollment is split across multiple entities (Orleans Parish School Board, Recovery School District, charter operators)</li>
+<strong>No “Orleans Parish” district</strong> exists in the LDOE data – post-Katrina reorganization split New Orleans schools across multiple entities</li>
 <li>
-<strong>Charter schools</strong> are included with their authorizing parish</li>
+<strong>No charter school district</strong> – charter schools are included with their authorizing parish</li>
 <li>
 <strong>Extension Academy</strong> and <strong>T9 (transitional 9th grade)</strong> data may not be available for all years/parishes</li>
 </ol>
@@ -522,7 +538,7 @@
 </h3>
 <ul>
 <li>
-<strong>Levels:</strong> State, Parish (69 districts), Site (school)</li>
+<strong>Levels:</strong> State, District (75 entities), Campus (school)</li>
 <li>
 <strong>Demographics:</strong> White, Black, Hispanic, Asian, Native American, Pacific Islander, Multiracial</li>
 <li>
