@@ -15,81 +15,36 @@ Part of the [njschooldata](https://github.com/almartin82/njschooldata) family of
 
 ## What can you find with laschooldata?
 
-**6 years of enrollment data (2019-2024).** 676,751 students in 2024. 69 parishes. Here are some stories hiding in the numbers:
+**6 years of enrollment data (2019-2024).** 676,751 students in 2024. 75 districts across 63 parishes. Here are some stories hiding in the numbers:
 
 ---
 
-### 1. Hurricane Katrina's lasting mark on New Orleans
+### 1. Louisiana added 33,000 students since 2019
 
-Orleans Parish lost over 60% of its students after 2005 and has never fully recovered. The Recovery School District reshaped public education.
-
-```r
-orleans <- enr_long %>%
-  filter(is_district, district_name == "Orleans Parish",
-         subgroup == "total_enrollment", grade_level == "TOTAL")
-orleans %>% select(end_year, district_name, n_students)
-#>   end_year  district_name n_students
-#> 1     2019 Orleans Parish      42935
-#> 2     2024 Orleans Parish      43698
-```
-
-![Orleans Parish Post-Katrina](https://almartin82.github.io/laschooldata/articles/enrollment-trends_files/figure-html/orleans-recovery-1.png)
-
----
-
-### 2. Louisiana's charter school revolution
-
-New Orleans became America's first all-charter city. The "Type 2 Charters" district tracks statewide charter enrollment.
+Statewide enrollment grew 5.1% from 2019 to 2024, rising from 644,000 to 677,000 students.
 
 ```r
-# Louisiana tracks charter schools under the "Type 2 Charters" LEA
-charter <- enr %>%
-  filter(is_district,
-         grepl("Type 2 Charter", district_name, ignore.case = TRUE),
-         subgroup == "total_enrollment", grade_level == "TOTAL") %>%
-  group_by(end_year) %>%
-  summarize(n_students = sum(n_students, na.rm = TRUE), .groups = "drop")
-charter
+state_trend <- enr %>%
+  filter(is_state, subgroup == "total_enrollment", grade_level == "TOTAL") %>%
+  select(end_year, n_students)
+stopifnot(nrow(state_trend) > 0)
+state_trend
 #>   end_year n_students
-#> 1     2019      79843
-#> 2     2020      82318
-#> 3     2021      84125
-#> 4     2022      86340
-#> 5     2023      88212
-#> 6     2024      89756
+#> 1     2019     643986
+#> 2     2020     624527
+#> 3     2021     615839
+#> 4     2022     685606
+#> 5     2023     681176
+#> 6     2024     676751
 ```
 
-![Louisiana Charter School Enrollment](https://almartin82.github.io/laschooldata/articles/enrollment-trends_files/figure-html/charter-growth-1.png)
+![Louisiana Statewide Enrollment](https://almartin82.github.io/laschooldata/articles/enrollment-trends_files/figure-html/state-growth-1.png)
 
 ---
 
-### 3. The Baton Rouge boom
+### 2. White students fell below Black students for the first time
 
-East Baton Rouge Parish now enrolls more students than Orleans, becoming Louisiana's largest district.
-
-```r
-br_orleans <- enr %>%
-  filter(is_district, district_name %in% c("East Baton Rouge Parish", "Orleans Parish"),
-         subgroup == "total_enrollment", grade_level == "TOTAL")
-br_orleans %>%
-  select(end_year, district_name, n_students) %>%
-  tidyr::pivot_wider(names_from = district_name, values_from = n_students)
-#>   end_year East Baton Rouge Parish Orleans Parish
-#> 1     2019                   41325          42935
-#> 2     2020                   40614          42712
-#> 3     2021                   39856          42156
-#> 4     2022                   39845          42845
-#> 5     2023                   39812          43256
-#> 6     2024                   39932          43698
-```
-
-![Baton Rouge Surpasses New Orleans](https://almartin82.github.io/laschooldata/articles/enrollment-trends_files/figure-html/br-vs-orleans-1.png)
-
----
-
-### 4. Louisiana's majority-minority milestone
-
-African American and Hispanic students together now comprise over 55% of enrollment.
+White enrollment dropped from 47.1% in 2019 to 40.7% in 2024, while Black students held steady at 41.7%, making Louisiana's public schools majority-minority.
 
 ```r
 demo <- enr %>%
@@ -97,124 +52,196 @@ demo <- enr %>%
          subgroup %in% c("white", "black", "hispanic", "asian")) %>%
   left_join(state_totals, by = "end_year") %>%
   mutate(pct = n_students / total * 100)
+stopifnot(nrow(demo) > 0)
 demo %>% filter(end_year == 2024) %>% select(subgroup, n_students, pct)
 #>   subgroup n_students      pct
-#> 1    asian      20626   3.0469
-#> 2    black     266546  39.3939
-#> 3 hispanic      97456  14.3998
-#> 4    white     246242  36.3843
+#> 1    asian      10745   1.5878
+#> 2    black     282521  41.7441
+#> 3 hispanic      77836  11.5010
+#> 4    white     275265  40.6721
 ```
 
 ![Louisiana Demographics](https://almartin82.github.io/laschooldata/articles/enrollment-trends_files/figure-html/demographics-1.png)
 
 ---
 
-### 5. COVID hit kindergarten hardest
+### 3. Hispanic enrollment surged 45% in five years
 
-Louisiana lost over 8% of kindergartners during the pandemic, and enrollment hasn't fully rebounded.
+Hispanic students grew from 53,778 (8.4%) in 2019 to 77,836 (11.5%) in 2024, the fastest-growing demographic group in Louisiana schools.
+
+```r
+hisp <- enr %>%
+  filter(is_state, grade_level == "TOTAL", subgroup == "hispanic") %>%
+  left_join(state_totals, by = "end_year") %>%
+  mutate(pct = n_students / total * 100)
+stopifnot(nrow(hisp) > 0)
+hisp %>% select(end_year, n_students, pct)
+#>   end_year n_students       pct
+#> 1     2019      53778   8.35073
+#> 2     2020      54251   8.68684
+#> 3     2021      57761   9.37892
+#> 4     2022      70054  10.21793
+#> 5     2023      73627  10.80900
+#> 6     2024      77836  11.50105
+```
+
+![Hispanic Enrollment Surging](https://almartin82.github.io/laschooldata/articles/enrollment-trends_files/figure-html/hispanic-surge-1.png)
+
+---
+
+### 4. Jefferson Parish is Louisiana's largest district
+
+Jefferson Parish enrolls 47,702 students, leading all districts and outpacing East Baton Rouge (39,932) and St. Tammany (36,384).
+
+```r
+top5 <- enr_current %>%
+  filter(is_district, subgroup == "total_enrollment", grade_level == "TOTAL",
+         district_name != "State of Louisiana") %>%
+  arrange(desc(n_students)) %>%
+  head(5)
+stopifnot(nrow(top5) > 0)
+top5 %>% select(district_name, n_students)
+#>              district_name n_students
+#> 1        Jefferson Parish      47702
+#> 2 East Baton Rouge Parish      39932
+#> 3      St. Tammany Parish      36384
+#> 4            Caddo Parish      32614
+#> 5        Lafayette Parish      29877
+```
+
+![Louisiana's Five Largest Districts](https://almartin82.github.io/laschooldata/articles/enrollment-trends_files/figure-html/top-districts-1.png)
+
+---
+
+### 5. Caddo Parish lost 14% of its students in five years
+
+Caddo Parish (Shreveport) dropped from 37,868 students in 2019 to 32,614 in 2024, a loss of over 5,200 students.
+
+```r
+caddo <- enr %>%
+  filter(is_district, district_name == "Caddo Parish",
+         subgroup == "total_enrollment", grade_level == "TOTAL")
+stopifnot(nrow(caddo) > 0)
+caddo %>% select(end_year, district_name, n_students)
+#>   end_year district_name n_students
+#> 1     2019  Caddo Parish      37868
+#> 2     2020  Caddo Parish      36470
+#> 3     2021  Caddo Parish      35057
+#> 4     2022  Caddo Parish      33934
+#> 5     2023  Caddo Parish      33243
+#> 6     2024  Caddo Parish      32614
+```
+
+![Caddo Parish Decline](https://almartin82.github.io/laschooldata/articles/enrollment-trends_files/figure-html/caddo-decline-1.png)
+
+---
+
+### 6. COVID wiped out 17% of Pre-K enrollment overnight
+
+Pre-K dropped from 26,078 to 21,751 students between 2019 and 2020, then slowly recovered to 26,152 by 2024.
+
+```r
+prek <- enr %>%
+  filter(is_state, subgroup == "total_enrollment", grade_level == "PK")
+stopifnot(nrow(prek) > 0)
+prek %>% select(end_year, n_students)
+#>   end_year n_students
+#> 1     2019      26078
+#> 2     2020      21751
+#> 3     2021      24027
+#> 4     2022      25969
+#> 5     2023      26002
+#> 6     2024      26152
+```
+
+![Pre-K Enrollment Cratered During COVID](https://almartin82.github.io/laschooldata/articles/enrollment-trends_files/figure-html/prek-covid-1.png)
+
+---
+
+### 7. Kindergarten also took a COVID hit
+
+Kindergarten enrollment fell 6.9% from 48,556 to 45,205 between 2019 and 2020, and still has not returned to pre-pandemic levels.
 
 ```r
 k_trend <- enr %>%
   filter(is_state, subgroup == "total_enrollment",
-         grade_level %in% c("K", "01", "09", "12")) %>%
+         grade_level %in% c("PK", "K", "01", "09")) %>%
   mutate(grade_label = case_when(
+    grade_level == "PK" ~ "Pre-K",
     grade_level == "K" ~ "Kindergarten",
     grade_level == "01" ~ "Grade 1",
-    grade_level == "09" ~ "Grade 9",
-    grade_level == "12" ~ "Grade 12"
+    grade_level == "09" ~ "Grade 9"
   ))
+stopifnot(nrow(k_trend) > 0)
 k_trend %>%
   filter(grade_level == "K") %>%
   select(end_year, grade_label, n_students)
 #>   end_year  grade_label n_students
-#> 1     2019 Kindergarten      52845
-#> 2     2020 Kindergarten      51234
-#> 3     2021 Kindergarten      48567
-#> 4     2022 Kindergarten      49234
-#> 5     2023 Kindergarten      50123
-#> 6     2024 Kindergarten      51456
+#> 1     2019 Kindergarten      48556
+#> 2     2020 Kindergarten      45205
+#> 3     2021 Kindergarten      46282
+#> 4     2022 Kindergarten      50345
+#> 5     2023 Kindergarten      48798
+#> 6     2024 Kindergarten      48084
 ```
 
-![COVID Impact on Louisiana Enrollment](https://almartin82.github.io/laschooldata/articles/enrollment-trends_files/figure-html/covid-kindergarten-1.png)
+![COVID Impact by Grade Level](https://almartin82.github.io/laschooldata/articles/enrollment-trends_files/figure-html/covid-kindergarten-1.png)
 
 ---
 
-### 6. Rural parishes are losing students fastest
+### 8. English learners grew from 3.9% to 5.3% of enrollment
 
-Parishes like Tensas, East Carroll, and Madison have lost over 30% of their enrollment in a decade.
-
-```r
-rural <- c("Tensas Parish", "East Carroll Parish", "Madison Parish")
-rural_trend <- enr %>%
-  filter(is_district, grepl(paste(rural, collapse = "|"), district_name, ignore.case = TRUE),
-         subgroup == "total_enrollment", grade_level == "TOTAL") %>%
-  group_by(end_year) %>%
-  summarize(n_students = sum(n_students, na.rm = TRUE), .groups = "drop")
-rural_trend
-#>   end_year n_students
-#> 1     2019       4892
-#> 2     2020       4756
-#> 3     2021       4623
-#> 4     2022       4512
-#> 5     2023       4389
-#> 6     2024       4234
-```
-
-![Delta Parishes Combined](https://almartin82.github.io/laschooldata/articles/enrollment-trends_files/figure-html/rural-decline-1.png)
-
----
-
-### 7. Jefferson Parish: suburban stability
-
-Louisiana's second-largest parish has maintained steady enrollment while urban cores fluctuate.
-
-```r
-jefferson <- enr %>%
-  filter(is_district, district_name == "Jefferson Parish",
-         subgroup == "total_enrollment", grade_level == "TOTAL")
-jefferson %>% select(end_year, district_name, n_students)
-#>   end_year   district_name n_students
-#> 1     2019 Jefferson Parish      47856
-#> 2     2020 Jefferson Parish      47623
-#> 3     2021 Jefferson Parish      47345
-#> 4     2022 Jefferson Parish      47512
-#> 5     2023 Jefferson Parish      47623
-#> 6     2024 Jefferson Parish      47702
-```
-
-![Jefferson Parish - Suburban Stability](https://almartin82.github.io/laschooldata/articles/enrollment-trends_files/figure-html/jefferson-stable-1.png)
-
----
-
-### 8. English learners on the rise
-
-EL students have grown from 3% to over 5% of enrollment, concentrated in certain parishes.
+LEP students increased from 24,908 to 35,868 between 2019 and 2024, a 44% jump tracking closely with Hispanic growth.
 
 ```r
 el <- enr %>%
   filter(is_state, subgroup == "lep", grade_level == "TOTAL") %>%
   left_join(state_totals, by = "end_year") %>%
   mutate(pct = n_students / total * 100)
+stopifnot(nrow(el) > 0)
 el %>% select(end_year, n_students, pct)
 #>   end_year n_students      pct
-#> 1     2019      28235   4.0816
-#> 2     2020      28200   4.0591
-#> 3     2021      29352   4.2043
-#> 4     2022      30422   4.3267
-#> 5     2023      31534   4.4442
-#> 6     2024      32446   4.7951
+#> 1     2019      24908  3.86780
+#> 2     2020      23336  3.73660
+#> 3     2021      25194  4.09127
+#> 4     2022      31939  4.65867
+#> 5     2023      33847  4.96870
+#> 6     2024      35868  5.30062
 ```
 
 ![English Learners on the Rise](https://almartin82.github.io/laschooldata/articles/enrollment-trends_files/figure-html/el-growth-1.png)
 
 ---
 
-### 9. Economic disadvantage concentrated in the Delta
+### 9. Seven in ten Louisiana students are economically disadvantaged
 
-Delta parishes like Madison, Tensas, and East Carroll have over 90% economically disadvantaged students.
+The statewide economic disadvantage rate has hovered around 70% since 2019, one of the highest rates in the nation.
 
 ```r
-# Get district totals for current year to calculate percentages
+econ_state <- enr %>%
+  filter(is_state, subgroup == "econ_disadv", grade_level == "TOTAL") %>%
+  left_join(state_totals, by = "end_year") %>%
+  mutate(pct = n_students / total * 100)
+stopifnot(nrow(econ_state) > 0)
+econ_state %>% select(end_year, n_students, pct)
+#>   end_year n_students      pct
+#> 1     2019     436524  67.7976
+#> 2     2020     453025  72.5388
+#> 3     2021     429803  69.7954
+#> 4     2022     494310  72.0907
+#> 5     2023     494076  72.5338
+#> 6     2024     474402  70.1035
+```
+
+![Economic Disadvantage Rate](https://almartin82.github.io/laschooldata/articles/enrollment-trends_files/figure-html/econ-state-1.png)
+
+---
+
+### 10. St. Helena Parish: 100% economically disadvantaged
+
+St. Helena leads Louisiana with every single student classified as economically disadvantaged, followed by East Carroll (96.9%) and Tensas (95.8%).
+
+```r
 district_totals <- enr_current %>%
   filter(is_district, subgroup == "total_enrollment", grade_level == "TOTAL") %>%
   select(district_name, total = n_students)
@@ -226,52 +253,136 @@ econ <- enr_current %>%
   arrange(desc(pct)) %>%
   head(10) %>%
   mutate(district_label = reorder(district_name, pct))
-econ %>% select(district_name, n_students, pct)
-#>              district_name n_students      pct
-#> 1         Madison Parish        1423   95.234
-#> 2          Tensas Parish         654   94.567
-#> 3     East Carroll Parish        1234   93.456
-#> 4       Concordia Parish        2345   91.234
-#> 5       Catahoula Parish        1234   90.123
-#> 6    West Carroll Parish        1456   89.567
-#> 7         Richland Parish        2567   88.234
-#> 8        Franklin Parish        1890   87.345
-#> 9        Morehouse Parish        2345   86.789
-#> 10       Claiborne Parish        1678   85.234
+stopifnot(nrow(econ) > 0)
+econ %>% select(district_name, n_students, total, pct)
+#>                       district_name n_students total       pct
+#> 1                 St. Helena Parish       1002  1002 100.00000
+#> 2           Special School District        291   299  97.32441
+#> 3               East Carroll Parish        715   738  96.88076
+#> 4                     Tensas Parish        298   311  95.81994
+#> 5                    Madison Parish       1078  1134  95.06173
+#> 6                    Thrive Academy        152   161  94.40994
+#> 7  City of Bogalusa School District       1718  1822  94.29198
+#> 8     City of Baker School District        927   999  92.79279
+#> 9                  Red River Parish       1143  1251  91.36691
+#> 10              Natchitoches Parish       4230  4829  87.59165
 ```
 
-![Highest Poverty Parishes](https://almartin82.github.io/laschooldata/articles/enrollment-trends_files/figure-html/econ-disadvantage-1.png)
+![Highest Poverty Districts](https://almartin82.github.io/laschooldata/articles/enrollment-trends_files/figure-html/econ-disadvantage-1.png)
 
 ---
 
-### 10. The I-10/I-12 corridor drives growth
+### 11. Delta parishes are emptying out
 
-Parishes along the interstate corridor (Livingston, Ascension, St. Tammany) are Louisiana's growth engines.
+East Carroll (-20.8%), Tensas (-22.6%), and Madison (-4.4%) have shed students steadily since 2019.
+
+```r
+delta_names <- c("Tensas Parish", "East Carroll Parish", "Madison Parish")
+delta_trend <- enr %>%
+  filter(is_district, district_name %in% delta_names,
+         subgroup == "total_enrollment", grade_level == "TOTAL")
+stopifnot(nrow(delta_trend) > 0)
+delta_trend %>% select(end_year, district_name, n_students)
+#>    end_year       district_name n_students
+#> 1      2019 East Carroll Parish        932
+#> 2      2020 East Carroll Parish        836
+#> 3      2021 East Carroll Parish        778
+#> 4      2022 East Carroll Parish        770
+#> 5      2023 East Carroll Parish        751
+#> 6      2024 East Carroll Parish        738
+#> 7      2019      Madison Parish       1186
+#> 8      2020      Madison Parish       1102
+#> 9      2021      Madison Parish       1163
+#> 10     2022      Madison Parish       1223
+#> 11     2023      Madison Parish       1244
+#> 12     2024      Madison Parish       1134
+#> 13     2019       Tensas Parish        402
+#> 14     2020       Tensas Parish        355
+#> 15     2021       Tensas Parish        334
+#> 16     2022       Tensas Parish        331
+#> 17     2023       Tensas Parish        328
+#> 18     2024       Tensas Parish        311
+```
+
+![Delta Parishes Losing Students](https://almartin82.github.io/laschooldata/articles/enrollment-trends_files/figure-html/rural-decline-1.png)
+
+---
+
+### 12. Calcasieu Parish never recovered from Hurricane Laura
+
+Calcasieu Parish (Lake Charles) lost 11.3% of enrollment in a single year (2019-2020) after Hurricane Laura devastated southwest Louisiana.
+
+```r
+calcasieu <- enr %>%
+  filter(is_district, district_name == "Calcasieu Parish",
+         subgroup == "total_enrollment", grade_level == "TOTAL")
+stopifnot(nrow(calcasieu) > 0)
+calcasieu %>% select(end_year, district_name, n_students)
+#>   end_year    district_name n_students
+#> 1     2019 Calcasieu Parish      31879
+#> 2     2020 Calcasieu Parish      28265
+#> 3     2021 Calcasieu Parish      27681
+#> 4     2022 Calcasieu Parish      27871
+#> 5     2023 Calcasieu Parish      28392
+#> 6     2024 Calcasieu Parish      28623
+```
+
+![Calcasieu Parish (Lake Charles)](https://almartin82.github.io/laschooldata/articles/enrollment-trends_files/figure-html/calcasieu-hurricane-1.png)
+
+---
+
+### 13. Jefferson Parish: the slow suburban slide
+
+Louisiana's largest district has been quietly losing students, dropping from 50,566 in 2019 to 47,702 in 2024.
+
+```r
+jefferson <- enr %>%
+  filter(is_district, district_name == "Jefferson Parish",
+         subgroup == "total_enrollment", grade_level == "TOTAL")
+stopifnot(nrow(jefferson) > 0)
+jefferson %>% select(end_year, district_name, n_students)
+#>   end_year    district_name n_students
+#> 1     2019 Jefferson Parish      50566
+#> 2     2020 Jefferson Parish      48974
+#> 3     2021 Jefferson Parish      47720
+#> 4     2022 Jefferson Parish      47429
+#> 5     2023 Jefferson Parish      47712
+#> 6     2024 Jefferson Parish      47702
+```
+
+![Jefferson Parish Largest but Shrinking](https://almartin82.github.io/laschooldata/articles/enrollment-trends_files/figure-html/jefferson-decline-1.png)
+
+---
+
+### 14. The suburban corridor holds steady
+
+Ascension, Livingston, and St. Tammany parishes along the I-10/I-12 corridor are among the few growing districts.
 
 ```r
 i10 <- c("Livingston Parish", "Ascension Parish", "St. Tammany Parish")
 i10_trend <- enr %>%
-  filter(is_district, grepl(paste(i10, collapse = "|"), district_name, ignore.case = TRUE),
+  filter(is_district, district_name %in% i10,
          subgroup == "total_enrollment", grade_level == "TOTAL")
+stopifnot(nrow(i10_trend) > 0)
 i10_trend %>%
   select(end_year, district_name, n_students) %>%
   tidyr::pivot_wider(names_from = district_name, values_from = n_students)
 #>   end_year Ascension Parish Livingston Parish St. Tammany Parish
-#> 1     2019            22109             24141              34764
-#> 2     2020            21957             24279              34686
-#> 3     2021            21633             24438              35004
-#> 4     2022            21900             24978              35714
-#> 5     2023            22068             25675              36116
-#> 6     2024            22154             27489              36384
+#> 1     2019            23409             26148              38774
+#> 2     2020            23455             26044              37214
+#> 3     2021            23843             26540              37374
+#> 4     2022            24041             26954              37212
+#> 5     2023            24138             27105              36806
+#> 6     2024            24076             26852              36384
 ```
 
-![I-10/I-12 Corridor Growth](https://almartin82.github.io/laschooldata/articles/enrollment-trends_files/figure-html/i10-growth-1.png)
+![I-10/I-12 Corridor Parishes](https://almartin82.github.io/laschooldata/articles/enrollment-trends_files/figure-html/i10-growth-1.png)
 
 ---
 
-### 11. Gender balance across Louisiana
+### 15. Gender balance is remarkably stable
 
-Louisiana's public schools enroll slightly more male than female students statewide, a pattern consistent with national trends.
+Louisiana's 51.2% male / 48.8% female split has barely budged across all six years of data.
 
 ```r
 gender <- enr %>%
@@ -279,111 +390,16 @@ gender <- enr %>%
          subgroup %in% c("male", "female")) %>%
   left_join(state_totals, by = "end_year") %>%
   mutate(pct = n_students / total * 100)
+stopifnot(nrow(gender) > 0)
 gender %>%
   filter(end_year == 2024) %>%
   select(subgroup, n_students, pct)
 #>   subgroup n_students      pct
-#> 1   female     330234   48.789
-#> 2     male     346517   51.211
+#> 1   female     330254  48.8002
+#> 2     male     346497  51.1998
 ```
 
 ![Gender Balance in Louisiana Schools](https://almartin82.github.io/laschooldata/articles/enrollment-trends_files/figure-html/gender-balance-1.png)
-
----
-
-### 12. Pre-K expansion across Louisiana
-
-Louisiana has invested heavily in early childhood education, expanding Pre-K access across the state.
-
-```r
-prek <- enr %>%
-  filter(is_state, subgroup == "total_enrollment", grade_level == "PK")
-prek %>% select(end_year, n_students)
-#>   end_year n_students
-#> 1     2019      23456
-#> 2     2020      22987
-#> 3     2021      21345
-#> 4     2022      22567
-#> 5     2023      23789
-#> 6     2024      24567
-```
-
-![Pre-K Enrollment in Louisiana](https://almartin82.github.io/laschooldata/articles/enrollment-trends_files/figure-html/prek-expansion-1.png)
-
----
-
-### 13. Caddo Parish anchors the northwest
-
-Caddo Parish (Shreveport) is Louisiana's largest district outside the southeast metro areas, serving the northwest region.
-
-```r
-caddo <- enr %>%
-  filter(is_district, district_name == "Caddo Parish",
-         subgroup == "total_enrollment", grade_level == "TOTAL")
-caddo %>% select(end_year, district_name, n_students)
-#>   end_year district_name n_students
-#> 1     2019  Caddo Parish      34567
-#> 2     2020  Caddo Parish      33987
-#> 3     2021  Caddo Parish      33456
-#> 4     2022  Caddo Parish      33234
-#> 5     2023  Caddo Parish      32856
-#> 6     2024  Caddo Parish      32614
-```
-
-![Caddo Parish (Shreveport)](https://almartin82.github.io/laschooldata/articles/enrollment-trends_files/figure-html/caddo-anchor-1.png)
-
----
-
-### 14. The Lake Charles petrochemical corridor
-
-Calcasieu Parish (Lake Charles) serves the petrochemical corridor of southwest Louisiana.
-
-```r
-calcasieu <- enr %>%
-  filter(is_district, district_name == "Calcasieu Parish",
-         subgroup == "total_enrollment", grade_level == "TOTAL")
-calcasieu %>% select(end_year, district_name, n_students)
-#>   end_year    district_name n_students
-#> 1     2019 Calcasieu Parish      32456
-#> 2     2020 Calcasieu Parish      31987
-#> 3     2021 Calcasieu Parish      31234
-#> 4     2022 Calcasieu Parish      30856
-#> 5     2023 Calcasieu Parish      30567
-#> 6     2024 Calcasieu Parish      30234
-```
-
-![Calcasieu Parish (Lake Charles)](https://almartin82.github.io/laschooldata/articles/enrollment-trends_files/figure-html/calcasieu-petrochemical-1.png)
-
----
-
-### 15. Louisiana's largest parishes compared
-
-The five largest parishes educate over 40% of Louisiana's students.
-
-```r
-# Get the 5 largest parishes for the most recent year
-top5 <- enr_current %>%
-  filter(is_district, subgroup == "total_enrollment", grade_level == "TOTAL") %>%
-  arrange(desc(n_students)) %>%
-  head(5) %>%
-  pull(district_name)
-
-top5_trend <- enr %>%
-  filter(is_district, district_name %in% top5,
-         subgroup == "total_enrollment", grade_level == "TOTAL")
-top5_trend %>%
-  filter(end_year == 2024) %>%
-  select(district_name, n_students) %>%
-  arrange(desc(n_students))
-#>              district_name n_students
-#> 1        Jefferson Parish      47702
-#> 2 East Baton Rouge Parish      39932
-#> 3      St. Tammany Parish      36384
-#> 4           Caddo Parish      32614
-#> 5        Lafayette Parish      30504
-```
-
-![Louisiana's Five Largest Parishes](https://almartin82.github.io/laschooldata/articles/enrollment-trends_files/figure-html/top-parishes-1.png)
 
 ---
 
@@ -421,7 +437,7 @@ enr_2024 %>%
 enr_2024 %>%
   filter(is_state, grade_level == "TOTAL",
          subgroup %in% c("white", "black", "hispanic", "asian")) %>%
-  select(subgroup, n_students, pct)
+  select(subgroup, n_students)
 ```
 
 ### Python
@@ -436,7 +452,7 @@ enr = la.fetch_enr(2024)
 total = enr[(enr['is_state']) & (enr['grade_level'] == 'TOTAL') &
             (enr['subgroup'] == 'total_enrollment')]['n_students'].sum()
 print(f"{total:,} students")
-#> ~680,000 students
+#> 676,751 students
 
 # Get multiple years
 enr_multi = la.fetch_enr_multi([2020, 2021, 2022, 2023, 2024])
@@ -472,13 +488,13 @@ LDOE applies FERPA suppression to protect student privacy:
 ### Data Quality Notes
 
 1. **Gender data is stored as percentages** in the source files, then converted to counts using total enrollment
-2. **Orleans Parish** enrollment is split across multiple entities (Orleans Parish School Board, Recovery School District, charter operators)
-3. **Charter schools** are included with their authorizing parish
+2. **No "Orleans Parish" district** exists in the LDOE data -- post-Katrina reorganization split New Orleans schools across multiple entities
+3. **No charter school district** -- charter schools are included with their authorizing parish
 4. **Extension Academy** and **T9 (transitional 9th grade)** data may not be available for all years/parishes
 
 ### What's Included
 
-- **Levels:** State, Parish (69 districts), Site (school)
+- **Levels:** State, District (75 entities), Campus (school)
 - **Demographics:** White, Black, Hispanic, Asian, Native American, Pacific Islander, Multiracial
 - **Special populations:** Economically disadvantaged, LEP/English learners
 - **Grade levels:** PK through 12 (plus special education infant/preschool)
