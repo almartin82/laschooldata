@@ -15,3 +15,4 @@
 ^EXPANSION\.md$
 ^generate_readme_figs\.R$
 ^vignettes/.*_cache$
+^DATA-CATEGORY-TAXONOMY\.md$
