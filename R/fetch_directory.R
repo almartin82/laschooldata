@@ -367,15 +367,15 @@ process_directory_sheet <- function(df, end_year, is_charter = FALSE) {
   # Parish code
   parish_col <- find_col(c("^ParishCd$", "^Parish.*Code"))
   if (!is.null(parish_col)) {
-    # Ensure 2-digit format with leading zero
-    result$parish_code <- sprintf("%02s", trimws(as.character(df[[parish_col]])))
+    # Ensure 2-digit format with leading zero (use %02d for cross-platform zero-padding)
+    result$parish_code <- sprintf("%02d", as.integer(trimws(as.character(df[[parish_col]]))))
   }
 
   # District/Sponsor code
   sponsor_col <- find_col(c("^SponsorCd$", "^Sponsor.*Code", "^DistrictCd"))
   if (!is.null(sponsor_col)) {
-    # Ensure 3-digit format with leading zeros
-    result$district_code <- sprintf("%03s", trimws(as.character(df[[sponsor_col]])))
+    # Ensure 3-digit format with leading zeros (use %03d for cross-platform zero-padding)
+    result$district_code <- sprintf("%03d", as.integer(trimws(as.character(df[[sponsor_col]]))))
   }
 
   # School name
