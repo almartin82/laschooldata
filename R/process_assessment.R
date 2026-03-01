@@ -284,8 +284,8 @@ standardize_la_subject <- function(x) {
 standardize_la_grade <- function(x) {
   x <- toupper(trimws(as.character(x)))
 
-  # Remove GRADE prefix
-  x <- gsub("^GRADE\\s*", "", x)
+  # Remove GRADE/GRADES prefix
+  x <- gsub("^GRADES?\\s*", "", x)
 
   # Handle ordinal formats
   x <- gsub("^3RD$", "03", x)
