@@ -19,7 +19,7 @@ A list with:
 
 - max_year:
 
-  Last available year (2024)
+  Last available year (2026)
 
 - description:
 
@@ -32,5 +32,5 @@ years <- get_available_years()
 print(years$min_year)
 #> [1] 2019
 print(years$max_year)
-#> [1] 2024
+#> [1] 2026
 ```

@@ -14,8 +14,8 @@ fetch_enr(end_year, tidy = TRUE, use_cache = TRUE)
 - end_year:
 
   A school year. Year is the end of the academic year - e.g., 2023-24
-  school year is year '2024'. Valid values are 2007-2025 (Multi Stats
-  format). Data for 2006 is also available but uses a different format.
+  school year is year '2024'. Valid values are 2019-2026 (Multi Stats
+  format).
 
 - tidy:
 

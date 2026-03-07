@@ -26,10 +26,10 @@ get_available_years()
 #> [1] 2019
 #> 
 #> $max_year
-#> [1] 2024
+#> [1] 2026
 #> 
 #> $description
-#> [1] "Louisiana enrollment data from LDOE Multi Stats files. Available years: 2019-2024. Earlier years (2007-2018) may use different formats and URLs."
+#> [1] "Louisiana enrollment data from LDOE Multi Stats files. Available years: 2019-2026. Earlier years (2007-2018) may use different formats and URLs."
 # Returns: min_year = 2019, max_year = 2024
 ```
 
@@ -458,16 +458,16 @@ sessionInfo()
 #> 
 #> loaded via a namespace (and not attached):
 #>  [1] jsonlite_2.0.0    compiler_4.5.2    tidyselect_1.2.1  stringr_1.6.0    
-#>  [5] snakecase_0.11.1  tidyr_1.3.2       jquerylib_0.1.4   systemfonts_1.3.1
-#>  [9] textshaping_1.0.4 yaml_2.3.12       fastmap_1.2.0     readxl_1.4.5     
+#>  [5] snakecase_0.11.1  tidyr_1.3.2       jquerylib_0.1.4   systemfonts_1.3.2
+#>  [9] textshaping_1.0.5 yaml_2.3.12       fastmap_1.2.0     readxl_1.4.5     
 #> [13] R6_2.6.1          generics_0.1.4    curl_7.0.0        knitr_1.51       
 #> [17] htmlwidgets_1.6.4 tibble_3.3.1      janitor_2.2.1     desc_1.4.3       
 #> [21] lubridate_1.9.5   bslib_0.10.0      pillar_1.11.1     rlang_1.1.7      
 #> [25] utf8_1.2.6        stringi_1.8.7     cachem_1.1.0      xfun_0.56        
-#> [29] fs_1.6.6          sass_0.4.10       otel_0.2.0        timechange_0.4.0 
+#> [29] fs_1.6.7          sass_0.4.10       otel_0.2.0        timechange_0.4.0 
 #> [33] cli_3.6.5         withr_3.0.2       pkgdown_2.2.0     magrittr_2.0.4   
 #> [37] digest_0.6.39     rappdirs_0.3.4    lifecycle_1.0.5   vctrs_0.7.1      
 #> [41] evaluate_1.0.5    glue_1.8.0        cellranger_1.1.0  codetools_0.2-20 
-#> [45] ragg_1.5.0        purrr_1.2.1       rmarkdown_2.30    httr_1.4.8       
+#> [45] ragg_1.5.1        purrr_1.2.1       rmarkdown_2.30    httr_1.4.8       
 #> [49] tools_4.5.2       pkgconfig_2.0.3   htmltools_0.5.9
 ```

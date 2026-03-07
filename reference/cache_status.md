@@ -23,4 +23,6 @@ cache_status()
 #> 4     2022       FALSE       FALSE
 #> 5     2023       FALSE       FALSE
 #> 6     2024       FALSE       FALSE
+#> 7     2025       FALSE       FALSE
+#> 8     2026       FALSE       FALSE
 ```
