@@ -54,7 +54,7 @@ safe_numeric <- function(x) {
 #'
 #' @return A list with:
 #'   \item{min_year}{First available year (2019)}
-#'   \item{max_year}{Last available year (2024)}
+#'   \item{max_year}{Last available year (2026)}
 #'   \item{description}{Description of data availability}
 #' @export
 #' @examples
@@ -64,10 +64,10 @@ safe_numeric <- function(x) {
 get_available_years <- function() {
   list(
     min_year = 2019,
-    max_year = 2024,
+    max_year = 2026,
     description = paste(
       "Louisiana enrollment data from LDOE Multi Stats files.",
-      "Available years: 2019-2024.",
+      "Available years: 2019-2026.",
       "Earlier years (2007-2018) may use different formats and URLs."
     )
   )

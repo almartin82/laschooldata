@@ -107,7 +107,7 @@ Before opening a PR, verify:
 
 ## Available Years - Enrollment
 
-**Confirmed Working**: 2019-2024 (6 years)
+**Confirmed Working**: 2019-2026 (8 years)
 - Earlier years (2007-2018) may exist but use different URL patterns and file structures
 
 ## Available Years - Assessment (LEAP)
@@ -230,7 +230,7 @@ trends <- enr_multi |>
 ## Test Coverage
 
 Tests verify:
-1. All available years (2019-2024) work correctly
+1. All available years (2019-2026) work correctly
 2. Male/female enrollment is NOT ZERO (critical bug fix)
 3. Race/ethnicity counts match raw file values
 4. Gender percentages and calculated counts are correct
@@ -241,7 +241,7 @@ Tests verify:
 
 ## Known Limitations
 
-1. Only 2019-2024 are confirmed working (earlier years may have different formats)
+1. Only 2019-2026 are confirmed working (earlier years may have different formats)
 2. Gender and special population counts are derived from percentages (may have rounding differences)
 3. Orleans Parish data is fragmented across multiple entities post-Katrina
 4. Extension Academy enrollment may not be available for all years/districts

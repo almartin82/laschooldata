@@ -19,7 +19,7 @@
 # - Race/ethnicity are stored as counts
 # - Grade enrollment is stored as counts
 #
-# Available years: 2019-2024 (confirmed working)
+# Available years: 2019-2026 (confirmed working)
 #
 # ==============================================================================
 
@@ -33,9 +33,9 @@
 #' @keywords internal
 get_raw_enr <- function(end_year) {
 
-  # Validate year - only 2019-2024 are confirmed working
-  if (end_year < 2019 || end_year > 2024) {
-    stop("end_year must be between 2019 and 2024 (confirmed available years)")
+  # Validate year - only 2019-2026 are confirmed working
+  if (end_year < 2019 || end_year > 2026) {
+    stop("end_year must be between 2019 and 2026 (confirmed available years)")
   }
 
   message(paste("Downloading LDOE enrollment data for", end_year, "..."))
@@ -268,10 +268,27 @@ get_alternate_urls <- function(end_year) {
     # Space replaced with hyphen
     paste0("oct-", end_year, "-multi-stats.xlsx"),
     # February data as fallback
-    paste0("feb-", end_year, "-multi-stats-(total-by-site-and-school-system).xlsx")
+    paste0("feb-", end_year, "-multi-stats-(total-by-site-and-school-system).xlsx"),
+    # With %28/%29 URL-encoded parens and _web suffix
+    paste0("oct-", end_year, "-multi-stats-%28total-by-site-and-school-system%29_web.xlsx"),
+    # February with _web suffix
+    paste0("feb-", end_year, "-multi-stats-(total-by-site-and-school-system)_web.xlsx"),
+    # February with %28/%29 encoded parens and _web suffix
+    paste0("feb-", end_year, "-multi-stats-%28total-by-site-and-school-system%29_web.xlsx"),
+    # February with %28/%29 encoded parens (no _web suffix)
+    paste0("feb-", end_year, "-multi-stats-%28total-by-site-and-school-system%29-web.xlsx")
   )
 
-  paste0(base_url, patterns)
+  # Also try doe.louisiana.gov domain (LDOE migrated some content)
+  doe_base <- "https://doe.louisiana.gov/docs/default-source/fiscal-data/"
+  doe_patterns <- c(
+    paste0("oct-", end_year, "-multi-stats-%28total-by-site-and-school-system%29-web.xlsx"),
+    paste0("feb-", end_year, "-multi-stats-%28total-by-site-and-school-system%29-web.xlsx"),
+    paste0("oct-", end_year, "-multi-stats-(total-by-site-and-school-system)_web.xlsx"),
+    paste0("feb-", end_year, "-multi-stats-(total-by-site-and-school-system)_web.xlsx")
+  )
+
+  c(paste0(base_url, patterns), paste0(doe_base, doe_patterns))
 }
 
 
