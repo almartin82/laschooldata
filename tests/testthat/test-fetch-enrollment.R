@@ -37,7 +37,7 @@ test_that("get_available_years returns expected structure", {
   expect_type(years, "list")
   expect_named(years, c("min_year", "max_year", "description"))
   expect_equal(years$min_year, 2019)
-  expect_equal(years$max_year, 2024)
+  expect_equal(years$max_year, 2026)
   expect_type(years$description, "character")
 })
 
@@ -47,14 +47,14 @@ test_that("get_available_years returns expected structure", {
 # ==============================================================================
 
 test_that("fetch_enr rejects invalid years", {
-  expect_error(fetch_enr(2018), "2019 and 2024")
-  expect_error(fetch_enr(2025), "2019 and 2024")
-  expect_error(fetch_enr(2000), "2019 and 2024")
+  expect_error(fetch_enr(2018), "2019 and 2026")
+  expect_error(fetch_enr(2027), "2019 and 2026")
+  expect_error(fetch_enr(2000), "2019 and 2026")
 })
 
 test_that("fetch_enr_multi rejects invalid years", {
-  expect_error(fetch_enr_multi(2015:2020), "2019 and 2024")
-  expect_error(fetch_enr_multi(c(2020, 2025)), "2019 and 2024")
+  expect_error(fetch_enr_multi(2015:2020), "2019 and 2026")
+  expect_error(fetch_enr_multi(c(2020, 2027)), "2019 and 2026")
 })
 
 
@@ -415,5 +415,5 @@ test_that("cache_status returns expected structure", {
   expect_true("end_year" %in% names(status))
   expect_true("tidy_cached" %in% names(status))
   expect_true("wide_cached" %in% names(status))
-  expect_equal(nrow(status), 6)  # 2019-2024
+  expect_equal(nrow(status), 8)  # 2019-2026
 })

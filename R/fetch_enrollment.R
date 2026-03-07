@@ -13,8 +13,8 @@
 #' Education Multi Stats files.
 #'
 #' @param end_year A school year. Year is the end of the academic year - e.g.,
-#'   2023-24 school year is year '2024'. Valid values are 2007-2025 (Multi Stats
-#'   format). Data for 2006 is also available but uses a different format.
+#'   2023-24 school year is year '2024'. Valid values are 2019-2026 (Multi Stats
+#'   format).
 #' @param tidy If TRUE (default), returns data in long (tidy) format with subgroup
 #'   column. If FALSE, returns wide format.
 #' @param use_cache If TRUE (default), uses locally cached data when available.
@@ -40,9 +40,9 @@
 #' }
 fetch_enr <- function(end_year, tidy = TRUE, use_cache = TRUE) {
 
-  # Validate year - only 2019-2024 are confirmed working
-  if (end_year < 2019 || end_year > 2024) {
-    stop("end_year must be between 2019 and 2024 (confirmed available years)")
+  # Validate year - only 2019-2026 are confirmed working
+  if (end_year < 2019 || end_year > 2026) {
+    stop("end_year must be between 2019 and 2026 (confirmed available years)")
   }
 
   # Determine cache type based on tidy parameter
@@ -96,11 +96,11 @@ fetch_enr <- function(end_year, tidy = TRUE, use_cache = TRUE) {
 #' }
 fetch_enr_multi <- function(end_years, tidy = TRUE, use_cache = TRUE) {
 
-  # Validate years - only 2019-2024 are confirmed working
-  invalid_years <- end_years[end_years < 2019 | end_years > 2024]
+  # Validate years - only 2019-2026 are confirmed working
+  invalid_years <- end_years[end_years < 2019 | end_years > 2026]
   if (length(invalid_years) > 0) {
     stop(paste("Invalid years:", paste(invalid_years, collapse = ", "),
-               "\nend_year must be between 2019 and 2024 (confirmed available years)"))
+               "\nend_year must be between 2019 and 2026 (confirmed available years)"))
   }
 
   # Fetch each year

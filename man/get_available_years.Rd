@@ -9,7 +9,7 @@ get_available_years()
 \value{
 A list with:
 \item{min_year}{First available year (2019)}
-\item{max_year}{Last available year (2024)}
+\item{max_year}{Last available year (2026)}
 \item{description}{Description of data availability}
 }
 \description{
